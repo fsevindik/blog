@@ -41,11 +41,11 @@ const filmSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    posterImageUrl: {
+    posterImageUrlA: {
       type: String,
       required: true,
     },
-    bannerImageUrl: {
+    bannerImageUrlB: {
       type: String,
       required: true,
     },

@@ -29,7 +29,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/films", reactionRoutesRoutes);
 app.use("/api/messages", messageRoutes);
 
-// Error handling middleware
+// Error handling middleware  dont forget to adjust error messages..proper
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(err.status || 500).json({
@@ -39,7 +39,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Basic route for testing
+// BE aware !!!!! if port is  6666 its ok     but     if 6660 it is not
 app.get("/", (req, res) => {
   res.send("Welcome to the Film API");
 });

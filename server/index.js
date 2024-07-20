@@ -1,17 +1,19 @@
+import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import helmet from "helmet";
 import mongoose from "mongoose";
 import filmRoutes from "./routes/filmRoutes.js";
 import messageRoutes from "./routes/messageRoutes.js";
-import reactionRoutesRoutes from "./routes/reactionRoutes.js";
+import reactionRoutes from "./routes/reactionRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 
 dotenv.config();
-
-const app = express();
 const PORT = process.env.PORT || 3000;
 
+const app = express();
+
+app.use(cors());
 app.use(helmet());
 app.use(express.json());
 
@@ -21,15 +23,17 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => console.log("MongoDB connected successfully"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+  .catch((err) => {
+    console.error("MongoDB connection error:", err);
+    process.exit(1);
+  });
 
 // Routes
-app.use("/api/films", filmRoutes);
-app.use("/api/users", userRoutes);
-app.use("/api/films", reactionRoutesRoutes);
-app.use("/api/messages", messageRoutes);
+app.use("/films", filmRoutes);
+app.use("/films/:filmId/reactions", reactionRoutes);
+app.use("/users", userRoutes);
+app.use("/messages", messageRoutes);
 
-// Error handling middleware  dont forget to adjust error messages..proper
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(err.status || 500).json({
@@ -39,7 +43,6 @@ app.use((err, req, res, next) => {
   });
 });
 
-// BE aware !!!!! if port is  6666 its ok     but     if 6660 it is not
 app.get("/", (req, res) => {
   res.send("Welcome to the Film API");
 });

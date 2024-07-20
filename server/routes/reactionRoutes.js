@@ -1,103 +1,73 @@
 import express from "express";
-import Film from "../models/filmModel.js";
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
-// Add a like to a film
-router.post("/:filmId/like", async (req, res) => {
+// Add reaction
+router.post("/:filmId/comments/:commentId/postreactions", async (req, res) => {
   try {
-    const { filmId } = req.params;
-    const { userId } = req.body;
+    const { FilmId, commentId } = req.params;
+    const { userId, reactionType } = req.body;
 
-    const film = await Film.findById(filmId);
-    if (!film) {
+    const Film = await Film.findById(FilmId);
+    if (!Film) {
       return res.status(404).json({ message: "Film not found" });
     }
 
-    // Check if the user has already liked
-    const existingLike = film.ratings.find(
-      (rating) => rating.userId.toString() === userId
-    );
-
-    if (existingLike) {
-      return res
-        .status(400)
-        .json({ message: "User has already liked this film" });
+    const comment = Film.comments.id(commentId);
+    if (!comment) {
+      return res.status(404).json({ message: "Comment not found" });
     }
 
-    // Add new like
-    film.ratings.push({
-      userId,
-      rating: 10, // We'll use 10 to represent a like
+    if (!comment.reactions) {
+      comment.reactions = { like: 0, usersLiked: [] };
+    }
+
+    switch (reactionType) {
+      case "like":
+        const userIndex = comment.reactions.usersLiked.indexOf(userId);
+        if (userIndex === -1) {
+          comment.reactions.like++;
+          comment.reactions.usersLiked.push(userId);
+        } else {
+          comment.reactions.like--;
+          comment.reactions.usersLiked.splice(userIndex, 1);
+        }
+        break;
+      default:
+        return res.status(400).json({ message: "Invalid reaction type" });
+    }
+
+    await Film.save();
+
+    res.status(200).json({
+      message: "Reaction toggled successfully",
+      reactions: comment.reactions,
     });
-
-    await film.save();
-
-    res.json({ message: "Like added successfully", film });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error("Error adding reaction:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 
-// Remove a like from a film
-router.delete("/:filmId/like", async (req, res) => {
+// Get reactions
+router.get("/:FilmId/comments/:commentId/getreactions", async (req, res) => {
   try {
-    const { filmId } = req.params;
-    const { userId } = req.body;
+    const { FilmId, commentId } = req.params;
 
-    const film = await Film.findById(filmId);
-    if (!film) {
+    const Film = await Film.findById(FilmId);
+    if (!Film) {
       return res.status(404).json({ message: "Film not found" });
     }
 
-    // Remove the user's like
-    film.ratings = film.ratings.filter(
-      (rating) => rating.userId.toString() !== userId
-    );
-
-    await film.save();
-
-    res.json({ message: "Like removed successfully", film });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
-// Get likes for a film
-router.get("/:filmId/likes", async (req, res) => {
-  try {
-    const { filmId } = req.params;
-
-    const film = await Film.findById(filmId).populate("ratings.userId", "name");
-    if (!film) {
-      return res.status(404).json({ message: "Film not found" });
+    const comment = Film.comments.id(commentId);
+    if (!comment) {
+      return res.status(404).json({ message: "Comment not found" });
     }
 
-    const likes = film.ratings.map((rating) => ({
-      user: rating.userId,
-    }));
-
-    res.json(likes);
+    res.status(200).json(comment.reactions || { like: 0, usersLiked: [] });
   } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
-// Get like count for a film
-router.get("/:filmId/likeCount", async (req, res) => {
-  try {
-    const { filmId } = req.params;
-
-    const film = await Film.findById(filmId);
-    if (!film) {
-      return res.status(404).json({ message: "Film not found" });
-    }
-
-    const likeCount = film.ratings.length;
-
-    res.json({ likes: likeCount });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error("Error getting reactions:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 

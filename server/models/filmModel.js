@@ -19,6 +19,7 @@ const rateSchema = new mongoose.Schema(
 
 const filmSchema = new mongoose.Schema(
   {
+    filmId: { type: String, required: true, unique: true },
     title: { type: String, required: true, trim: true },
     director: { type: String, required: true, trim: true },
     releaseDate: { type: Number, required: true },
@@ -33,7 +34,6 @@ const filmSchema = new mongoose.Schema(
     toObject: { virtuals: true },
   }
 );
-
 filmSchema.virtual("averageRating").get(function () {
   if (this.ratings.length === 0) return 0;
   const sum = this.ratings.reduce((total, rate) => total + rate.rating, 0);

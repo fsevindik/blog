@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import AddBoxIcon from "../icons/AddBoxIcon";
+import FilmsTable from "./components/FilmTable";
 
 const Home = () => {
   return (
@@ -12,6 +13,7 @@ const Home = () => {
           <AddBoxIcon />
         </Link>
       </div>
+      <FilmsTable />
     </div>
   );
 };

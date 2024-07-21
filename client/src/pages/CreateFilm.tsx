@@ -32,13 +32,15 @@ const CreateFilms: React.FC = () => {
     actors: [],
     filmOverview: "",
   });
+
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const handleSaveFilm = () => {
     setLoading(true);
     axios
-      .post(`${process.env.REACT_APP_API_URL}/films`, film)
+      // .post(`${process.env.REACT_APP_API_URL}/films`, film)
+      .post(`http://localhost:3000/films`, film)
       .then(() => {
         setLoading(false);
         toast.success("Film Created Successfully");
@@ -95,7 +97,7 @@ const CreateFilms: React.FC = () => {
             name="title"
             value={film.title}
             onChange={handleChange}
-            className="border-2 border-gray-500 px-4 py-2 w-full"
+            className="border-2 text-black border-gray-500 px-4 py-2 w-full"
           />
         </div>
         <div className="my-4">
@@ -105,7 +107,7 @@ const CreateFilms: React.FC = () => {
             name="director"
             value={film.director}
             onChange={handleChange}
-            className="border-2 border-gray-500 px-4 py-2 w-full"
+            className="border-2 text-black border-gray-500 px-4 py-2 w-full"
           />
         </div>
         <div className="my-4">
@@ -115,7 +117,7 @@ const CreateFilms: React.FC = () => {
             name="releaseYear"
             value={film.releaseYear}
             onChange={handleChange}
-            className="border-2 border-gray-500 px-4 py-2 w-full"
+            className="border-2 text-black border-gray-500 px-4 py-2 w-full"
           />
         </div>
         <div className="my-4">
@@ -125,7 +127,7 @@ const CreateFilms: React.FC = () => {
             name="posterImageUrlA"
             value={film.posterImageUrlA}
             onChange={handleChange}
-            className="border-2 border-gray-500 px-4 py-2 w-full"
+            className="border-2 text-black border-gray-500 px-4 py-2 w-full"
           />
         </div>
         <div className="my-4">
@@ -135,7 +137,7 @@ const CreateFilms: React.FC = () => {
             name="bannerImageUrlB"
             value={film.bannerImageUrlB}
             onChange={handleChange}
-            className="border-2 border-gray-500 px-4 py-2 w-full"
+            className="border-2 text-black border-gray-500 px-4 py-2 w-full"
           />
         </div>
         <div className="my-4">
@@ -149,7 +151,7 @@ const CreateFilms: React.FC = () => {
                 onChange={(e) =>
                   handleActorChange(index, "name", e.target.value)
                 }
-                className="border-2 border-gray-500 px-4 py-2 w-full mb-2"
+                className="border-2 text-black border-gray-500 px-4 py-2 w-full mb-2"
               />
               <input
                 type="url"
@@ -158,7 +160,7 @@ const CreateFilms: React.FC = () => {
                 onChange={(e) =>
                   handleActorChange(index, "imageUrl", e.target.value)
                 }
-                className="border-2 border-gray-500 px-4 py-2 w-full"
+                className="border-2 text-black border-gray-500 px-4 py-2 w-full"
               />
             </div>
           ))}
@@ -175,7 +177,7 @@ const CreateFilms: React.FC = () => {
             name="filmOverview"
             value={film.filmOverview}
             onChange={handleChange}
-            className="border-2 border-gray-500 px-4 py-2 w-full h-24"
+            className="border-2 text-black border-gray-500 px-4 py-2 w-full h-24"
             placeholder="Write a brief overview of the film..."
           />
         </div>

@@ -39,8 +39,8 @@ router.post("/", async (req, res) => {
       title,
       director,
       releaseYear,
-      imageA,
-      imageB,
+      posterImageUrlA,
+      bannerImageUrlB,
       actors,
       filmOverview,
     } = req.body;
@@ -48,8 +48,8 @@ router.post("/", async (req, res) => {
       !title ||
       !director ||
       !releaseYear ||
-      !imageA ||
-      !imageB ||
+      !posterImageUrlA ||
+      !bannerImageUrlB ||
       !actors ||
       !filmOverview
     ) {
@@ -62,8 +62,8 @@ router.post("/", async (req, res) => {
       title,
       director,
       releaseYear,
-      imageA,
-      imageA,
+      posterImageUrlA,
+      bannerImageUrlB,
       actors,
       filmOverview,
       ratings: [],

@@ -15,37 +15,34 @@ const Navbar: React.FC = () => {
               to="/"
               className=" text-yellow-500  hover:text-white  flex items-center"
             >
-              <HomeIcon className="w-5 h-5 mr-1 " />
               <span className="hidden sm:inline text-sm md:text-base lg:text-md">
                 Home
               </span>
+              <HomeIcon className="w-5 h-5 ml-1 " />
             </Link>
           </li>
-
           <li className="flex items-center space-x-2">
             <Link
-              to="/services"
+              to="/films/trends"
               className="text-yellow-500 hover:text-white  flex items-center"
             >
-              <HeartIcon className="w-5 h-5 mr-1" />
               <span className="hidden sm:inline text-sm md:text-base lg:text-md">
-                Most Beloveds
+                Trends
               </span>
+              <HeartIcon className="w-5 h-5 ml-1" />
             </Link>
           </li>
-
           <li className="flex items-center space-x-2">
             <Link
               to="/"
               className="text-yellow-500 hover:text-white  flex items-center"
             >
-              <MessageIcon className="w-5 h-5 mr-1" />
               <span className="hidden sm:inline  text-sm md:text-base lg:text-md">
                 Messages
               </span>
+              <MessageIcon className="w-5 h-5 ml-1" />
             </Link>
           </li>
-
           <li className="flex items-center space-x-2">
             <div className="text-yellow-500 hover:text-white  flex items-center cursor-pointer">
               <span className="hidden sm:inline  text-sm md:text-base lg:text-md">

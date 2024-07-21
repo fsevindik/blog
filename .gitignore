@@ -1,1 +1,5 @@
 .env
+
+
+# Frontend environment vars.
+/client/.env

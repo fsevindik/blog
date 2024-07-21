@@ -7,7 +7,7 @@ const Header: React.FC = () => {
     <header className="bg-gray-900 text-yellow-500 p-4 flex items-center justify-between">
       <div className="flex items-center space-x-2">
         <DoctorIcon />
-        <span className="text-xs md:text-lg font-bold font-cursive">
+        <span className="text-xs md:text-lg font-semi-bold font-cursive">
           Dr. Filmolog
         </span>
       </div>

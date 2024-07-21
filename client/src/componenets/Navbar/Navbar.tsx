@@ -47,7 +47,7 @@ const Navbar: React.FC = () => {
           </li>
 
           <li className="flex items-center space-x-2">
-            <div className="text-yellow-500 hover:text-white  flex items-center">
+            <div className="text-yellow-500 hover:text-white  flex items-center cursor-pointer">
               <span className="hidden sm:inline  text-sm md:text-base lg:text-md">
                 User
               </span>

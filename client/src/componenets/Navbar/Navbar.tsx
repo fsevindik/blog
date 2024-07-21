@@ -7,16 +7,16 @@ import MessageIcon from "../../icons/MessageIcon";
 
 const Navbar: React.FC = () => {
   return (
-    <nav className="p-4 rounded-lg shadow-md bg-gray-800">
+    <nav className="p-4 rounded-lg shadow-md ">
       <div className="flex items-center justify-between">
-        <ul className="flex items-center space-x-4">
+        <ul className="flex items-center space-x-6">
           <li className="flex items-center space-x-2">
             <Link
               to="/"
-              className="text-white hover:text-yellow-600 flex items-center"
+              className=" text-yellow-500  hover:text-white  flex items-center"
             >
-              <HomeIcon className="w-5 h-5" />
-              <span className="hidden sm:inline text-sm md:text-base lg:text-lg">
+              <HomeIcon className="w-5 h-5 mr-1 " />
+              <span className="hidden sm:inline text-sm md:text-base lg:text-md">
                 Home
               </span>
             </Link>
@@ -25,10 +25,10 @@ const Navbar: React.FC = () => {
           <li className="flex items-center space-x-2">
             <Link
               to="/services"
-              className="text-white hover:text-yellow-600 flex items-center"
+              className="text-yellow-500 hover:text-white  flex items-center"
             >
-              <HeartIcon className="w-5 h-5" />
-              <span className="hidden sm:inline text-sm md:text-base lg:text-lg">
+              <HeartIcon className="w-5 h-5 mr-1" />
+              <span className="hidden sm:inline text-sm md:text-base lg:text-md">
                 Most Beloveds
               </span>
             </Link>
@@ -37,21 +37,21 @@ const Navbar: React.FC = () => {
           <li className="flex items-center space-x-2">
             <Link
               to="/"
-              className="text-white hover:text-yellow-600 flex items-center"
+              className="text-yellow-500 hover:text-white  flex items-center"
             >
-              <MessageIcon className="w-5 h-5" />
-              <span className="hidden sm:inline text-sm md:text-base lg:text-lg">
+              <MessageIcon className="w-5 h-5 mr-1" />
+              <span className="hidden sm:inline  text-sm md:text-base lg:text-md">
                 Messages
               </span>
             </Link>
           </li>
 
           <li className="flex items-center space-x-2">
-            <div className="text-white hover:text-yellow-600 flex items-center cursor-pointer">
-              <span className="hidden sm:inline text-sm md:text-base lg:text-lg">
+            <div className="text-yellow-500 hover:text-white  flex items-center">
+              <span className="hidden sm:inline  text-sm md:text-base lg:text-md">
                 User
               </span>
-              <HamburgerIcon className="w-5 h-5 ml-2" />
+              <HamburgerIcon className="w-5 h-5 ml-1" />
             </div>
           </li>
         </ul>

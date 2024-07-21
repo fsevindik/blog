@@ -6,4 +6,5 @@ export type IconProps = {
   visibility?: string;
   width?: string;
   height?: string;
+  className?: string;
 };

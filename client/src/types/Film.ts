@@ -1,7 +1,11 @@
 import { ReactNode } from "react";
 
+interface Actor {
+  name: string;
+  imageUrl: string;
+}
+
 export interface Film {
-  publishYear: ReactNode;
   _id: string;
   filmId: string;
   title: string;
@@ -9,6 +13,7 @@ export interface Film {
   releaseYear: number;
   posterImageUrlA: string;
   bannerImageUrlB: string;
-  actors: [];
+  actors: Actor[];
   filmOverview: string;
+  publishYear: ReactNode;
 }

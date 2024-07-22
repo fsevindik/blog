@@ -9,11 +9,12 @@ const Home: React.FC = () => {
   const [films, setFilms] = useState<Film[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const API_URL = "http://localhost:3000";
 
   useEffect(() => {
     const fetchFilms = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/films");
+        const response = await axios.get(`${API_URL}/films`);
         const filmsData = response.data.data;
         if (Array.isArray(filmsData)) {
           setFilms(filmsData);
@@ -48,6 +49,11 @@ const Home: React.FC = () => {
           className="text-yellow-500 h-8 w-8 ml-auto hover:text-white flex items-center"
         >
           <AddBoxIcon />
+        </Link>
+      </div>
+      <div>
+        <Link to="/films/:id ">
+          <button>edit movie</button>
         </Link>
       </div>
       {/* <div className="flex flex-wrap gap-4 p-4">

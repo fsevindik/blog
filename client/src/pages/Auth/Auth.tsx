@@ -4,8 +4,8 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import AuthContainer from "./Authcontainer";
-import AuthForm from "./Authform";
+import AuthContainer from "./AuthContainer";
+import AuthForm from "./AuthForm";
 
 const Auth: React.FC = () => {
   const navigate = useNavigate();
@@ -96,11 +96,11 @@ const Auth: React.FC = () => {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-3xl font-bold mb-6">
+            <h2 className="text-3xl font-bold mb-6 text-black">
               {mode === "register" ? "Register" : "Login"}
             </h2>
             {mode === "register" && (
-              <p className="font-mono mb-4 text-sm">
+              <p className="font-mono mb-4 text-sm text-black">
                 You may register with a dummy email
               </p>
             )}

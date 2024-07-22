@@ -1,20 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
-interface Film {
-  director: string;
-  _id: string;
-  title: string;
-  author: string;
-  publishYear: number;
-  posterImageUrlA: string;
-}
+import { Film } from "../../types/Film";
 
 interface FilmsTableProps {
-  Films?: Film[];
+  films?: Film[];
 }
 
-const FilmsTable: React.FC<FilmsTableProps> = ({ Films = [] }) => {
+const FilmsTable: React.FC<FilmsTableProps> = ({ films = [] }) => {
   const [showEditTooltip, setShowEditTooltip] = useState<boolean>(false);
   const [editTooltipIndex, setEditTooltipIndex] = useState<number | null>(null);
   const [showDeleteTooltip, setShowDeleteTooltip] = useState<boolean>(false);
@@ -72,28 +64,28 @@ const FilmsTable: React.FC<FilmsTableProps> = ({ Films = [] }) => {
           </tr>
         </thead>
         <tbody>
-          {Films.map((Film, _index) => (
-            <tr key={Film._id} className="h-12 bg-gray-300">
+          {films.map((film, _index) => (
+            <tr key={film._id} className="h-12 bg-gray-300">
               <td className="relative pl-5 ">
                 <Link
-                  to={`/Films/details/${Film._id}`}
+                  to={`/Films/details/${film._id}`}
                   className="flex items-center p-2 hover:bg-yellow-600 cursor-pointer font-serif font-semibold flex-wrap md:flex-nowrap"
                 >
                   <img
-                    src={Film.posterImageUrlA}
-                    alt={Film.title}
+                    src={film.posterImageUrlA}
+                    alt={film.title}
                     className="h-12 w-12 object-cover mr-2 mb-2 md:h-16 md:w-16 md:mb-0"
                   />
                   <span className="md:ml-2 md:text-base text-sm">
-                    {Film.title}
+                    {film.title}
                   </span>
                 </Link>
               </td>
               <td className="border border-slate-700 rounded-md text-center font-semibold hidden md:table-cell w-1/6">
-                {Film.director}
+                {film.director}
               </td>
               <td className="border border-slate-700 rounded-md text-center font-semibold hidden md:table-cell w-1/6">
-                {Film.publishYear}
+                {film.publishYear}
               </td>
               {userType === "admin" && (
                 <td className="border border-slate-700 rounded-md text-center w-1/6">

@@ -55,7 +55,7 @@ router.post("/", async (req, res) => {
     ) {
       return res.status(400).send({
         message:
-          "Send all required fields: title, director, releaseYear, posterImageUrl, bannerImageUrl, actors, filmOverview",
+          "Send all required fields: title, director, releaseYear, posterImageUrlA, bannerImageUrlB, actors, filmOverview",
       });
     }
     const newFilm = {

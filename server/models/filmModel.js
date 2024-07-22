@@ -29,6 +29,11 @@ const actorSchema = new mongoose.Schema({
 //film Schema
 const filmSchema = new mongoose.Schema(
   {
+    filmId: {
+      type: String,
+      unique: true,
+      default: () => new mongoose.Types.ObjectId().toString(),
+    },
     title: {
       type: String,
       required: true,
@@ -54,7 +59,6 @@ const filmSchema = new mongoose.Schema(
       validate: [arrayLimit, "{PATH} exceeds the limit of 5"],
     },
     ratings: [rateSchema],
-
     filmOverview: {
       type: String,
       required: true,

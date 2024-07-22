@@ -26,7 +26,7 @@ const CreateFilms: React.FC = () => {
   const [film, setFilm] = useState<Film>({
     title: "",
     director: "",
-    releaseYear: 0,
+    releaseYear: 2024,
     posterImageUrlA: "",
     bannerImageUrlB: "",
     actors: [],
@@ -36,31 +36,48 @@ const CreateFilms: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  const handleSaveFilm = () => {
+  const handleSaveFilm = async () => {
+    if (
+      !film.title ||
+      !film.director ||
+      !film.releaseYear ||
+      !film.posterImageUrlA ||
+      !film.bannerImageUrlB ||
+      film.actors.length === 0 ||
+      !film.filmOverview
+    ) {
+      toast.error("Please fill all required fields");
+      return;
+    }
+
     setLoading(true);
-    axios
-      // .post(`${process.env.REACT_APP_API_URL}/films`, film)
-      .post(`http://localhost:3000/films`, film)
-      .then(() => {
-        setLoading(false);
-        toast.success("Film Created Successfully");
-        navigate("/");
-      })
-      .catch((error) => {
-        setLoading(false);
-        toast.error("An error happened. Please check console");
-        console.error("Error creating film:", error);
-      });
+    try {
+      await axios.post(`http://localhost:3000/films`, film);
+      toast.success("Film Created Successfully");
+      navigate("/");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(
+          error.response?.data?.message ||
+            "An error occurred while creating the film"
+        );
+      } else {
+        toast.error("An unexpected error occurred");
+      }
+      console.error("Error creating film:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setFilm({
-      ...film,
-      [name]: name === "releaseYear" ? parseInt(value) : value,
-    });
+    setFilm((prevFilm) => ({
+      ...prevFilm,
+      [name]: name === "releaseYear" ? parseInt(value) || 0 : value,
+    }));
   };
 
   const handleActorChange = (
@@ -68,17 +85,19 @@ const CreateFilms: React.FC = () => {
     field: keyof Actor,
     value: string
   ) => {
-    const updatedActors = [...film.actors];
-    updatedActors[index] = { ...updatedActors[index], [field]: value };
-    setFilm({ ...film, actors: updatedActors });
+    setFilm((prevFilm) => {
+      const updatedActors = [...prevFilm.actors];
+      updatedActors[index] = { ...updatedActors[index], [field]: value };
+      return { ...prevFilm, actors: updatedActors };
+    });
   };
 
   const addActor = () => {
     if (film.actors.length < 5) {
-      setFilm({
-        ...film,
-        actors: [...film.actors, { name: "", imageUrl: "" }],
-      });
+      setFilm((prevFilm) => ({
+        ...prevFilm,
+        actors: [...prevFilm.actors, { name: "", imageUrl: "" }],
+      }));
     } else {
       toast.warning("Maximum 5 actors allowed");
     }
@@ -89,7 +108,13 @@ const CreateFilms: React.FC = () => {
       <BackButton />
       <h1 className="text-3xl my-4 text-white text-center">Create a Film</h1>
       {loading && <Spinner />}
-      <div className="flex flex-col border-2 border-sky-400 rounded-xl w-full md:w-[600px] p-4 mx-auto">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSaveFilm();
+        }}
+        className="flex flex-col border-2 border-sky-400 rounded-xl w-full md:w-[600px] p-4 mx-auto"
+      >
         <div className="my-4">
           <label className="text-xl mr-4 text-white">Title</label>
           <input
@@ -165,6 +190,7 @@ const CreateFilms: React.FC = () => {
             </div>
           ))}
           <button
+            type="button"
             className="p-2 bg-blue-500 text-white rounded-md mt-2"
             onClick={addActor}
           >
@@ -182,12 +208,12 @@ const CreateFilms: React.FC = () => {
           />
         </div>
         <button
+          type="submit"
           className="p-2 bg-yellow-500 hover:bg-red-600 m-8 rounded-md"
-          onClick={handleSaveFilm}
         >
           Save
         </button>
-      </div>
+      </form>
       <ToastContainer />
     </div>
   );

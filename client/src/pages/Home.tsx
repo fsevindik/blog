@@ -13,7 +13,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     const fetchFilms = async () => {
       try {
-        const response = await axios.get("/api/films");
+        const response = await axios.get("http://localhost:3000/films");
         const filmsData = response.data.data;
         if (Array.isArray(filmsData)) {
           setFilms(filmsData);
@@ -41,6 +41,7 @@ const Home: React.FC = () => {
 
   return (
     <div>
+      Home
       <div>
         <Link
           to="/films/create"
@@ -49,6 +50,21 @@ const Home: React.FC = () => {
           <AddBoxIcon />
         </Link>
       </div>
+      {/* <div className="flex flex-wrap gap-4 p-4">
+        test part
+        {films.map((film) => (
+          <div
+            key={film._id}
+            className="border p-4 text-black rounded-lg shadow-md bg-slate-200"
+          >
+            <h3 className="text-lg text-black font-bold">
+              filmtitle:
+              {film.title}
+            </h3>
+            <p className="text-black">{film.filmOverview}</p>
+          </div>
+        ))}
+      </div> */}
       <FilmsTable films={films} />
     </div>
   );

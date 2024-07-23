@@ -14,7 +14,7 @@ const PasswordRequirements: React.FC<PasswordRequirementProps> = ({
   // const hasPsSymbol = /\W|_/g.test(password);
 
   return (
-    <div className="flex flex-col w-350px  h-125px p-1 rounded-md bg-slate-100">
+    <div className="flex flex-col w-350px  h-130px p-1 rounded-md bg-slate-100">
       <RequirementCard text="Required" hasPassed={hasPsValue} />
       <RequirementCard
         text="At least 6 characters"

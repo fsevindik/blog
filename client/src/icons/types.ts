@@ -48,3 +48,8 @@ export interface RequirementCardProps {
 export interface AuthContainerProps {
   children: React.ReactNode;
 }
+
+export interface User {
+  id: string;
+  name: string;
+}

@@ -13,8 +13,8 @@ const RequirementCard: React.FC<RequirementCardProps> = ({
   const IconComponent = hasPassed ? CheckCircleIcon : DotCircleIcon;
 
   return (
-    <div>
-      <IconComponent className={`tetx-lg ${color} mr-2`} />
+    <div className="flex items-center mb-1">
+      <IconComponent className={`tetx-lg w-4 h-4 ${color} mr-2`} />
       <p className={`text-sm ${color}`}>{text} </p>
     </div>
   );

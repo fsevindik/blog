@@ -49,8 +49,8 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
   };
 
   return (
-    <header className="bg-gray-900 text-white p-4 shadow-lg ">
-      <div className="container mx-auto flex flex-wrap items-center justify-between">
+    <header className="bg-gray-900 text-white p-4 shadow-lg">
+      <div className="container mx-auto flex flex-col sm:flex-row items-center justify-between">
         <div className="flex items-center mb-4 sm:mb-0">
           <DoctorIcon className="w-8 h-8 text-yellow-300 mr-2" />
           <p className="text-lg font-semibold text-yellow-300">

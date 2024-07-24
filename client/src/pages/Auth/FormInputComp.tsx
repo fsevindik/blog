@@ -12,7 +12,7 @@ const FormInputComp: React.FC<FormInputProps> = ({
     placeholder={placeholder}
     value={value}
     onChange={onChange}
-    className="w-full px-3 py-2 border rounded-md"
+    className="w-full px-3 py-2 border rounded-md text-black"
   />
 );
 

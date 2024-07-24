@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import DeleteIcon from "../../icons/DeleteIcon";
+import EditIcon from "../../icons/EditIcon";
 import { Film } from "../../types/Film";
 
 interface FilmsTableProps {
@@ -7,12 +9,6 @@ interface FilmsTableProps {
 }
 
 const FilmsTable: React.FC<FilmsTableProps> = ({ films = [] }) => {
-  const [showEditTooltip, setShowEditTooltip] = useState<boolean>(false);
-  const [editTooltipIndex, setEditTooltipIndex] = useState<number | null>(null);
-  const [showDeleteTooltip, setShowDeleteTooltip] = useState<boolean>(false);
-  const [deleteTooltipIndex, setDeleteTooltipIndex] = useState<number | null>(
-    null
-  );
   const [userType, setUserType] = useState<string>("visitor");
 
   useEffect(() => {
@@ -21,26 +17,6 @@ const FilmsTable: React.FC<FilmsTableProps> = ({ films = [] }) => {
       setUserType(userStatus);
     }
   }, []);
-
-  const handleEditMouseEnter = (index: number) => {
-    setShowEditTooltip(true);
-    setEditTooltipIndex(index);
-  };
-
-  const handleEditMouseLeave = () => {
-    setShowEditTooltip(false);
-    setEditTooltipIndex(null);
-  };
-
-  const handleDeleteMouseEnter = (index: number) => {
-    setShowDeleteTooltip(true);
-    setDeleteTooltipIndex(index);
-  };
-
-  const handleDeleteMouseLeave = () => {
-    setShowDeleteTooltip(false);
-    setDeleteTooltipIndex(null);
-  };
 
   return (
     <div className="overflow-x-auto">
@@ -54,7 +30,7 @@ const FilmsTable: React.FC<FilmsTableProps> = ({ films = [] }) => {
               Director
             </th>
             <th className="w-1/6 border border-slate-600 rounded-md bg-slate-500 hidden md:table-cell">
-              Publish Year
+              Release Date
             </th>
             {userType === "admin" && (
               <th className="w-1/6 border border-slate-600 rounded-md bg-slate-500">
@@ -64,7 +40,7 @@ const FilmsTable: React.FC<FilmsTableProps> = ({ films = [] }) => {
           </tr>
         </thead>
         <tbody>
-          {films.map((film, _index) => (
+          {films.map((film) => (
             <tr key={film._id} className="h-12 bg-gray-300">
               <td className="relative pl-5 ">
                 <Link
@@ -85,27 +61,18 @@ const FilmsTable: React.FC<FilmsTableProps> = ({ films = [] }) => {
                 {film.director}
               </td>
               <td className="border border-slate-700 rounded-md text-center font-semibold hidden md:table-cell w-1/6">
-                {film.publishYear}
+                {film.releaseYear}
               </td>
               {userType === "admin" && (
                 <td className="border border-slate-700 rounded-md text-center w-1/6">
-                  {/* <div className="flex justify-center gap-x-2 md:gap-x-4">
-                    <DetailsButton FilmId={Film._id} />
-                    <EditButton
-                      FilmId={Film._id}
-                      userType={userType}
-                      index={index}
-                      handleMouseEnter={handleEditMouseEnter}
-                      handleMouseLeave={handleEditMouseLeave}
-                    />
-                    <DeleteButton
-                      FilmId={Film._id}
-                      userType={userType}
-                      index={index}
-                      handleMouseEnter={handleDeleteMouseEnter}
-                      handleMouseLeave={handleDeleteMouseLeave}
-                    />
-                  </div> */}
+                  <div className="flex justify-center gap-x-2 md:gap-x-4">
+                    <Link to={`/Films/edit/${film._id}`}>
+                      <EditIcon className="h-6 w-6 text-blue-500 hover:text-blue-700" />
+                    </Link>
+                    <button onClick={() => {}}>
+                      <DeleteIcon className="h-6 w-6 text-red-500 hover:text-red-700" />
+                    </button>
+                  </div>
                 </td>
               )}
             </tr>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import HeartIcon from "../../icons/HeartIcon";
 import HomeIcon from "../../icons/HomeIcon";
@@ -8,10 +8,27 @@ import UserDropdown from "../Header/UserDropDown";
 
 const Navbar: React.FC<{ user: any }> = ({ user }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <nav className="flex items-center space-x-4">
@@ -26,7 +43,7 @@ const Navbar: React.FC<{ user: any }> = ({ user }) => {
         icon={<MessageIcon className="w-6 h-6" />}
         text="Messages"
       />
-      <div className="relative">
+      <div className="relative" ref={dropdownRef}>
         <button
           onClick={toggleDropdown}
           className="text-yellow-500 hover:text-white flex items-center space-x-2"

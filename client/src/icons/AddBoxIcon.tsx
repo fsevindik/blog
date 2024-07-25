@@ -1,10 +1,9 @@
-import React from "react";
-
 interface IconProps {
   className?: string;
 }
 
-const AddBoxIcon: React.FC<IconProps> = ({ className }) => {
+const AddBoxIcon = (props: IconProps) => {
+  const { className } = props;
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

@@ -1,12 +1,16 @@
+type Visibility = "visible" | "hidden" | "collapse";
+
 export type IconProps = {
   color?: string;
-  onClick?: () => void;
+  onClick?: React.MouseEventHandler<SVGSVGElement>;
   cursor?: string;
   fontSize?: string;
-  visibility?: string;
+  visibility?: Visibility;
   width?: string;
   height?: string;
   className?: string;
+  onMouseEnter?: React.MouseEventHandler<SVGSVGElement>;
+  onMouseLeave?: React.MouseEventHandler<SVGSVGElement>;
 };
 
 export interface AuthFormProps {

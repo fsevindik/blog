@@ -1,6 +1,7 @@
-import React from "react";
+import { IconProps } from "./types";
 
-const DoctorIcon: React.FC<{ className?: string }> = ({ className }) => {
+const DoctorIcon = (props: IconProps) => {
+  const { className, ...otherProps } = props;
   return (
     <svg
       className={className}
@@ -13,6 +14,7 @@ const DoctorIcon: React.FC<{ className?: string }> = ({ className }) => {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
+      {...otherProps}
     >
       <circle cx="12" cy="7" r="4" />
       <path d="M5.5 20a6.5 6.5 0 0 1 13 0" />

@@ -1,10 +1,7 @@
-import React from "react";
+import { IconProps } from "./types";
 
-interface IconProps {
-  className?: string;
-}
-
-const CheckCircleIcon: React.FC<IconProps> = ({ className }) => {
+const CheckCircleIcon = (props: IconProps) => {
+  const { className } = props;
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

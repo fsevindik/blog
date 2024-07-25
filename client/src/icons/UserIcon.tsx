@@ -1,7 +1,6 @@
-import React from "react";
 import { IconProps } from "./types";
 
-const UserIcon: React.FC<IconProps> = (props) => {
+const UserIcon = (props: IconProps) => {
   return (
     <svg
       className="w-6 h-6 text-white"

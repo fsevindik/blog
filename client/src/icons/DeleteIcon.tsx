@@ -1,7 +1,7 @@
-import React from "react";
 import { IconProps } from "./types";
 
-const DeleteIcon: React.FC<IconProps> = ({ className, ...props }) => {
+const DeleteIcon = (props: IconProps) => {
+  const { className, ...otherProps } = props;
   return (
     <svg
       className={`w-6 h-6 ${className}`}
@@ -12,7 +12,7 @@ const DeleteIcon: React.FC<IconProps> = ({ className, ...props }) => {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      {...props}
+      {...otherProps}
     >
       <path d="M3 6h18M9 6v12M15 6v12M4 6l1 14h10l1-14H4z" />
     </svg>

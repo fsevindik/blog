@@ -1,7 +1,6 @@
-import React from "react";
 import { IconProps } from "./types";
 
-const MessageIcon: React.FC<IconProps> = (props) => {
+const MessageIcon = (props: IconProps) => {
   return (
     <svg
       className="w-7 h-7 text-white"

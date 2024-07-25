@@ -8,8 +8,11 @@ import { Film } from "../../types/Film";
 import RatingComponent from "./RatingComponent";
 
 const API_URL = "http://localhost:3000";
+interface FilmDetailProps {
+  film: Film;
+}
 
-const FilmDetail: React.FC = () => {
+const FilmDetail: React.FC<FilmDetailProps> = () => {
   const { filmId } = useParams<{ filmId: string }>();
   const [film, setFilm] = useState<Film | null>(null);
   const [loading, setLoading] = useState(true);

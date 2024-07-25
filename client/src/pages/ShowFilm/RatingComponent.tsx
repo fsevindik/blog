@@ -4,12 +4,12 @@ import { Rating } from "../../types/Film";
 
 interface RatingComponentProps {
   filmId: string;
-  ratings: Rating[];
+  ratings?: Rating[];
 }
 
 const RatingComponent: React.FC<RatingComponentProps> = ({
   filmId,
-  ratings,
+  ratings = [],
 }) => {
   const [userRating, setUserRating] = useState<number>(0);
 

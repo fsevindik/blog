@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 type Visibility = "visible" | "hidden" | "collapse";
 
 export type IconProps = {
@@ -63,4 +65,31 @@ type ObjectId = string;
 export interface Rating {
   userId: ObjectId;
   rating: number;
+}
+
+export interface ratingPtops {
+  rating: number;
+}
+
+export interface commentProps {
+  comment: string;
+}
+
+interface Actor {
+  name: string;
+  imageUrl: string;
+}
+
+export interface Film {
+  ratings: Rating[];
+  _id: string;
+  filmId: string;
+  title: string;
+  director: string;
+  releaseYear: number;
+  posterImageUrlA: string;
+  bannerImageUrlB: string;
+  actors: Actor[];
+  filmOverview: string;
+  publishYear: ReactNode;
 }

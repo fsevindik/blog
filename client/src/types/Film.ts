@@ -6,6 +6,7 @@ interface Actor {
 }
 
 export interface Film {
+  ratings: Rating[];
   _id: string;
   filmId: string;
   title: string;
@@ -16,4 +17,10 @@ export interface Film {
   actors: Actor[];
   filmOverview: string;
   publishYear: ReactNode;
+}
+
+export interface Rating {
+  rating: number;
+  filmId: string;
+  ratings: Rating[];
 }

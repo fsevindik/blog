@@ -53,3 +53,10 @@ export interface User {
   id: string;
   name: string;
 }
+
+type ObjectId = string;
+
+export interface Rating {
+  userId: ObjectId;
+  rating: number;
+}

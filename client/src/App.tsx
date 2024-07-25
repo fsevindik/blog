@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+
 import Header from "./componenets/Header/Header";
 import Admin from "./pages/Admin";
 import Auth from "./pages/Auth/Auth";
@@ -7,8 +8,7 @@ import CreateFilms from "./pages/CreateFilm";
 import DeleteFilm from "./pages/DeleteFilm";
 import EditFilm from "./pages/EditFilm";
 import Home from "./pages/Home";
-
-import ShowFilm from "./pages/ShowFilm";
+import ShowFilm from "./pages/ShowFilm/ShowFilm";
 import WelcomePage from "./pages/WelcomePage";
 
 const App: React.FC = () => {

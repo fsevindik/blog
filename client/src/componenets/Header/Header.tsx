@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useContext, useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import FilmContext from "../../context/FilmDb";
 import useDebounce from "../../hooks/useDebounce";
 import DoctorIcon from "../../icons/DoctorIcon";
@@ -15,6 +16,7 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
   const [, setSearchResults] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 400);
+  const location = useLocation();
 
   useEffect(() => {
     const performSearch = async () => {
@@ -57,22 +59,23 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
             Dr. Filmolog: Your cinematic cure
           </p>
         </div>
-
-        <div className="flex items-center w-full sm:w-auto mb-4 sm:mb-0">
-          <input
-            type="text"
-            placeholder="Search films"
-            className="p-2 w-full sm:w-64 bg-gray-800 text-white border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
-            ref={inputRef}
-            onChange={handleInputChange}
-          />
-          <button
-            className="p-2 bg-yellow-500 text-white rounded-md ml-2 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500"
-            onClick={handleButtonClick}
-          >
-            Search
-          </button>
-        </div>
+        {location.pathname === "/" && (
+          <div className="flex items-center w-full sm:w-auto mb-4 sm:mb-0">
+            <input
+              type="text"
+              placeholder="Search films"
+              className="p-2 w-full sm:w-64 bg-gray-800 text-white border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              ref={inputRef}
+              onChange={handleInputChange}
+            />
+            <button
+              className="p-2 bg-yellow-500 text-white rounded-md ml-2 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              onClick={handleButtonClick}
+            >
+              Search
+            </button>
+          </div>
+        )}
 
         <Navbar user={user} />
       </div>

@@ -56,21 +56,6 @@ const Home: React.FC = () => {
           <button>edit movie</button>
         </Link>
       </div>
-      {/* <div className="flex flex-wrap gap-4 p-4">
-        test part
-        {films.map((film) => (
-          <div
-            key={film._id}
-            className="border p-4 text-black rounded-lg shadow-md bg-slate-200"
-          >
-            <h3 className="text-lg text-black font-bold">
-              filmtitle:
-              {film.title}
-            </h3>
-            <p className="text-black">{film.filmOverview}</p>
-          </div>
-        ))}
-      </div> */}
       <FilmsTable films={films} />
     </div>
   );

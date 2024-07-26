@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import DeleteIcon from "../../icons/DeleteIcon";
 import EditIcon from "../../icons/EditIcon";
 import { Film } from "../../types/Film";
@@ -9,14 +10,8 @@ interface FilmsTableProps {
 }
 
 const FilmsTable: React.FC<FilmsTableProps> = ({ films = [] }) => {
-  const [userType, setUserType] = useState<string>("visitor");
-
-  useEffect(() => {
-    const userStatus = localStorage.getItem("UserRole");
-    if (userStatus) {
-      setUserType(userStatus);
-    }
-  }, []);
+  const { user } = useAuth(); // Kullanıcıyı AuthContext'ten alın
+  const userRole = user?.role || "visitor"; // Rolü kontrol edin, varsayılan olarak "visitor"
 
   return (
     <div className="overflow-x-auto">
@@ -32,7 +27,7 @@ const FilmsTable: React.FC<FilmsTableProps> = ({ films = [] }) => {
             <th className="w-1/6 border border-slate-600 rounded-md bg-yellow-600 hidden md:table-cell">
               Release Date
             </th>
-            {userType === "admin" && (
+            {userRole === "admin" && (
               <th className="w-1/6 border border-slate-600 rounded-md bg-slate-500">
                 Operations
               </th>
@@ -63,7 +58,7 @@ const FilmsTable: React.FC<FilmsTableProps> = ({ films = [] }) => {
               <td className="border border-slate-700 rounded-md text-center font-semibold hidden md:table-cell w-1/6">
                 {film.releaseYear}
               </td>
-              {userType === "admin" && (
+              {userRole === "admin" && (
                 <td className="border border-slate-700 rounded-md text-center w-1/6">
                   <div className="flex justify-center gap-x-2 md:gap-x-4">
                     <Link to={`/Films/edit/${film._id}`}>
@@ -72,8 +67,15 @@ const FilmsTable: React.FC<FilmsTableProps> = ({ films = [] }) => {
                         size={0}
                       />
                     </Link>
-                    <button onClick={() => {}}>
-                      <DeleteIcon className="h-6 w-6 text-red-500 hover:text-red-700" />
+                    <button
+                      onClick={() => {
+                        /* silme işlemi */
+                      }}
+                    >
+                      <DeleteIcon
+                        className="h-6 w-6 text-red-500 hover:text-red-700"
+                        size={0}
+                      />
                     </button>
                   </div>
                 </td>

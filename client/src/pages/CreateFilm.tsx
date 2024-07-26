@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import Spinner from "../componenets/Spinner";
 import BackButton from "./components/BackButton";
 
@@ -20,6 +19,7 @@ interface Film {
   bannerImageUrlB: string;
   actors: Actor[];
   filmOverview: string;
+  trailerUrl?: string; // Yeni özellik eklendi
 }
 
 const CreateFilms: React.FC = () => {
@@ -31,6 +31,7 @@ const CreateFilms: React.FC = () => {
     bannerImageUrlB: "",
     actors: [],
     filmOverview: "",
+    trailerUrl: "", // Yeni özellik eklendi
   });
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -163,6 +164,17 @@ const CreateFilms: React.FC = () => {
             value={film.bannerImageUrlB}
             onChange={handleChange}
             className="border-2 text-black border-gray-500 px-4 py-2 w-full"
+          />
+        </div>
+        <div className="my-4">
+          <label className="text-xl mr-4 text-white">Trailer URL</label>
+          <input
+            type="url"
+            name="trailerUrl"
+            value={film.trailerUrl || ""}
+            onChange={handleChange}
+            className="border-2 text-black border-gray-500 px-4 py-2 w-full"
+            placeholder="YouTube video URL"
           />
         </div>
         <div className="my-4">

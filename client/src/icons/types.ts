@@ -83,6 +83,7 @@ interface Actor {
 }
 
 export interface Film {
+  trailerUrl(trailerUrl: any): unknown;
   ratings: Rating[];
   _id: string;
   filmId: string;

@@ -43,6 +43,7 @@ router.post("/", async (req, res) => {
       bannerImageUrlB,
       actors,
       filmOverview,
+      trailerUrl, // Yeni alan
     } = req.body;
     if (
       !title ||
@@ -66,6 +67,7 @@ router.post("/", async (req, res) => {
       bannerImageUrlB,
       actors,
       filmOverview,
+      trailerUrl, // Yeni alan
       ratings: [],
     };
     const film = await Film.create(newFilm);
@@ -80,11 +82,14 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await Film.findByIdAndUpdate(id, req.body);
+    const updateFields = req.body;
+    const result = await Film.findByIdAndUpdate(id, updateFields, {
+      new: true,
+    });
     if (!result) {
       return res.status(404).json({ message: "Film not found" });
     }
-    return res.status(200).send({ message: "Film updated successfully" });
+    return res.status(200).send(result); // Güncellenmiş film döndürülür
   } catch (error) {
     console.log(error.message);
     res.status(500).send({ message: error.message });

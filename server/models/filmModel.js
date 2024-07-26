@@ -26,7 +26,7 @@ const actorSchema = new mongoose.Schema({
   },
 });
 
-//film Schema
+// Film Schema
 const filmSchema = new mongoose.Schema(
   {
     filmId: {
@@ -63,11 +63,14 @@ const filmSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    trailerUrl: {
+      type: String,
+      required: false,
+    },
   },
   { timestamps: true }
 );
 
-// learn this woaoov thx claude ai :)
 function arrayLimit(val) {
   return val.length <= 5;
 }

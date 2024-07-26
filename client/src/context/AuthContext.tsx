@@ -22,7 +22,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const validateToken = async (token: string) => {
     try {
-      const response = await axios.get("http://localhost:3000/users/me", {
+      const response = await axios.get<User>("http://localhost:3000/users/me", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUser(response.data);

@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import Spinner from "../componenets/Spinner";
 import { Film } from "../types/Film";
 import BackButton from "./components/BackButton";
@@ -25,6 +24,8 @@ const EditFilm: React.FC = () => {
     actors: [],
     filmOverview: "",
     publishYear: null,
+    ratings: [],
+    trailerUrl: "",
   });
 
   const [loading, setLoading] = useState<boolean>(true);
@@ -187,6 +188,17 @@ const EditFilm: React.FC = () => {
           />
         </div>
         <div className="my-4">
+          <label className="text-xl mr-4 text-white">Trailer URL</label>
+          <input
+            type="url"
+            name="trailerUrl"
+            value={film.trailerUrl || ""}
+            onChange={handleChange}
+            className="border-2 text-black border-gray-500 px-4 py-2 w-full"
+            placeholder="YouTube video URL"
+          />
+        </div>
+        <div className="my-4">
           <label className="text-xl mr-4 text-white">Actors</label>
           {film.actors.map((actor, index) => (
             <div key={index} className="my-2 flex items-center">
@@ -231,18 +243,17 @@ const EditFilm: React.FC = () => {
             name="filmOverview"
             value={film.filmOverview}
             onChange={handleChange}
-            className="border-2 text-black border-gray-500 px-4 py-2 w-full h-24"
-            placeholder="Write a brief overview of the film..."
+            className="border-2 text-black border-gray-500 px-4 py-2 w-full"
           />
         </div>
         <button
           type="submit"
-          className="p-2 bg-yellow-500 hover:bg-red-600 m-8 rounded-md"
+          className="bg-green-500 text-white p-2 rounded-md"
         >
-          Update
+          Update Film
         </button>
+        <ToastContainer />
       </form>
-      <ToastContainer />
     </div>
   );
 };

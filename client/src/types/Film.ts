@@ -6,6 +6,7 @@ interface Actor {
 }
 
 export interface Film {
+  trailerUrl: string;
   ratings: Rating[];
   _id: string;
   filmId: string;

@@ -1,13 +1,5 @@
-import { createContext, ReactNode, useState } from "react";
-
-interface FilmContextProps {
-  search: string;
-  handleSearch: (newSearch: string) => void;
-}
-
-interface FilmProviderProps {
-  children: ReactNode;
-}
+import { createContext, useState } from "react";
+import { FilmContextProps, FilmProviderProps } from "./type";
 
 const FilmContext = createContext<FilmContextProps>({
   search: "",

@@ -64,7 +64,7 @@ const ShowFilm: React.FC = () => {
             <img
               src={film.bannerImageUrlB}
               alt={film.title}
-              className="rounded-lg shadow-lg w-full h-full object-cover border-2 border-gray-700"
+              className="rounded-lg shadow-lg w-full h-full object-cover border-2  border-gray-700"
             />
           </div>
         </div>

@@ -14,7 +14,7 @@ const RequirementCard: React.FC<RequirementCardProps> = ({
 
   return (
     <div className="flex items-center mb-1">
-      <IconComponent className={`tetx-lg w-4 h-4 ${color} mr-2`} />
+      <IconComponent className={`tetx-lg w-4 h-4 ${color} mr-2`} size={0} />
       <p className={`text-sm ${color}`}>{text} </p>
     </div>
   );

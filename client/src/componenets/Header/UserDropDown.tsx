@@ -1,32 +1,25 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { User } from "../../icons/types";
+import { useAuth } from "../../context/AuthContext";
 
-interface UserDropdownProps {
-  onLogout?: () => void;
-  user: User | null;
-}
-
-const UserDropdown: React.FC<UserDropdownProps> = ({ onLogout, user }) => {
+const UserDropdown: React.FC = () => {
   const navigate = useNavigate();
+  const { user, logout } = useAuth();
   const [showTooltip, setShowTooltip] = useState(false);
 
-  const userName = localStorage.getItem("UserName") || "Guest";
-  const userNameFirstChar = userName.charAt(0).toUpperCase();
-  const userRole = localStorage.getItem("UserRole");
+  const userNameFirstChar = user ? user.name.charAt(0).toUpperCase() : "G";
 
   const handleLogout = () => {
-    localStorage.clear();
-    if (onLogout) onLogout();
+    logout();
     navigate("/");
   };
 
   return (
     <div className="py-2">
       <div className="p-4 flex items-center text-white">
-        {userName !== "Guest" ? (
+        {user ? (
           <Link
-            to={userRole === "admin" ? "/admin" : "/welcome"}
+            to={user.role === "admin" ? "/admin" : "/welcome"}
             className="rounded-full hover:ring-2 hover:ring-red-500"
             onMouseEnter={() => setShowTooltip(true)}
             onMouseLeave={() => setShowTooltip(false)}
@@ -36,7 +29,7 @@ const UserDropdown: React.FC<UserDropdownProps> = ({ onLogout, user }) => {
             </div>
             {showTooltip && (
               <div className="absolute bg-red-600 text-white text-md py-1 px-2 rounded-md mt-2">
-                {userRole === "admin"
+                {user.role === "admin"
                   ? "Go to admin dashboard"
                   : "Go to your welcome page"}
               </div>
@@ -47,11 +40,11 @@ const UserDropdown: React.FC<UserDropdownProps> = ({ onLogout, user }) => {
             {userNameFirstChar}
           </div>
         )}
-        <span className="ml-2">{userName}</span>
+        <span className="ml-2">{user ? user.name : "Guest"}</span>
       </div>
       <div className="border-t border-gray-200"></div>
       <div className="p-2">
-        {userName !== "Guest" ? (
+        {user ? (
           <button
             onClick={handleLogout}
             className="block w-full text-yellow-500 text-left px-4 py-2 text-md rounded-md hover:bg-red-500 hover:text-white"

@@ -1,10 +1,10 @@
 import React from "react";
-import { BounceLoader } from "react-spinners";
+import { ClipLoader } from "react-spinners";
 
 const Spinner: React.FC = () => {
   return (
     <div className="flex items-center justify-center min-h-screen">
-      <BounceLoader size={100} color={"#333abc"} loading={true} />
+      <ClipLoader size={100} color={"#333abc"} loading={true} />
     </div>
   );
 };

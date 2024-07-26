@@ -11,15 +11,14 @@ const UserDropdown: React.FC<UserDropdownProps> = ({ onLogout, user }) => {
   const navigate = useNavigate();
   const [showTooltip, setShowTooltip] = useState(false);
 
-  const userRole = localStorage.getItem("UserRole");
-  const userName = user ? user.name : "Guest";
+  const userName = localStorage.getItem("UserName") || "Guest";
   const userNameFirstChar = userName.charAt(0).toUpperCase();
+  const userRole = localStorage.getItem("UserRole");
 
   const handleLogout = () => {
     localStorage.clear();
-    navigate("/");
-    window.location.reload();
     if (onLogout) onLogout();
+    navigate("/");
   };
 
   return (
@@ -52,10 +51,10 @@ const UserDropdown: React.FC<UserDropdownProps> = ({ onLogout, user }) => {
       </div>
       <div className="border-t border-gray-200"></div>
       <div className="p-2">
-        {user ? (
+        {userName !== "Guest" ? (
           <button
             onClick={handleLogout}
-            className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 rounded-md"
+            className="block w-full text-yellow-500 text-left px-4 py-2 text-md rounded-md hover:bg-red-500 hover:text-white"
           >
             Logout
           </button>

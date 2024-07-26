@@ -1,4 +1,3 @@
-// src/components/ShowFilm.tsx
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -7,14 +6,15 @@ import "react-toastify/dist/ReactToastify.css";
 import Spinner from "../../componenets/Spinner";
 import { Film } from "../../types/Film";
 import BackButton from "../components/BackButton";
+import CommentSection from "./CommentSection";
 import RatingComponent from "./RatingComponent";
 
 const API_URL = "http://localhost:3000";
+const userId = localStorage.getItem("userId");
 
 const ShowFilm: React.FC = () => {
   const [film, setFilm] = useState<Film | null>(null);
   const [loading, setLoading] = useState(true);
-
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -79,7 +79,6 @@ const ShowFilm: React.FC = () => {
             <p className="text-lg mb-4 text-gray-700">
               Released in {film.releaseYear}
             </p>
-            <RatingComponent filmId={film.filmId} ratings={film.ratings} />
           </div>
           <div>
             <h2 className="text-2xl font-semibold mb-2 text-gray-900">
@@ -95,12 +94,16 @@ const ShowFilm: React.FC = () => {
                   <img
                     src={actor.imageUrl}
                     alt={actor.name}
-                    className="w-24 h-24 object-cover rounded-full mx-auto mb-2 border-2 border-gray-700"
+                    className="w-24 h-24 object-cover rounded-full mx-auto mb-2 border-2 bg-slate-800 border-gray-900"
                   />
                   <p className="text-gray-900">{actor.name}</p>
                 </div>
               ))}
             </div>
+          </div>
+          <div>
+            <RatingComponent filmId={film.filmId} ratings={film.ratings} />
+            <CommentSection filmId={id} currentUserId={userId} />
           </div>
         </div>
       </div>

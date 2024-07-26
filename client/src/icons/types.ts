@@ -10,6 +10,7 @@ export type IconProps = {
   visibility?: Visibility;
   width?: string;
   height?: string;
+  size: number;
   className?: string;
   onMouseEnter?: React.MouseEventHandler<SVGSVGElement>;
   onMouseLeave?: React.MouseEventHandler<SVGSVGElement>;
@@ -56,6 +57,7 @@ export interface AuthContainerProps {
 }
 
 export interface User {
+  role: any;
   id: string;
   name: string;
 }
@@ -92,4 +94,35 @@ export interface Film {
   actors: Actor[];
   filmOverview: string;
   publishYear: ReactNode;
+}
+
+export interface Reply {
+  _id: string;
+  userId: User;
+  content: string;
+  createdAt: string;
+}
+
+export interface Reaction {
+  like: number;
+  heart: number;
+  smile: number;
+  usersLiked: string[];
+  usersLoved: string[];
+  userSmiled: string[];
+}
+
+export interface Comment {
+  _id: string;
+  filmId: string;
+  userId: User;
+  content: string;
+  createdAt: string;
+  replies: Reply[];
+  reaction: Reaction;
+}
+
+export interface CommentSectionProps {
+  filmId: string | null;
+  currentUserId: string | null;
 }

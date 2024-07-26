@@ -1,12 +1,15 @@
+// src/components/Navbar.tsx
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import HeartIcon from "../../icons/HeartIcon";
 import HomeIcon from "../../icons/HomeIcon";
 import MessageIcon from "../../icons/MessageIcon";
 import UserIcon from "../../icons/UserIcon";
 import UserDropdown from "../Header/UserDropDown";
 
-const Navbar: React.FC<{ user: any }> = ({ user }) => {
+const Navbar: React.FC = () => {
+  const { user } = useAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -32,10 +35,14 @@ const Navbar: React.FC<{ user: any }> = ({ user }) => {
 
   return (
     <nav className="flex items-center space-x-4">
-      <NavItem to="/" icon={<HomeIcon className="w-6 h-6" />} text="Home" />
+      <NavItem
+        to="/"
+        icon={<HomeIcon className="w-6 h-6" size={2} />}
+        text="Home"
+      />
       <NavItem
         to="/films/trends"
-        icon={<HeartIcon className="w-6 h-6" />}
+        icon={<HeartIcon className="w-6 h-6" size={2} />}
         text="Trends"
       />
       <NavItem

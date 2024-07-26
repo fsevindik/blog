@@ -1,7 +1,6 @@
 import React from "react";
 import { Film } from "../../icons/types";
 import CommentSection from "./CommentSection";
-import RatingComponent from "./RatingComponent";
 
 interface FilmInfoProps {
   film: Film;
@@ -89,7 +88,6 @@ const FilmInfo: React.FC<FilmInfoProps> = ({ film, userId }) => {
           </div>
         </div>
         <div>
-          <RatingComponent filmId={film.filmId} ratings={film.ratings} />
           <CommentSection filmId={film.filmId} currentUserId={userId} />
         </div>
       </div>

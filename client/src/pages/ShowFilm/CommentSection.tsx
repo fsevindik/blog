@@ -140,13 +140,14 @@ const CommentSection = ({ filmId, currentUserId }: CommentSectionProps) => {
           {currentUserId && (
             <div className="mt-2">
               {replyingTo === comment._id ? (
-                <div>
+                <div className="text-black">
                   <textarea
-                    value={replyContent}
-                    onChange={(e) => setReplyContent(e.target.value)}
-                    className="w-full p-2 border border-gray-600 rounded-md bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="Write a reply..."
+                    value={newComment}
+                    onChange={(e) => setNewComment(e.target.value)}
+                    className="w-full p-2 border rounded bg-gray-200 text-black"
+                    placeholder="Write a comment..."
                   />
+
                   <button
                     onClick={() => handleReplySubmit(comment._id)}
                     className="mt-2 px-4 py-2 bg-green-500 text-white rounded"

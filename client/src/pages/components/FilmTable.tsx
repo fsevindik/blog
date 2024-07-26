@@ -10,8 +10,8 @@ interface FilmsTableProps {
 }
 
 const FilmsTable: React.FC<FilmsTableProps> = ({ films = [] }) => {
-  const { user } = useAuth(); // Kullanıcıyı AuthContext'ten alın
-  const userRole = user?.role || "visitor"; // Rolü kontrol edin, varsayılan olarak "visitor"
+  const { user } = useAuth();
+  const userRole = user?.role || "visitor";
 
   return (
     <div className="overflow-x-auto">
@@ -28,7 +28,7 @@ const FilmsTable: React.FC<FilmsTableProps> = ({ films = [] }) => {
               Release Date
             </th>
             {userRole === "admin" && (
-              <th className="w-1/6 border border-slate-600 rounded-md bg-slate-500">
+              <th className="w-1/6 border border-slate-600 rounded-md bg-yellow-600 ">
                 Operations
               </th>
             )}
@@ -60,18 +60,14 @@ const FilmsTable: React.FC<FilmsTableProps> = ({ films = [] }) => {
               </td>
               {userRole === "admin" && (
                 <td className="border border-slate-700 rounded-md text-center w-1/6">
-                  <div className="flex justify-center gap-x-2 md:gap-x-4">
+                  <div className="flex justify-center gap-x-2 md:gap-x-4 ">
                     <Link to={`/Films/edit/${film._id}`}>
                       <EditIcon
-                        className="h-6 w-6 text-blue-500 hover:text-blue-700"
+                        className="h-6 w-6 text-yellow-500 hover:text-blue-700"
                         size={0}
                       />
                     </Link>
-                    <button
-                      onClick={() => {
-                        /* silme işlemi */
-                      }}
-                    >
+                    <button onClick={() => {}}>
                       <DeleteIcon
                         className="h-6 w-6 text-red-500 hover:text-red-700"
                         size={0}

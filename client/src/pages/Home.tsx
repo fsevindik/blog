@@ -51,11 +51,6 @@ const Home: React.FC = () => {
           <AddBoxIcon />
         </Link>
       </div>
-      <div>
-        <Link to="/films/:id ">
-          <button>edit movie</button>
-        </Link>
-      </div>
       <FilmsTable films={films} />
     </div>
   );

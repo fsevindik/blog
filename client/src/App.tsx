@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Header from "./componenets/Header/Header";
 import Admin from "./pages/Admin";
 import Auth from "./pages/Auth/Auth";
+import Footer from "./pages/components/Footer";
 import Trends from "./pages/components/Trends";
 import CreateFilms from "./pages/CreateFilm";
 import DeleteFilm from "./pages/DeleteFilm";
@@ -26,6 +27,7 @@ const App: React.FC = () => {
         <Route path="/welcome" element={<WelcomePage />} />
         <Route path="/admin" element={<Admin />} />
       </Routes>
+      <Footer />
     </div>
   );
 };

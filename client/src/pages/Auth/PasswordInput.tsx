@@ -24,9 +24,9 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
         className="absolute inset-y-0 right-0 flex items-center pr-3 text-black"
       >
         {showPassword ? (
-          <EyeIcon className="h-5 w-5" />
+          <EyeIcon className="h-4 w-4" size={0} />
         ) : (
-          <EyeSlashIcon className="h-5 w-5" />
+          <EyeSlashIcon className="h-5 w-5" size={0} />
         )}
       </button>
     </div>

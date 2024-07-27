@@ -20,7 +20,6 @@ const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   useEffect(() => {
-    // Kullanıcı oturum durumunu kontrol et
     const authStatus = checkUserAuth();
     setIsAuthenticated(authStatus);
   }, []);

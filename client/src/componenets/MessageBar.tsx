@@ -22,6 +22,9 @@ const MessageBar: React.FC<MessageBarProps> = ({ show, onClose }) => {
       <div className="p-4 text-black font-serif">
         <p>Your messages here</p>
       </div>
+      <div className="text-black">
+        <textarea name="" id="" className="tetx-black font-cursive"></textarea>
+      </div>
     </div>
   );
 };

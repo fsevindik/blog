@@ -1,16 +1,18 @@
-// commentRoutes.js
 import express from "express";
-import Comment from "../models/commentModel.js";
-import Film from "../models/filmModel.js";
+import { Comment } from "../models/commentModel.js";
+import { Film } from "../models/filmModel.js";
 
 const router = express.Router();
 
 // Get all comments for a film
 router.get("/film/:filmId", async (req, res) => {
   try {
-    const comments = await Comment.find({ filmId: req.params.filmId })
+    const { filmId } = req.params;
+
+    const comments = await Comment.find({ filmId })
       .populate("userId", "name")
       .sort("-createdAt");
+
     res.json(comments);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -66,6 +68,59 @@ router.delete("/:commentId", async (req, res) => {
     res.json({ message: "Comment deleted" });
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+});
+
+// Add a reply to a comment
+router.post("/:commentId/replies", async (req, res) => {
+  try {
+    const comment = await Comment.findById(req.params.commentId);
+    if (!comment) {
+      return res.status(404).json({ message: "Comment not found" });
+    }
+
+    const newReply = {
+      userId: req.body.userId,
+      content: req.body.content,
+    };
+
+    comment.replies.push(newReply);
+    const updatedComment = await comment.save();
+    res.status(201).json(updatedComment);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// Add a reaction to a comment
+router.post("/:commentId/reactions", async (req, res) => {
+  try {
+    const comment = await Comment.findById(req.params.commentId);
+    if (!comment) {
+      return res.status(404).json({ message: "Comment not found" });
+    }
+
+    const { userId, reactionType } = req.body;
+    const existingReaction = comment.reaction.find(
+      (reaction) => reaction.userId.toString() === userId
+    );
+
+    if (existingReaction) {
+      existingReaction[reactionType]++;
+    } else {
+      const newReaction = {
+        [reactionType]: 1,
+        usersLiked: reactionType === "like" ? [userId] : [],
+        usersLoved: reactionType === "heart" ? [userId] : [],
+        userSmiled: reactionType === "smile" ? [userId] : [],
+      };
+      comment.reaction.push(newReaction);
+    }
+
+    const updatedComment = await comment.save();
+    res.status(201).json(updatedComment);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 });
 

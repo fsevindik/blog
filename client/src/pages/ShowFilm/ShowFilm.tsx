@@ -52,7 +52,7 @@ const ShowFilm: React.FC = () => {
       <h1 className="text-xl my-2 text-white font-mono">Film Info</h1>
       <FilmInfo film={film} userId={userId} />
       <div>
-        <CommentSection filmId={film.filmId} currentUserId={userId} />
+        <CommentSection filmId={film._id} currentUserId={userId} />
       </div>
       <ToastContainer />
     </div>

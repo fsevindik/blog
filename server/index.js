@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import express from "express";
 import helmet from "helmet";
 import mongoose from "mongoose";
+import commentRoutes from "./routes/commentRoutes.js";
 import filmRoutes from "./routes/filmRoutes.js";
 import messageRoutes from "./routes/messageRoutes.js";
 import reactionRoutes from "./routes/reactionRoutes.js";
@@ -33,6 +34,7 @@ app.use("/films", filmRoutes);
 app.use("/films/:filmId/reactions", reactionRoutes);
 app.use("/users", userRoutes);
 app.use("/messages", messageRoutes);
+app.use("/comments", commentRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

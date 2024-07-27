@@ -114,9 +114,9 @@ export interface Reaction {
 }
 
 export interface Comment {
-  _id: string;
+  _id: ObjectId;
   filmId: string;
-  userId: User;
+  userId: ObjectId;
   content: string;
   createdAt: string;
   replies: Reply[];

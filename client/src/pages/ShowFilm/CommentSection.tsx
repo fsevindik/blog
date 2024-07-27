@@ -1,26 +1,30 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import HearthIcon from "../../icons/HearthIcon";
-import ReplayIcon from "../../icons/ReplayIcon";
-import SmileIcon from "../../icons/SmileIcon";
-import ThumbsUpIcon from "../../icons/ThumbsUpIcon";
-import { Comment, CommentSectionProps } from "../../icons/types";
+import React, { useEffect, useState } from "react";
+import { CommentSectionProps, Reaction } from "../../icons/types";
 
 const API_URL = "http://localhost:3000";
 
-const CommentSection = ({ filmId, currentUserId }: CommentSectionProps) => {
+const CommentSection: React.FC<CommentSectionProps> = ({
+  filmId,
+  currentUserId,
+}) => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState("");
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
   const [replyContent, setReplyContent] = useState("");
 
   useEffect(() => {
-    fetchComments();
+    if (filmId) {
+      fetchComments();
+    }
   }, [filmId]);
 
   const fetchComments = async () => {
+    if (!filmId) return;
     try {
-      const response = await axios.get(`${API_URL}/comments/film/${filmId}`);
+      const response = await axios.get<Comment[]>(
+        `${API_URL}/comments/film/${filmId}`
+      );
       setComments(response.data);
     } catch (error) {
       console.error("Error fetching comments:", error);
@@ -29,7 +33,7 @@ const CommentSection = ({ filmId, currentUserId }: CommentSectionProps) => {
 
   const handleCommentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!currentUserId) return;
+    if (!currentUserId || !newComment.trim() || !filmId) return;
 
     try {
       await axios.post(`${API_URL}/comments`, {
@@ -45,7 +49,7 @@ const CommentSection = ({ filmId, currentUserId }: CommentSectionProps) => {
   };
 
   const handleReplySubmit = async (commentId: string) => {
-    if (!currentUserId) return;
+    if (!currentUserId || !replyContent.trim()) return;
 
     try {
       await axios.post(`${API_URL}/comments/${commentId}/replies`, {
@@ -62,18 +66,15 @@ const CommentSection = ({ filmId, currentUserId }: CommentSectionProps) => {
 
   const handleReaction = async (
     commentId: string,
-    reactionType: "like" | "heart" | "smile"
+    reactionType: keyof Reaction
   ) => {
     if (!currentUserId) return;
 
     try {
-      await axios.post(
-        `${API_URL}/reactions/${filmId}/comments/${commentId}/postreactions`,
-        {
-          userId: currentUserId,
-          reactionType,
-        }
-      );
+      await axios.post(`${API_URL}/comments/${commentId}/reactions`, {
+        userId: currentUserId,
+        reactionType,
+      });
       fetchComments();
     } catch (error) {
       console.error("Error adding reaction:", error);
@@ -84,22 +85,20 @@ const CommentSection = ({ filmId, currentUserId }: CommentSectionProps) => {
     <div className="my-4 bg-gray-800 p-4 rounded-lg shadow-lg">
       <h2 className="text-xl font-semibold text-white mb-4">Comments</h2>
 
-      {currentUserId && (
-        <form onSubmit={handleCommentSubmit} className="mb-4">
-          <textarea
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-            className="w-full p-2 border rounded"
-            placeholder="Write a comment..."
-          />
-          <button
-            type="submit"
-            className="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
-          >
-            Submit Comment
-          </button>
-        </form>
-      )}
+      <form onSubmit={handleCommentSubmit} className="mb-4">
+        <textarea
+          value={newComment}
+          onChange={(e) => setNewComment(e.target.value)}
+          className="w-full p-2 border rounded bg-gray-700 text-white"
+          placeholder="Write a comment..."
+        />
+        <button
+          type="submit"
+          className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        >
+          Submit Comment
+        </button>
+      </form>
 
       {comments.map((comment) => (
         <div key={comment._id} className="bg-gray-700 p-4 rounded-lg mb-4">
@@ -109,24 +108,21 @@ const CommentSection = ({ filmId, currentUserId }: CommentSectionProps) => {
           <div className="flex mt-2">
             <button
               onClick={() => handleReaction(comment._id, "like")}
-              className="mr-2"
+              className="mr-2 text-blue-500 hover:text-blue-600"
             >
-              <ThumbsUpIcon className="text-blue-500" size={4} />{" "}
-              {comment.reaction.like}
+              👍 {comment.reaction.like}
             </button>
             <button
               onClick={() => handleReaction(comment._id, "heart")}
-              className="mr-2"
+              className="mr-2 text-red-500 hover:text-red-600"
             >
-              <HearthIcon className="text-red-500" size={0} />{" "}
-              {comment.reaction.heart}
+              ❤️ {comment.reaction.heart}
             </button>
             <button
               onClick={() => handleReaction(comment._id, "smile")}
-              className="mr-2"
+              className="mr-2 text-yellow-500 hover:text-yellow-600"
             >
-              <SmileIcon className="text-yellow-500" size={0} />{" "}
-              {comment.reaction.smile}
+              😊 {comment.reaction.smile}
             </button>
           </div>
 
@@ -137,40 +133,37 @@ const CommentSection = ({ filmId, currentUserId }: CommentSectionProps) => {
             </div>
           ))}
 
-          {currentUserId && (
-            <div className="mt-2">
-              {replyingTo === comment._id ? (
-                <div className="text-black">
-                  <textarea
-                    value={newComment}
-                    onChange={(e) => setNewComment(e.target.value)}
-                    className="w-full p-2 border rounded bg-gray-200 text-black"
-                    placeholder="Write a comment..."
-                  />
-
-                  <button
-                    onClick={() => handleReplySubmit(comment._id)}
-                    className="mt-2 px-4 py-2 bg-green-500 text-white rounded"
-                  >
-                    Submit Reply
-                  </button>
-                  <button
-                    onClick={() => setReplyingTo(null)}
-                    className="mt-2 ml-2 px-4 py-2 bg-red-500 text-white rounded"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              ) : (
+          <div className="mt-2">
+            {replyingTo === comment._id ? (
+              <div>
+                <textarea
+                  value={replyContent}
+                  onChange={(e) => setReplyContent(e.target.value)}
+                  className="w-full p-2 border rounded bg-gray-600 text-white"
+                  placeholder="Write a reply..."
+                />
                 <button
-                  onClick={() => setReplyingTo(comment._id)}
-                  className="mt-2 flex items-center text-blue-500"
+                  onClick={() => handleReplySubmit(comment._id)}
+                  className="mt-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
                 >
-                  <ReplayIcon className="mr-1" size={5} /> Reply
+                  Submit Reply
                 </button>
-              )}
-            </div>
-          )}
+                <button
+                  onClick={() => setReplyingTo(null)}
+                  className="mt-2 ml-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                >
+                  Cancel
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => setReplyingTo(comment._id)}
+                className="mt-2 text-blue-500 hover:text-blue-600"
+              >
+                Reply
+              </button>
+            )}
+          </div>
         </div>
       ))}
     </div>

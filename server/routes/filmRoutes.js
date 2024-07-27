@@ -43,7 +43,7 @@ router.post("/", async (req, res) => {
       bannerImageUrlB,
       actors,
       filmOverview,
-      trailerUrl, // Yeni alan
+      trailerUrl,
     } = req.body;
     if (
       !title ||
@@ -67,7 +67,7 @@ router.post("/", async (req, res) => {
       bannerImageUrlB,
       actors,
       filmOverview,
-      trailerUrl, // Yeni alan
+      trailerUrl,
       ratings: [],
     };
     const film = await Film.create(newFilm);

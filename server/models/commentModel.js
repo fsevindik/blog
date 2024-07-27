@@ -5,27 +5,7 @@ const reactionSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  heart: {
-    type: Number,
-    default: 0,
-  },
-  smile: {
-    type: Number,
-    default: 0,
-  },
   usersLiked: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-  ],
-  usersLoved: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-  ],
-  userSmiled: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

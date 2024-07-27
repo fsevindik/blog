@@ -56,12 +56,6 @@ export interface AuthContainerProps {
   children: React.ReactNode;
 }
 
-export interface User {
-  role: any;
-  id: string;
-  name: string;
-}
-
 type ObjectId = string;
 
 export interface Rating {
@@ -97,13 +91,6 @@ export interface Film {
   publishYear: ReactNode;
 }
 
-export interface Reply {
-  _id: string;
-  userId: User;
-  content: string;
-  createdAt: string;
-}
-
 export interface Reaction {
   like: number;
   heart: number;
@@ -113,18 +100,27 @@ export interface Reaction {
   userSmiled: string[];
 }
 
-export interface Comment {
-  _id: ObjectId;
-  filmId: string;
-  userId: ObjectId;
-  content: string;
-  createdAt: string;
-  replies: Reply[];
-  reaction: Reaction;
-}
-
 export interface CommentSectionProps {
   filmId: string | null;
   _id: string | null;
   currentUserId: string | null;
+}
+
+export interface User {
+  _id: string;
+  name: string;
+}
+
+export interface Comment {
+  _id: string;
+  content: string;
+  userId: User;
+  likes: string[];
+  replies: Reply[];
+}
+
+export interface Reply {
+  _id: string;
+  content: string;
+  userId: User;
 }

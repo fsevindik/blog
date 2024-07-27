@@ -13,22 +13,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    const userName = localStorage.getItem("userName");
     if (token) {
-      validateToken(token);
+      validateToken(token, userName);
     } else {
       setIsLoading(false);
     }
   }, []);
 
-  const validateToken = async (token: string) => {
+  const validateToken = async (token: string, userName: string | null) => {
     try {
       const response = await axios.get<User>("http://localhost:3000/users/me", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setUser(response.data);
+      setUser({ ...response.data, name: userName || response.data.name });
     } catch (error) {
       console.error("Token validation error:", error);
       localStorage.removeItem("token");
+      localStorage.removeItem("userName");
     }
     setIsLoading(false);
   };
@@ -40,6 +42,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     });
     const { token, ...userData } = response.data;
     localStorage.setItem("token", token);
+    localStorage.setItem("userName", userData.name);
     setUser(userData);
   };
 
@@ -51,11 +54,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     });
     const { token, ...userData } = response.data;
     localStorage.setItem("token", token);
+    localStorage.setItem("userName", name);
     setUser(userData);
   };
 
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("userName");
     setUser(null);
   };
 

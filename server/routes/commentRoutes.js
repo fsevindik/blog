@@ -4,7 +4,7 @@ import { Film } from "../models/filmModel.js";
 
 const router = express.Router();
 
-// Get all comments for a film
+// take all comments for a film
 router.get("/film/:filmId", async (req, res) => {
   try {
     const { filmId } = req.params;
@@ -19,7 +19,7 @@ router.get("/film/:filmId", async (req, res) => {
   }
 });
 
-// Add a new comment to a film
+// add enw comment
 router.post("/", async (req, res) => {
   try {
     const film = await Film.findById(req.body.filmId);
@@ -40,7 +40,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Update a comment
+// update
 router.put("/:commentId", async (req, res) => {
   try {
     const comment = await Comment.findById(req.params.commentId);
@@ -56,7 +56,7 @@ router.put("/:commentId", async (req, res) => {
   }
 });
 
-// Delete a comment
+// delete comment
 router.delete("/:commentId", async (req, res) => {
   try {
     const comment = await Comment.findById(req.params.commentId);
@@ -71,7 +71,7 @@ router.delete("/:commentId", async (req, res) => {
   }
 });
 
-// Add a reply to a comment
+// add comment
 router.post("/:commentId/replies", async (req, res) => {
   try {
     const comment = await Comment.findById(req.params.commentId);
@@ -92,7 +92,7 @@ router.post("/:commentId/replies", async (req, res) => {
   }
 });
 
-// Add a reaction to a comment
+// add reaction
 router.post("/:commentId/reactions", async (req, res) => {
   try {
     const comment = await Comment.findById(req.params.commentId);
@@ -101,20 +101,24 @@ router.post("/:commentId/reactions", async (req, res) => {
     }
 
     const { userId, reactionType } = req.body;
-    const existingReaction = comment.reaction.find(
-      (reaction) => reaction.userId.toString() === userId
-    );
 
-    if (existingReaction) {
-      existingReaction[reactionType]++;
-    } else {
-      const newReaction = {
-        [reactionType]: 1,
-        usersLiked: reactionType === "like" ? [userId] : [],
-        usersLoved: reactionType === "heart" ? [userId] : [],
-        userSmiled: reactionType === "smile" ? [userId] : [],
+    let reaction = comment.reactions.find((r) => r.type === reactionType);
+
+    if (!reaction) {
+      reaction = {
+        type: reactionType,
+        users: [],
       };
-      comment.reaction.push(newReaction);
+      comment.reactions.push(reaction);
+    }
+
+    const userIndex = reaction.users.findIndex(
+      (user) => user.toString() === userId
+    );
+    if (userIndex === -1) {
+      reaction.users.push(userId);
+    } else {
+      reaction.users.splice(userIndex, 1);
     }
 
     const updatedComment = await comment.save();

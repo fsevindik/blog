@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Comment, CommentSectionProps, Reaction } from "../../icons/types";
+import { Comment, CommentSectionProps } from "../../icons/types";
 const API_URL = "http://localhost:3000";
 
 const CommentSection: React.FC<CommentSectionProps> = ({
@@ -63,20 +63,26 @@ const CommentSection: React.FC<CommentSectionProps> = ({
     }
   };
 
-  const handleReaction = async (
-    commentId: string,
-    reactionType: keyof Reaction
-  ) => {
+  const handleLike = async (commentId: string) => {
     if (!currentUserId) return;
 
     try {
-      await axios.post(`${API_URL}/comments/${commentId}/reactions`, {
-        userId: currentUserId,
-        reactionType,
-      });
-      fetchComments();
+      const response = await axios.post(
+        `${API_URL}/comments/${commentId}/like`,
+        {
+          userId: currentUserId,
+        }
+      );
+
+      const updatedComment = response.data;
+
+      setComments((prevComments) =>
+        prevComments.map((comment) =>
+          comment._id === commentId ? updatedComment : comment
+        )
+      );
     } catch (error) {
-      console.error("Error adding reaction:", error);
+      console.error("Error liking comment:", error);
     }
   };
 
@@ -104,65 +110,60 @@ const CommentSection: React.FC<CommentSectionProps> = ({
           <p className="text-white">{comment.content}</p>
           <p className="text-sm text-gray-400">By: {comment.userId.name}</p>
 
-          <div className="flex mt-2">
+          <div className="flex items-center mt-2">
             <button
-              onClick={() => handleReaction(comment._id, "like")}
-              className="mr-2 text-blue-500 hover:text-blue-600"
+              onClick={() => handleLike(comment._id)}
+              className={`mr-2 ${
+                comment.likes && comment.likes.includes(currentUserId)
+                  ? "text-blue-500"
+                  : "text-gray-400"
+              } hover:text-blue-600`}
             >
-              👍 {comment.reaction.like}
+              👍 {comment.likes ? comment.likes.length : 0}
             </button>
             <button
-              onClick={() => handleReaction(comment._id, "heart")}
-              className="mr-2 text-red-500 hover:text-red-600"
+              onClick={() => setReplyingTo(comment._id)}
+              className="text-yellow-500 hover:text-yellow-600 text-sm"
             >
-              ❤️ {comment.reaction.heart}
-            </button>
-            <button
-              onClick={() => handleReaction(comment._id, "smile")}
-              className="mr-2 text-yellow-500 hover:text-yellow-600"
-            >
-              😊 {comment.reaction.smile}
+              Reply
             </button>
           </div>
 
-          {comment.replies.map((reply) => (
-            <div key={reply._id} className="ml-8 mt-2 bg-gray-600 p-2 rounded">
-              <p className="text-white">{reply.content}</p>
-              <p className="text-sm text-gray-400">By: {reply.userId.name}</p>
-            </div>
-          ))}
+          {comment.replies &&
+            comment.replies.map((reply) => (
+              <div
+                key={reply._id}
+                className="ml-8 mt-2 bg-gray-600 p-2 rounded"
+              >
+                <p className="text-white">{reply.content}</p>
+                <p className="text-sm text-gray-400">By: {reply.userId.name}</p>
+              </div>
+            ))}
 
-          <div className="mt-2">
-            {replyingTo === comment._id ? (
-              <div>
-                <textarea
-                  value={replyContent}
-                  onChange={(e) => setReplyContent(e.target.value)}
-                  className="w-full p-2 border rounded bg-gray-600 text-white"
-                  placeholder="Write a reply..."
-                />
+          {replyingTo === comment._id && (
+            <div className="mt-2">
+              <textarea
+                value={replyContent}
+                onChange={(e) => setReplyContent(e.target.value)}
+                className="w-full p-2 border rounded bg-gray-600 text-white"
+                placeholder="Write a reply..."
+              />
+              <div className="mt-2">
                 <button
                   onClick={() => handleReplySubmit(comment._id)}
-                  className="mt-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+                  className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 mr-2"
                 >
                   Submit Reply
                 </button>
                 <button
                   onClick={() => setReplyingTo(null)}
-                  className="mt-2 ml-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                  className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
                 >
                   Cancel
                 </button>
               </div>
-            ) : (
-              <button
-                onClick={() => setReplyingTo(comment._id)}
-                className="mt-2 bg-yellow-500 text-black font-semibold p-1 text-sm rounded-lg hover:text-white hover:bg-red-600"
-              >
-                Reply
-              </button>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       ))}
     </div>

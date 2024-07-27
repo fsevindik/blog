@@ -1,10 +1,8 @@
-// src/components/Navbar.tsx
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import HeartIcon from "../../icons/HeartIcon";
 import HomeIcon from "../../icons/HomeIcon";
-import MessageIcon from "../../icons/MessageIcon";
 import UserIcon from "../../icons/UserIcon";
 import UserDropdown from "../Header/UserDropDown";
 
@@ -45,17 +43,13 @@ const Navbar: React.FC = () => {
         icon={<HeartIcon className="w-6 h-6" size={2} />}
         text="Trends"
       />
-      <NavItem
-        to="/"
-        icon={<MessageIcon className="w-6 h-6" />}
-        text="Messages"
-      />
+
       <div className="relative" ref={dropdownRef}>
         <button
           onClick={toggleDropdown}
           className="text-yellow-500 hover:text-white flex items-center space-x-2"
         >
-          <UserIcon className="w-6 h-6" />
+          <UserIcon className="w-6 h-6" size={2} />
           <span className="hidden sm:inline">
             {user ? user.name : "Profile"}
           </span>

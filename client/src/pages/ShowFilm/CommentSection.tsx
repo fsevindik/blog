@@ -1,7 +1,6 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { CommentSectionProps, Reaction } from "../../icons/types";
-
+import { useEffect, useState } from "react";
+import { Comment, CommentSectionProps, Reaction } from "../../icons/types";
 const API_URL = "http://localhost:3000";
 
 const CommentSection: React.FC<CommentSectionProps> = ({
@@ -158,7 +157,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({
             ) : (
               <button
                 onClick={() => setReplyingTo(comment._id)}
-                className="mt-2 text-blue-500 hover:text-blue-600"
+                className="mt-2 bg-yellow-500 text-black font-semibold p-1 text-sm rounded-lg hover:text-white hover:bg-red-600"
               >
                 Reply
               </button>

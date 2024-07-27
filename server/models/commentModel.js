@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-// Reaction schema for comments
 const reactionSchema = new mongoose.Schema({
   like: {
     type: Number,
@@ -34,7 +33,6 @@ const reactionSchema = new mongoose.Schema({
   ],
 });
 
-// Comment schema
 const commentSchema = new mongoose.Schema({
   filmId: {
     type: mongoose.Schema.Types.ObjectId,

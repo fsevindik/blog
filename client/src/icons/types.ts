@@ -125,5 +125,6 @@ export interface Comment {
 
 export interface CommentSectionProps {
   filmId: string | null;
+  _id: string | null;
   currentUserId: string | null;
 }

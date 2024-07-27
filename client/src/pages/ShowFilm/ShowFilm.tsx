@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Spinner from "../../componenets/Spinner";
 import { Film } from "../../types/Film";
 import BackButton from "../components/BackButton";
+import CommentSection from "./CommentSection";
 import FilmInfo from "./ShowFilmInfo";
 
 const API_URL = "http://localhost:3000";
@@ -50,6 +51,9 @@ const ShowFilm: React.FC = () => {
       <BackButton />
       <h1 className="text-xl my-2 text-white font-mono">Film Info</h1>
       <FilmInfo film={film} userId={userId} />
+      <div>
+        <CommentSection filmId={film.filmId} currentUserId={userId} />
+      </div>
       <ToastContainer />
     </div>
   );

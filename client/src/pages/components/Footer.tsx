@@ -4,7 +4,7 @@ import LinkedInIcon from "../../icons/LinkedInIcon ";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-gray-900 text-center py-4 w-full absolute bottom-0">
+    <footer className="bg-gray-900 text-center py-4 w-full mt-auto">
       <div className="container mx-auto">
         <p className="text-gray-300 font-semibold">
           &copy; 2024 My Blog. All rights reserved.

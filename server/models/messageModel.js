@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const messageSchema = new mongoose.Schema({
-  conversationId: {
+  conversation: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Conversation",
     required: true,
@@ -19,36 +19,8 @@ const messageSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  isRead: {
-    type: Boolean,
-    default: false,
-  },
 });
 
 const Message = mongoose.model("Message", messageSchema);
 
-const conversationSchema = new mongoose.Schema({
-  participants: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-  ],
-  subject: {
-    type: String,
-    required: true,
-  },
-  lastMessageAt: {
-    type: Date,
-    default: Date.now,
-  },
-  status: {
-    type: String,
-    enum: ["open", "closed"],
-    default: "open",
-  },
-});
-
-const Conversation = mongoose.model("Conversation", conversationSchema);
-
-export { Conversation, Message };
+export default Message;

@@ -107,6 +107,7 @@ export interface CommentSectionProps {
 }
 
 export interface User {
+  role: string;
   _id: string;
   name: string;
 }

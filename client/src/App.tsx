@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Header from "./componenets/Header/Header";
-import MessageBar from "./componenets/MessageBar";
-import AddBoxIcon from "./icons/AddBoxIcon";
 import Admin from "./pages/Admin";
 import Auth from "./pages/Auth/Auth";
 import CreateFilms from "./pages/CreateFilm";
@@ -12,25 +10,29 @@ import Home from "./pages/Home";
 import ShowFilm from "./pages/ShowFilm/ShowFilm";
 import WelcomePage from "./pages/WelcomePage";
 import Footer from "./pages/components/Footer";
+import MessageBarContainer from "./pages/components/MessageBarContainer";
 import Trends from "./pages/components/Trends";
-import { checkUserAuth } from "./utils/auth";
 
 const App: React.FC = () => {
-  const [showMessageBar, setShowMessageBar] = useState<boolean>(false);
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [userId, setUserId] = useState<string | null>(null);
+  const [userName, setUserName] = useState<string | null>(null);
 
   useEffect(() => {
-    const authStatus = checkUserAuth();
-    setIsAuthenticated(authStatus);
-  }, []);
+    const storedUserId = localStorage.getItem("userId");
+    const storedUserName = localStorage.getItem("userName");
 
-  const handleToggleMessageBar = () => {
-    setShowMessageBar(!showMessageBar);
-  };
+    console.log("Stored UserId:", storedUserId);
+    console.log("Stored UserName:", storedUserName);
+
+    if (storedUserId && storedUserName) {
+      setUserId(storedUserId);
+      setUserName(storedUserName);
+    }
+  }, []);
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-700 text-lg text-white text-center">
-      <Header />
+      <Header user={undefined} />
       <div className="flex-grow">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -46,18 +48,10 @@ const App: React.FC = () => {
       </div>
       <Footer />
 
-      {isAuthenticated && (
+      {userId && userName && (
         <>
-          <div className="fixed bottom-5 right-5 z-50">
-            <button
-              className="p-4 bg-blue-500 text-white rounded-full shadow-lg hover:bg-blue-600"
-              onClick={handleToggleMessageBar}
-            >
-              <AddBoxIcon />
-            </button>
-          </div>
-
-          <MessageBar show={showMessageBar} onClose={handleToggleMessageBar} />
+          <MessageBarContainer userId={userId} />
+          {console.log("MessageBarContainer Rendered")}
         </>
       )}
     </div>

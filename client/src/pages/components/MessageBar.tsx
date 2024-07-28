@@ -1,4 +1,5 @@
 import React from "react";
+import AdminIcon from "../../icons/AdminIcon ";
 import MessageBox from "./MessageBox";
 
 interface MessageBarProps {
@@ -12,10 +13,12 @@ const MessageBar: React.FC<MessageBarProps> = ({ show, onClose, userId }) => {
 
   return (
     <div className="fixed bottom-5 right-5 z-50 w-full max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl bg-white shadow-lg rounded-lg overflow-hidden h-96">
-      <div className="bg-blue-500 text-white p-2 flex justify-between items-center">
+      <div className="bg-red-600 text-white p-2 flex justify-between items-center">
         <div className="flex items-center mx-auto">
-          <span className="mr-2">📩</span>
-          <h3>Messages</h3>
+          <h3>
+            Direct Line to
+            <AdminIcon />
+          </h3>
         </div>
         <button onClick={onClose}>&times;</button>
       </div>

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import AddBoxIcon from "../icons/AddBoxIcon";
 import { Film } from "../types/Film";
 import FilmsTable from "./components/FilmTable";
@@ -10,6 +11,10 @@ const Home: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const API_URL = "http://localhost:3000";
+  const userName = localStorage.getItem("userName");
+
+  const { user } = useAuth();
+  const userRole = user?.role || "visitor";
 
   useEffect(() => {
     const fetchFilms = async () => {
@@ -48,7 +53,7 @@ const Home: React.FC = () => {
           to="/films/create"
           className="text-yellow-500 h-8 w-8 ml-auto hover:text-white flex items-center"
         >
-          <AddBoxIcon />
+          {userRole === "admin" ? <AddBoxIcon /> : null}
         </Link>
       </div>
       <FilmsTable films={films} />

@@ -1,4 +1,5 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import AverageIcon from "../../icons/AverageIcon";
 import { Film } from "../../icons/types";
 import RateModal from "./RateModal";
@@ -8,6 +9,8 @@ interface FilmInfoProps {
   userId: string | null;
 }
 
+const API_URL = "http://localhost:3000";
+
 const extractYouTubeVideoId = (url: string): string | null => {
   const match = url.match(
     /(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([^\s&]+)/
@@ -15,10 +18,32 @@ const extractYouTubeVideoId = (url: string): string | null => {
   return match ? match[1] : null;
 };
 
-const FilmInfo: React.FC<FilmInfoProps> = ({ film, userId }) => {
+const FilmInfo: React.FC<FilmInfoProps> = ({ film: initialFilm, userId }) => {
+  const [film, setFilm] = useState(initialFilm);
+  const [averageRating, setAverageRating] = useState(initialFilm.averageRating);
   const trailerId = extractYouTubeVideoId(film.trailerUrl);
 
-  const averageRating = film.averageRating;
+  const handleRate = async (rate: number) => {
+    if (!userId) return;
+
+    try {
+      const response = await axios.post(`${API_URL}/films/${film._id}/rate`, {
+        userId,
+        rating: rate,
+      });
+
+      if (response.status === 200) {
+        const updatedFilm = {
+          ...film,
+          averageRating: response.data.averageRating,
+        };
+        setFilm(updatedFilm);
+        setAverageRating(response.data.averageRating);
+      }
+    } catch (error) {
+      console.error("Error rating the film:", error);
+    }
+  };
 
   return (
     <div className="max-w-4xl mx-auto p-4 bg-yellow-500 rounded-xl shadow-lg space-y-4">
@@ -90,14 +115,10 @@ const FilmInfo: React.FC<FilmInfoProps> = ({ film, userId }) => {
             ))}
           </div>
         </div>
-
-        <RateModal
-          film={film}
-          onRate={function (rate: number): void {
-            throw new Error("Function not implemented.");
-          }}
-        />
-        <AverageIcon rating={averageRating} />
+        <div className="flex flex-grow  items-center">
+          <AverageIcon rating={film.averageRating} />
+          <RateModal film={film} onRate={handleRate} />
+        </div>
       </div>
     </div>
   );

@@ -14,7 +14,7 @@ const FilmsTable: React.FC<FilmsTableProps> = ({ films = [] }) => {
   const userRole = user?.role || "visitor";
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto bg-gray-700 ">
       <h1 className="font-mono">prescriptions</h1>
       <table className="w-full border-separate border-spacing-2">
         <thead>
@@ -37,8 +37,8 @@ const FilmsTable: React.FC<FilmsTableProps> = ({ films = [] }) => {
         </thead>
         <tbody>
           {films.map((film) => (
-            <tr key={film._id} className="h-12 bg-gray-700  ">
-              <td className="relative pl-5  ">
+            <tr key={film._id} className="h-12 bg-gray-700   ">
+              <td className="relative pl-5 border  rounded-md  border-black ">
                 <Link
                   to={`/Films/details/${film._id}`}
                   className="flex items-center p-2  hover:bg-yellow-500 cursor-pointer font-serif font-semibold flex-wrap md:flex-nowrap"
@@ -53,24 +53,25 @@ const FilmsTable: React.FC<FilmsTableProps> = ({ films = [] }) => {
                   </span>
                 </Link>
               </td>
-              <td className="border border-slate-700 rounded-md text-center font-semibold hidden md:table-cell w-1/6">
+
+              <td className="border   border-black rounded-md text-center font-semibold hidden md:table-cell w-1/6">
                 {film.director}
               </td>
-              <td className="border border-slate-700 rounded-md text-center font-semibold hidden md:table-cell w-1/6">
+              <td className=" border    border-black rounded-md text-center font-semibold hidden md:table-cell w-1/6">
                 {film.releaseYear}
               </td>
               {userRole === "admin" && (
-                <td className="border border-slate-700 rounded-md text-center w-1/6">
+                <td className="border    border-black  rounded-md text-center w-1/6">
                   <div className="flex justify-center gap-x-2 md:gap-x-4 ">
                     <Link to={`/Films/edit/${film._id}`}>
                       <EditIcon
-                        className="h-6 w-6 text-yellow-500 hover:text-blue-700"
+                        className="h-6 w-6 text-yellow-500 hover:text-white hover:scale-105"
                         size={0}
                       />
                     </Link>
                     <button onClick={() => {}}>
                       <DeleteIcon
-                        className="h-6 w-6 text-red-500 hover:text-red-700"
+                        className="h-6 w-6 text-red-500 hover:text-black hover:scale-105 "
                         size={0}
                       />
                     </button>

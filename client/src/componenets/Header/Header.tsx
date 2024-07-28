@@ -63,8 +63,8 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
           <div className="flex items-center w-full sm:w-auto mb-4 sm:mb-0">
             <input
               type="text"
-              placeholder="Search films"
-              className="p-2 w-full sm:w-64 bg-gray-800 text-white border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              placeholder="Search from My List"
+              className="p-2 w-full sm:w-64 bg-gray-700 text-white border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
               ref={inputRef}
               onChange={handleInputChange}
             />

@@ -1,5 +1,3 @@
-import { ReactNode } from "react";
-
 type Visibility = "visible" | "hidden" | "collapse";
 
 export type IconProps = {
@@ -75,21 +73,24 @@ interface Actor {
   name: string;
   imageUrl: string;
 }
-
 export interface Film {
-  averageRating: any;
-  trailerUrl(trailerUrl: any): unknown;
-  ratings: Rating[];
   _id: string;
-  filmId: string;
   title: string;
   director: string;
   releaseYear: number;
   posterImageUrlA: string;
   bannerImageUrlB: string;
-  actors: Actor[];
+  actors: {
+    name: string;
+    imageUrl: string;
+  }[];
+  ratings: {
+    userId: string;
+    rating: number;
+  }[];
   filmOverview: string;
-  publishYear: ReactNode;
+  trailerUrl: string;
+  averageRating: number;
 }
 
 export interface Reaction {
@@ -130,5 +131,5 @@ export interface Reply {
 
 export interface RateModalProps {
   film: Film;
-  onRate: (rate: number) => void;
+  onRate: (rate: number) => Promise<void>;
 }

@@ -132,6 +132,7 @@ router.post("/:id/rate", async (req, res) => {
     }
 
     await film.save();
+
     const averageRating = film.calculateAverageRating();
 
     res.json({ averageRating });

@@ -77,6 +77,7 @@ interface Actor {
 }
 
 export interface Film {
+  averageRating: any;
   trailerUrl(trailerUrl: any): unknown;
   ratings: Rating[];
   _id: string;
@@ -125,4 +126,9 @@ export interface Reply {
   _id: string;
   content: string;
   userId: User;
+}
+
+export interface RateModalProps {
+  film: Film;
+  onRate: (rate: number) => void;
 }

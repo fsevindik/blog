@@ -1,5 +1,7 @@
 import React from "react";
+import AverageIcon from "../../icons/AverageIcon";
 import { Film } from "../../icons/types";
+import RateModal from "./RateModal";
 
 interface FilmInfoProps {
   film: Film;
@@ -15,6 +17,8 @@ const extractYouTubeVideoId = (url: string): string | null => {
 
 const FilmInfo: React.FC<FilmInfoProps> = ({ film, userId }) => {
   const trailerId = extractYouTubeVideoId(film.trailerUrl);
+
+  const averageRating = film.averageRating;
 
   return (
     <div className="max-w-4xl mx-auto p-4 bg-yellow-500 rounded-xl shadow-lg space-y-4">
@@ -86,6 +90,14 @@ const FilmInfo: React.FC<FilmInfoProps> = ({ film, userId }) => {
             ))}
           </div>
         </div>
+
+        <RateModal
+          film={film}
+          onRate={function (rate: number): void {
+            throw new Error("Function not implemented.");
+          }}
+        />
+        <AverageIcon rating={averageRating} />
       </div>
     </div>
   );

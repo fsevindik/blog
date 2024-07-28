@@ -15,6 +15,7 @@ const FilmsTable: React.FC<FilmsTableProps> = ({ films = [] }) => {
 
   return (
     <div className="overflow-x-auto">
+      <h1 className="font-mono">prescriptions</h1>
       <table className="w-full border-separate border-spacing-2">
         <thead>
           <tr>
@@ -36,11 +37,11 @@ const FilmsTable: React.FC<FilmsTableProps> = ({ films = [] }) => {
         </thead>
         <tbody>
           {films.map((film) => (
-            <tr key={film._id} className="h-12 bg-gray-500">
-              <td className="relative pl-5 ">
+            <tr key={film._id} className="h-12 bg-gray-700  ">
+              <td className="relative pl-5  ">
                 <Link
                   to={`/Films/details/${film._id}`}
-                  className="flex items-center p-2 hover:bg-yellow-500 cursor-pointer font-serif font-semibold flex-wrap md:flex-nowrap"
+                  className="flex items-center p-2  hover:bg-yellow-500 cursor-pointer font-serif font-semibold flex-wrap md:flex-nowrap"
                 >
                   <img
                     src={film.posterImageUrlA}

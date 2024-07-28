@@ -4,20 +4,31 @@ import User from "../models/userModel.js";
 
 const router = express.Router();
 
-//User register
+// register
 router.post("/register", async (request, response) => {
   try {
     const { email, password, name } = request.body;
     const user = await User.create({ email, password, name });
     console.log("New user created");
-    return response.status(201).json(user);
+
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "30d",
+    });
+
+    return response.status(201).json({
+      _id: user._id, // dont forget to type like _id   not .id for fe
+      name: user.name,
+      email: user.email,
+      token,
+      role: user.role,
+    });
   } catch (error) {
     console.log(error.message);
     response.status(500).send({ message: error.message });
   }
 });
 
-//user login
+//  login
 router.post("/login", async (request, response) => {
   const { email, password } = request.body;
 
@@ -34,7 +45,7 @@ router.post("/login", async (request, response) => {
         _id: user._id,
         name: user.name,
         email: user.email,
-        token: token,
+        token,
         role: user.role,
       });
     } else {
@@ -48,15 +59,25 @@ router.post("/login", async (request, response) => {
   }
 });
 
-// find user with ID
-router.get("/user/:id", (req, res) => {
-  const userId = parseInt(req.params.id);
-  const user = users.find((u) => u.id === userId);
-
-  if (user) {
-    res.json(user);
-  } else {
-    res.status(404).send("User not found");
+// Get user by- ID
+router.get("/users/me", async (req, res) => {
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id);
+    if (user) {
+      res.json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      });
+    } else {
+      res.status(404).send("User not found");
+    }
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
   }
 });
 

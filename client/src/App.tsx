@@ -30,9 +30,11 @@ const App: React.FC = () => {
     }
   }, []);
 
+  const user = userId && userName ? { id: userId, name: userName } : null;
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-700 text-lg text-white text-center">
-      <Header user={undefined} />
+      <Header user={user} />
       <div className="flex-grow">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -47,7 +49,6 @@ const App: React.FC = () => {
         </Routes>
       </div>
       <Footer />
-
       {userId && userName && (
         <>
           <MessageBarContainer userId={userId} />

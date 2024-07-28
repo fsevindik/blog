@@ -13,23 +13,33 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
     const userName = localStorage.getItem("userName");
     if (token) {
-      validateToken(token, userName);
+      validateToken(token, userId, userName);
     } else {
       setIsLoading(false);
     }
   }, []);
 
-  const validateToken = async (token: string, userName: string | null) => {
+  const validateToken = async (
+    token: string,
+    userId: string | null,
+    userName: string | null
+  ) => {
     try {
       const response = await axios.get<User>("http://localhost:3000/users/me", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setUser({ ...response.data, name: userName || response.data.name });
+      setUser({
+        ...response.data,
+        id: userId || response.data._id,
+        name: userName || response.data.name,
+      });
     } catch (error) {
       console.error("Token validation error:", error);
       localStorage.removeItem("token");
+      localStorage.removeItem("userId");
       localStorage.removeItem("userName");
     }
     setIsLoading(false);
@@ -40,10 +50,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       email,
       password,
     });
-    const { token, ...userData } = response.data;
+    const { token, _id, ...userData } = response.data;
     localStorage.setItem("token", token);
+    localStorage.setItem("userId", _id);
     localStorage.setItem("userName", userData.name);
-    setUser(userData);
+    setUser({ ...userData, id: _id });
   };
 
   const register = async (email: string, password: string, name: string) => {
@@ -52,14 +63,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       password,
       name,
     });
-    const { token, ...userData } = response.data;
+    const { token, _id, ...userData } = response.data;
     localStorage.setItem("token", token);
+    localStorage.setItem("userId", _id);
     localStorage.setItem("userName", name);
-    setUser(userData);
+    setUser({ ...userData, id: _id });
   };
 
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("userId");
     localStorage.removeItem("userName");
     setUser(null);
   };

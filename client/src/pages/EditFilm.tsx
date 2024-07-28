@@ -105,7 +105,7 @@ const EditFilm: React.FC = () => {
   };
 
   const addActor = () => {
-    if (film.actors.length < 5) {
+    if (film.actors.length < 10) {
       setFilm((prevFilm) => ({
         ...prevFilm,
         actors: [...prevFilm.actors, { name: "", imageUrl: "" }],

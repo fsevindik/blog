@@ -19,7 +19,7 @@ interface Film {
   bannerImageUrlB: string;
   actors: Actor[];
   filmOverview: string;
-  trailerUrl?: string; // Yeni özellik eklendi
+  trailerUrl?: string;
 }
 
 const CreateFilms: React.FC = () => {
@@ -31,7 +31,7 @@ const CreateFilms: React.FC = () => {
     bannerImageUrlB: "",
     actors: [],
     filmOverview: "",
-    trailerUrl: "", // Yeni özellik eklendi
+    trailerUrl: "",
   });
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -94,7 +94,7 @@ const CreateFilms: React.FC = () => {
   };
 
   const addActor = () => {
-    if (film.actors.length < 5) {
+    if (film.actors.length < 10) {
       setFilm((prevFilm) => ({
         ...prevFilm,
         actors: [...prevFilm.actors, { name: "", imageUrl: "" }],

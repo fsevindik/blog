@@ -50,9 +50,8 @@ const ShowFilm: React.FC = () => {
     <div className="min-h-screen p-2 bg-[#1c1a1a] flex flex-col items-center">
       <BackButton />
       <h1 className="text-xl my-2 text-white font-mono">Film Info</h1>
-      <FilmInfo film={film} userId={userId} />
-
-      <div>
+      <div className="w-full max-w-3xl">
+        <FilmInfo film={film} userId={userId} />
         <CommentSection filmId={film._id} currentUserId={userId} _id={null} />
       </div>
       <ToastContainer />

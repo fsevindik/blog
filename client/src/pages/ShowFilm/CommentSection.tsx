@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Comment, CommentSectionProps } from "../../icons/types";
+
 const API_URL = "http://localhost:3000";
 
 const CommentSection: React.FC<CommentSectionProps> = ({
@@ -87,29 +88,32 @@ const CommentSection: React.FC<CommentSectionProps> = ({
   };
 
   return (
-    <div className="my-4 bg-gray-800 p-4 rounded-lg shadow-lg">
+    <div className="my-4 bg-gray-800 p-4 rounded-lg shadow-lg w-full max-w-3xl mx-auto">
       <h2 className="text-xl font-semibold text-white mb-4">Comments</h2>
-
-      <form onSubmit={handleCommentSubmit} className="mb-4">
-        <textarea
-          value={newComment}
-          onChange={(e) => setNewComment(e.target.value)}
-          className="w-full p-2 border rounded bg-gray-700 text-white"
-          placeholder="Write a comment..."
-        />
-        <button
-          type="submit"
-          className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+      <div className="border border-white flex items-center">
+        <form
+          onSubmit={handleCommentSubmit}
+          className="flex w-full items-center p-2"
         >
-          Submit Comment
-        </button>
-      </form>
+          <textarea
+            value={newComment}
+            onChange={(e) => setNewComment(e.target.value)}
+            className="flex-grow p-2 border rounded bg-gray-700 text-white mr-2"
+            placeholder="Write a comment here...   yeah I have wacthed this film its amazing ...  thank you admin its one of my favorites "
+          />
+          <button
+            type="submit"
+            className="px-1 py-1 bg-red-600 text-white text-mmd rounded font-cursive hover:bg-blue-600"
+          >
+            Send
+          </button>
+        </form>
+      </div>
 
       {comments.map((comment) => (
         <div key={comment._id} className="bg-gray-700 p-4 rounded-lg mb-4">
           <p className="text-white">{comment.content}</p>
           <p className="text-sm text-gray-400">By: {comment.userId.name}</p>
-
           <div className="flex items-center mt-2">
             <button
               onClick={() => handleLike(comment._id)}
@@ -128,7 +132,6 @@ const CommentSection: React.FC<CommentSectionProps> = ({
               Reply
             </button>
           </div>
-
           {comment.replies &&
             comment.replies.map((reply) => (
               <div
@@ -139,7 +142,6 @@ const CommentSection: React.FC<CommentSectionProps> = ({
                 <p className="text-sm text-gray-400">By: {reply.userId.name}</p>
               </div>
             ))}
-
           {replyingTo === comment._id && (
             <div className="mt-2">
               <textarea
@@ -148,7 +150,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({
                 className="w-full p-2 border rounded bg-gray-600 text-white"
                 placeholder="Write a reply..."
               />
-              <div className="mt-2">
+              <div className="mt-2 flex">
                 <button
                   onClick={() => handleReplySubmit(comment._id)}
                   className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 mr-2"

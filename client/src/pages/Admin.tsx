@@ -6,12 +6,12 @@ const Admin = () => {
     <div className="flex flex-col items-center">
       <div className="text-center mb-4">
         <h1 className="text-3xl font-semibold text-yellow-500">
-          Welcome, Administrator{" "}
+          Welcome, Sir yes Sir
           <span className="ml-2">
             <AdminIcon />
           </span>
         </h1>
-        <p className="mt-2 text-white">You got work to do...</p>
+        <p className="mt-2 text-white">You got work to do...🫡</p>
       </div>
       <div className="flex justify-center">
         <Link to="/">

@@ -20,7 +20,9 @@ const extractYouTubeVideoId = (url: string): string | null => {
 
 const FilmInfo: React.FC<FilmInfoProps> = ({ film: initialFilm, userId }) => {
   const [film, setFilm] = useState(initialFilm);
-  const [averageRating, setAverageRating] = useState(initialFilm.averageRating);
+  const [averageRating, setAverageRating] = useState(
+    initialFilm.ratings.length > 0 ? initialFilm.ratings[0].rating : 0
+  );
   const trailerId = extractYouTubeVideoId(film.trailerUrl);
 
   const handleRate = async (rate: number) => {
@@ -35,7 +37,7 @@ const FilmInfo: React.FC<FilmInfoProps> = ({ film: initialFilm, userId }) => {
       if (response.status === 200) {
         const updatedFilm = {
           ...film,
-          averageRating: response.data.averageRating,
+          ratings: [{ rating: response.data.averageRating }],
         };
         setFilm(updatedFilm);
         setAverageRating(response.data.averageRating);
@@ -115,8 +117,8 @@ const FilmInfo: React.FC<FilmInfoProps> = ({ film: initialFilm, userId }) => {
             ))}
           </div>
         </div>
-        <div className="flex flex-grow  items-center">
-          <AverageIcon rating={film.averageRating} />
+        <div className="flex flex-grow items-center">
+          <AverageIcon rating={averageRating} />
           <RateModal film={film} onRate={handleRate} />
         </div>
       </div>

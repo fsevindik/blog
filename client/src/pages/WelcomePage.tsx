@@ -1,9 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import UserMessage from "./components/UserMessage";
 
 const Welcome: React.FC = () => {
-  const userName = localStorage.getItem("UserName") || "Guest";
+  const userName = localStorage.getItem("userName");
 
   return (
     <div className="flex flex-grow h-full items-center justify-center min-h-screen bg-yellow-500">
@@ -13,25 +12,29 @@ const Welcome: React.FC = () => {
         </h2>
         <p>Congrats... !!! You have successfully logged in.</p>
         <p className="mb-4">Enjoy exploring our bookstore!</p>
-        <ul className="list-disc list-inside text-left mb-4">
-          <li className="font-semibold font-mono">
+        <div className="space-y-4">
+          <div className="font-semibold font-mono">
             <span className="underline">💬 </span>
-            You can comment on any of them.
-          </li>
-          <li className="font-semibold font-mono">
-            <span>👍👎 </span> Now you can rate any of them.
-          </li>
-          <li className="font-semibold font-mono">
+            You can comment on any book.
+            <hr className="my-2" />
+          </div>
+          <div className="font-semibold font-mono">
+            <span>👍👎 </span> Now you can rate any book.
+            <hr className="my-2" />
+          </div>
+          <div className="font-semibold font-mono">
             📨 Also, you may request new books directly from the manager.
-          </li>
-        </ul>
-        <button className="bg-black text-white py-2 px-4 rounded-md animate-pulse">
+            Because you have direct line to admin by clicking on the blue dot on
+            the left bottom side. ↘️
+            <hr className="my-2" />
+          </div>
+        </div>
+        <button className="bg-black text-white py-2 px-4 rounded-md animate-pulse mt-4">
           <Link to="/" className="flex items-center hover:text-gray-300">
             Explore Books
           </Link>
         </button>
-      </div>{" "}
-      <UserMessage />
+      </div>
     </div>
   );
 };

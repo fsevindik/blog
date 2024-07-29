@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+const API_URL = "http://localhost:3000";
 
 interface Message {
   _id: string;
@@ -17,21 +18,19 @@ const MessageBox: React.FC<MessageBoxProps> = ({ userId }) => {
   const [newMessage, setNewMessage] = useState("");
 
   useEffect(() => {
+    console.log("MessageBox mounted, userId:", userId);
     fetchMessages();
-  }, []);
+  }, [userId]);
 
   const fetchMessages = async () => {
     try {
-      const response = await axios.get(`/api/messages/getmessages/${userId}`);
-      const fetchedMessages = response.data;
+      const response = await axios.get(`${API_URL}/messages/${userId}`);
+      console.log("Fetched messages:", response.data);
 
-      if (Array.isArray(fetchedMessages)) {
-        setMessages(fetchedMessages);
+      if (Array.isArray(response.data)) {
+        setMessages(response.data);
       } else {
-        console.error(
-          "Error: fetched messages are not an array",
-          fetchedMessages
-        );
+        console.error("Fetched data is not an array:", response.data);
         setMessages([]);
       }
     } catch (error) {
@@ -42,11 +41,11 @@ const MessageBox: React.FC<MessageBoxProps> = ({ userId }) => {
 
   const sendMessage = async () => {
     try {
-      await axios.post("/api/messages/sendmessage", {
-        sender: userId,
-        recipient: "admin", // for now
+      const response = await axios.post(`${API_URL}/messages`, {
+        userId,
         content: newMessage,
       });
+      console.log("Message sent:", response.data);
       setNewMessage("");
       fetchMessages();
     } catch (error) {
@@ -54,24 +53,26 @@ const MessageBox: React.FC<MessageBoxProps> = ({ userId }) => {
     }
   };
 
+  console.log("Rendering MessageBox, messages:", messages);
+
   return (
     <div className="flex flex-col h-full bg-gray-700">
-      <div className="flex-grow overflow-auto p-2 ">
-        {messages.length > 0 ? (
+      <div className="flex-grow overflow-auto p-2">
+        {Array.isArray(messages) && messages.length > 0 ? (
           messages.map((message) => (
             <div
               key={message._id}
-              className={`p-2 my-2 rounded ${
+              className={`p-1 my-2 rounded ml-auto w-3/5 font-extralight ${
                 message.sender === userId
-                  ? "bg-blue-100 self-end"
-                  : "bg-gray-200"
+                  ? "bg-blue-500 self-end"
+                  : "bg-gray-300"
               }`}
             >
               {message.content}
             </div>
           ))
         ) : (
-          <div>No messages</div>
+          <div className="text-white">No messages yet</div>
         )}
       </div>
       <div className="flex p-2 bg-slate-200">
@@ -79,7 +80,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({ userId }) => {
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
           placeholder="Type your message"
-          className="flex-grow p-2 rounded bg-white text-black mr-2 mb-10 min-h-20 shadow-lg "
+          className="flex-grow p-2 rounded bg-white text-black mr-2 mb-10 min-h-20 shadow-lg"
           rows={1}
         />
         <button

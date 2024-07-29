@@ -50,8 +50,8 @@ const Auth: React.FC = () => {
         await register(email, password, userName);
       }
       toast.success("Login successful! Redirecting...", {
-        position: "top-center",
-        autoClose: 4000,
+        position: "bottom-right",
+        autoClose: 2000,
       });
       setCountdown(5);
     } catch (error) {

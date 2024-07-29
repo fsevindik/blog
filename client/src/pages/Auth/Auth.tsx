@@ -89,7 +89,7 @@ const Auth: React.FC = () => {
           />
         </div>
       ) : (
-        <div className="text-center bg-gray-100 p-8 rounded-lg shadow-md">
+        <div className="text-center bg-gray-300 p-8 rounded-lg shadow-md">
           <h2 className="text-2xl font-bold mb-4 text-black">
             Welcome, {user.name}!
           </h2>

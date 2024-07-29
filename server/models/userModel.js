@@ -9,6 +9,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "visitor",
   },
+  favorites: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Film",
+    },
+  ],
 });
 
 //  hash the password

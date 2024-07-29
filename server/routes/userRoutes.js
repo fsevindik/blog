@@ -81,4 +81,60 @@ router.get("/users/me", async (req, res) => {
   }
 });
 
+// Get user's favorite films
+router.get("/users/:userId/favorites", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    if (user) {
+      res.json({
+        favorites: user.favorites,
+      });
+    } else {
+      res.status(404).send("User not found");
+    }
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send({ message: error.message });
+  }
+});
+// Add a film to user's favorites
+router.post("/users/:userId/favorites/:filmId", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    if (user) {
+      if (!user.favorites.includes(req.params.filmId)) {
+        user.favorites.push(req.params.filmId);
+        await user.save();
+        res.status(200).send("Film added to favorites");
+      } else {
+        res.status(400).send("Film already in favorites");
+      }
+    } else {
+      res.status(404).send("User not found");
+    }
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send({ message: error.message });
+  }
+});
+
+// Remove a film from user's favorites
+router.delete("/users/:userId/favorites/:filmId", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    if (user) {
+      user.favorites = user.favorites.filter(
+        (filmId) => filmId !== req.params.filmId
+      );
+      await user.save();
+      res.status(200).send("Film removed from favorites");
+    } else {
+      res.status(404).send("User not found");
+    }
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send({ message: error.message });
+  }
+});
+
 export default router;

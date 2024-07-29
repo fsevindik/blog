@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Spinner from "../../componenets/Spinner";
 import { Film } from "../../types/Film";
 import BackButton from "../components/BackButton";
+import FavoriteButton from "../components/FavoriteButton";
 import CommentSection from "./CommentSection";
 import FilmInfo from "./ShowFilmInfo";
 
@@ -52,6 +53,7 @@ const ShowFilm: React.FC = () => {
       <h1 className="text-xl my-2 text-white font-mono">Film Info</h1>
       <div className="w-full max-w-3xl">
         <FilmInfo film={film} userId={userId} />
+        <FavoriteButton filmId={film._id} userId={userId} />
         <CommentSection filmId={film._id} currentUserId={userId} _id={null} />
       </div>
       <ToastContainer />

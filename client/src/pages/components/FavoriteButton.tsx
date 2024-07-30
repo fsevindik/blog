@@ -1,5 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import HeartIcon from "../../icons/HeartIcon";
+import HearthIcon from "../../icons/HearthIcon";
 
 interface FavoriteButtonProps {
   filmId: string;
@@ -47,13 +49,9 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ filmId, userId }) => {
   return (
     <button onClick={handleFavorite}>
       {isFavorited ? (
-        <span role="img" aria-label="favorited">
-          ❤️
-        </span>
+        <HearthIcon size={16} className="text-red-700" />
       ) : (
-        <span role="img" aria-label="not-favorited">
-          🤍
-        </span>
+        <HeartIcon size={16} className="text-white" />
       )}
     </button>
   );

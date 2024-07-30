@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import AverageIcon from "../../icons/AverageIcon";
 import { Film } from "../../icons/types";
+import FavoriteButton from "../components/FavoriteButton";
 import RateModal from "./RateModal";
 
 interface FilmInfoProps {
@@ -121,6 +122,7 @@ const FilmInfo: React.FC<FilmInfoProps> = ({ film: initialFilm, userId }) => {
           <AverageIcon rating={averageRating} />
           <RateModal film={film} onRate={handleRate} />
         </div>
+        <FavoriteButton filmId={film._id} userId={userId} />
       </div>
     </div>
   );

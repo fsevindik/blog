@@ -1,6 +1,6 @@
-import { IconProps } from "./types";
+import { IconProps } from "react-toastify";
 
-const HeartIcon = (props: IconProps) => {
+const HeartIcon = ({ size = 24, className = "", ...props }: IconProps) => {
   return (
     <svg
       className="w-6 h-6 text-current"

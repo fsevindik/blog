@@ -66,12 +66,12 @@ const Auth: React.FC = () => {
   return (
     <AuthContainer>
       {!user ? (
-        <div>
-          <h2 className="text-3xl font-bold mb-6 text-black">
+        <div className="relative z-10 p-8 bg-black bg-opacity-30 rounded-lg shadow-xl border-4 border-gray-900 film-frame">
+          <h2 className="text-3xl font-bold mb-6 text-white">
             {mode === "register" ? "Register" : "Login"}
           </h2>
           {mode === "register" && (
-            <p className="font-mono mb-4 text-sm text-black">
+            <p className="font-mono mb-4 text-sm text-white">
               You may register with a dummy email
             </p>
           )}
@@ -89,12 +89,12 @@ const Auth: React.FC = () => {
           />
         </div>
       ) : (
-        <div className="text-center bg-gray-300 p-8 rounded-lg shadow-md">
-          <h2 className="text-2xl font-bold mb-4 text-black">
+        <div className="relative z-10 text-center bg-black bg-opacity-30 p-8 rounded-lg shadow-xl border-4 border-gray-900 film-frame">
+          <h2 className="text-2xl font-bold mb-4 text-white">
             Welcome, {user.name}!
           </h2>
-          <p className="text-black mb-4">Login successful! Redirecting...</p>
-          <p className="mt-4 text-lg text-black font-bold">
+          <p className="text-white mb-4">Login successful! Redirecting...</p>
+          <p className="mt-4 text-lg text-white font-bold">
             You will be redirected in {countdown} seconds.
           </p>
         </div>

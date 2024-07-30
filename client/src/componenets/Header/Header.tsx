@@ -54,8 +54,8 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
     <header className="bg-gray-900 text-white p-4 shadow-lg">
       <div className="container mx-auto flex flex-col sm:flex-row items-center justify-between">
         <div className="flex items-center mb-4 sm:mb-0">
-          <DoctorIcon className="w-8 h-8 text-yellow-300 mr-2" size={0} />
-          <p className="text-lg font-semibold text-yellow-300">
+          <DoctorIcon className="w-8 h-8 text-yellow-300 mr-2" size={12} />
+          <p className="lg:text-lg font-semibold md:text-sm text-sm text-yellow-300 mr-5">
             Dr. Filmolog: Your cinematic cure
           </p>
         </div>
@@ -69,7 +69,7 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
               onChange={handleInputChange}
             />
             <button
-              className="p-2 bg-yellow-500 text-white rounded-md ml-2 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              className="p-2 w-1/4  bg-yellow-500 text-white rounded-md ml-2 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500"
               onClick={handleButtonClick}
             >
               Search

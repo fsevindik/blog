@@ -1,12 +1,18 @@
-import { useRef } from "react";
+import { Key, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 
 const FilmSlider = ({ films }) => {
   const swiperRef = useRef(null);
+  const navigate = useNavigate();
+
+  const handleFilmClick = (filmId: any) => {
+    navigate(`/Films/details/${filmId}`);
+  };
 
   return (
-    <div className="relative w-full max-w-screen-xl mx-auto px-4 bg-gray-300 p-4 rounded-lg border border-gray-700">
+    <div className="relative w-full max-w-screen-xl mx-auto px-4 mb-10 bg-gray-900 p-4 rounded-lg border border-gray-700">
       <Swiper
         spaceBetween={10}
         slidesPerView={1}
@@ -22,20 +28,29 @@ const FilmSlider = ({ films }) => {
         }}
         className="swiper-container"
       >
-        {films.map((film) => (
-          <SwiperSlide key={film._id}>
-            <div className="relative w-full h-60 overflow-hidden rounded-lg">
-              <img
-                src={film.posterImageUrlA}
-                alt={film.title}
-                className="w-full h-full object-contain object-center "
-              />
-            </div>
-          </SwiperSlide>
-        ))}
+        {films.map(
+          (film: {
+            _id: Key | null | undefined;
+            posterImageUrlA: string | undefined;
+            title: string | undefined;
+          }) => (
+            <SwiperSlide key={film._id}>
+              <div
+                onClick={() => handleFilmClick(film._id)}
+                className="relative w-full h-60 overflow-hidden rounded-lg border-r-2 border-white transition-transform duration-300 hover:scale-105 cursor-pointer"
+              >
+                <img
+                  src={film.posterImageUrlA}
+                  alt={film.title}
+                  className="w-full h-full object-contain object-center"
+                />
+              </div>
+            </SwiperSlide>
+          )
+        )}
       </Swiper>
       <button
-        className="absolute top-1/2 left-2 transform -translate-y-1/2 text-yellow-400 hover:text-yellow-300 cursor-pointer z-10 transition-transform duration-300 ease-in-out"
+        className="absolute top-1/2 left-2 transform -translate-y-1/2 text-yellow-400 hover:text-white hover:scale-110 cursor-pointer z-10 transition-all duration-300 ease-in-out"
         onClick={() => swiperRef.current?.slidePrev()}
       >
         <svg
@@ -54,7 +69,7 @@ const FilmSlider = ({ films }) => {
         </svg>
       </button>
       <button
-        className="absolute top-1/2 right-2 transform -translate-y-1/2 text-yellow-400 hover:text-yellow-300 cursor-pointer z-10 transition-transform duration-300 ease-in-out"
+        className="absolute top-1/2 right-2 transform -translate-y-1/2 text-yellow-400 hover:text-white hover:scale-110 cursor-pointer z-10 transition-all duration-300 ease-in-out"
         onClick={() => swiperRef.current?.slideNext()}
       >
         <svg

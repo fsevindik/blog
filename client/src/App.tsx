@@ -42,7 +42,7 @@ const App: React.FC = () => {
           <Route path="/films/details/:id" element={<ShowFilm />} />
           <Route path="/films/edit/:id" element={<EditFilm />} />
           <Route path="/films/delete/:id" element={<DeleteFilm />} />
-          <Route path="/films/trends" element={<Trends />} />
+          <Route path="/films/trends" element={<Trends limit={6} />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/welcome" element={<WelcomePage />} />
           <Route path="/admin" element={<Admin />} />

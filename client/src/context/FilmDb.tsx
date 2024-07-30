@@ -1,6 +1,8 @@
+// FilmContext.tsx
 import axios from "axios";
 import React, { createContext, useEffect, useState } from "react";
-import { Film, FilmContextProps, FilmProviderProps } from "./type";
+import { Film } from "../icons/types";
+import { FilmContextProps, FilmProviderProps } from "./type";
 
 const FilmContext = createContext<FilmContextProps>({
   films: [],
@@ -16,12 +18,12 @@ export const FilmProvider: React.FC<FilmProviderProps> = ({ children }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState<string>("");
-  const API_URL = "http://localhost:3000/films"; // API URL
+  const API_URL = "http://localhost:3000/films";
 
   const fetchFilms = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(API_URL);
+      const response = await axios.get<Film[]>(API_URL);
       setFilms(response.data);
     } catch (error) {
       console.error("Error fetching films:", error);

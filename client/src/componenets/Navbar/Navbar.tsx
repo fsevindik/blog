@@ -32,16 +32,17 @@ const Navbar: React.FC = () => {
   }, []);
 
   return (
-    <nav className="flex items-center space-x-4">
+    <nav className="flex items-center space-x-4 ml-5">
       <NavItem
         to="/"
         icon={<HomeIcon className="w-6 h-6" size={2} />}
         text="Home"
       />
+
       <NavItem
         to="/films/trends"
-        icon={<HeartIcon className="w-6 h-6" size={2} />}
-        text="Trends"
+        icon={<HeartIcon className="w-6 h-6 " size={2} />}
+        text="Top"
       />
 
       <div className="relative" ref={dropdownRef}>

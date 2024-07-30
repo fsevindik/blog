@@ -48,7 +48,6 @@ const Home: React.FC = () => {
 
   return (
     <div>
-      Home
       <div>
         <Link
           to="/films/create"

@@ -15,7 +15,7 @@ const FilmsTable: React.FC<FilmsTableProps> = ({ films = [] }) => {
 
   return (
     <div className="overflow-x-auto bg-gray-700 ">
-      <h1 className="font-mono">prescriptions</h1>
+      <h1 className="font-mono bg-gray-900 p-2">filmolog's prescription</h1>
       <table className="w-full border-separate border-spacing-2">
         <thead>
           <tr>

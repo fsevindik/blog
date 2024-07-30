@@ -6,7 +6,7 @@ const FilmSlider = ({ films }) => {
   const swiperRef = useRef(null);
 
   return (
-    <div className="relative w-full max-w-screen-xl mx-auto px-4 bg-gray-800 p-4 rounded-lg border border-gray-700">
+    <div className="relative w-full max-w-screen-xl mx-auto px-4 bg-gray-300 p-4 rounded-lg border border-gray-700">
       <Swiper
         spaceBetween={10}
         slidesPerView={1}
@@ -28,7 +28,7 @@ const FilmSlider = ({ films }) => {
               <img
                 src={film.posterImageUrlA}
                 alt={film.title}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain object-center "
               />
             </div>
           </SwiperSlide>

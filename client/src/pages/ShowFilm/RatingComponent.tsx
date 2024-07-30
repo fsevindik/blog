@@ -16,7 +16,7 @@ const RatingComponent: React.FC<RatingComponentProps> = ({
   const handleRating = async (rating: number) => {
     try {
       const userId = "current-user-id";
-      await axios.post(`/api/films/${filmId}/rate`, { userId, rating });
+      await axios.post(`/films/${filmId}/rate`, { userId, rating });
       setUserRating(rating);
     } catch (error) {
       console.error("Error rating film:", error);

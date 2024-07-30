@@ -5,11 +5,13 @@ import HearthIcon from "../../icons/HearthIcon";
 
 interface FavoriteButtonProps {
   filmId: string;
-  userId: string;
 }
 
-const FavoriteButton: React.FC<FavoriteButtonProps> = ({ filmId, userId }) => {
+const FavoriteButton: React.FC<FavoriteButtonProps> = ({ filmId }) => {
   const [isFavorited, setIsFavorited] = useState<boolean>(false);
+
+  const userId = localStorage.getItem("userId");
+  const userName = localStorage.getItem("userName");
 
   useEffect(() => {
     const checkIfFavorited = async () => {
@@ -47,13 +49,17 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ filmId, userId }) => {
   };
 
   return (
-    <button onClick={handleFavorite}>
-      {isFavorited ? (
-        <HearthIcon size={16} className="text-red-700" />
-      ) : (
-        <HeartIcon size={16} className="text-white" />
+    <>
+      {userId && userName && (
+        <button onClick={handleFavorite}>
+          {isFavorited ? (
+            <HearthIcon size={16} className="text-red-700" />
+          ) : (
+            <HeartIcon size={16} className="text-white" />
+          )}
+        </button>
       )}
-    </button>
+    </>
   );
 };
 

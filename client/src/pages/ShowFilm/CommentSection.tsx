@@ -13,6 +13,9 @@ const CommentSection: React.FC<CommentSectionProps> = ({
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
   const [replyContent, setReplyContent] = useState("");
 
+  const userId = localStorage.getItem("userId");
+  const userName = localStorage.getItem("userName");
+
   useEffect(() => {
     if (filmId) {
       fetchComments();
@@ -86,6 +89,14 @@ const CommentSection: React.FC<CommentSectionProps> = ({
       console.error("Error liking comment:", error);
     }
   };
+
+  if (!userId || !userName) {
+    return (
+      <div className="my-4 bg-red-700 p-4 rounded-lg shadow-lg w-full max-w-3xl mx-auto text-white">
+        ⚠️ You need to login to comment and for many other features.
+      </div>
+    );
+  }
 
   return (
     <div className="my-4 bg-gray-800 p-4 rounded-lg shadow-lg w-full max-w-3xl mx-auto">

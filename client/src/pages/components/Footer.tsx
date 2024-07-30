@@ -7,14 +7,14 @@ const Footer: React.FC = () => {
     <footer className="bg-gray-900 text-center max-h-20 py-4 w-full mt-auto">
       <div className="container mx-auto">
         <p className="text-gray-300 font-semibold">
-          &copy; 2024 Murat Can{" "}
+          &copy; 2024{" "}
           <a
             href="https://muratcan23.github.io/myportfolio/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-sky-400 hover:text-yellow-500 mr-4"
           >
-            Portfolio
+            Murat Can
           </a>
           <a
             href="https://github.com/muratcan23"

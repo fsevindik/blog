@@ -78,6 +78,7 @@ const RateModal: React.FC<RateModalProps> = ({ film, onRate }) => {
       if (response.status === 200) {
         setRating(rate);
         setIsOpen(false);
+        toast.dismiss(); // Close any existing toasts
         toast.success(`Rated ${rate} stars`);
         onRate(rate);
       } else {
@@ -161,7 +162,17 @@ const RateModal: React.FC<RateModalProps> = ({ film, onRate }) => {
           </div>
         </div>
       )}
-      <ToastContainer />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 };

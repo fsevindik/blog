@@ -1,24 +1,48 @@
-import { createContext, useState } from "react";
-import { FilmContextProps, FilmProviderProps } from "./type";
+import axios from "axios";
+import React, { createContext, useEffect, useState } from "react";
+import { Film, FilmContextProps, FilmProviderProps } from "./type";
 
 const FilmContext = createContext<FilmContextProps>({
+  films: [],
+  loading: false,
+  error: null,
   search: "",
   handleSearch: () => {},
+  fetchFilms: () => {},
 });
 
 export const FilmProvider: React.FC<FilmProviderProps> = ({ children }) => {
-  const initialState = {
-    search: "",
-  };
+  const [films, setFilms] = useState<Film[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [search, setSearch] = useState<string>("");
+  const API_URL = "http://localhost:3000/films"; // API URL
 
-  const [search, setSearch] = useState(initialState.search);
+  const fetchFilms = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(API_URL);
+      setFilms(response.data);
+    } catch (error) {
+      console.error("Error fetching films:", error);
+      setError("Failed to fetch films");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSearch = (newSearch: string) => {
     setSearch(newSearch);
   };
 
+  useEffect(() => {
+    fetchFilms();
+  }, []);
+
   return (
-    <FilmContext.Provider value={{ search, handleSearch }}>
+    <FilmContext.Provider
+      value={{ films, loading, error, search, handleSearch, fetchFilms }}
+    >
       {children}
     </FilmContext.Provider>
   );

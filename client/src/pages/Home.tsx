@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import AddBoxIcon from "../icons/AddBoxIcon";
 import { Film } from "../types/Film";
+import FilmSlider from "./components/FilmSlider";
 import FilmsTable from "./components/FilmTable";
 
 const Home: React.FC = () => {
@@ -56,6 +57,7 @@ const Home: React.FC = () => {
           {userRole === "admin" ? <AddBoxIcon /> : null}
         </Link>
       </div>
+      <FilmSlider films={films} />
       <FilmsTable films={films} />
     </div>
   );

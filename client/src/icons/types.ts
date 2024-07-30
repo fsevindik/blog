@@ -74,6 +74,8 @@ interface Actor {
   imageUrl: string;
 }
 export interface Film {
+  bonusVideos: any;
+  honorableMentions: never[];
   _id: string;
   title: string;
   director: string;

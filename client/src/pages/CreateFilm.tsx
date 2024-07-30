@@ -20,6 +20,7 @@ interface Film {
   actors: Actor[];
   filmOverview: string;
   trailerUrl?: string;
+  honorableMentions: string[];
 }
 
 const CreateFilms: React.FC = () => {
@@ -32,6 +33,7 @@ const CreateFilms: React.FC = () => {
     actors: [],
     filmOverview: "",
     trailerUrl: "",
+    honorableMentions: [],
   });
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -100,8 +102,23 @@ const CreateFilms: React.FC = () => {
         actors: [...prevFilm.actors, { name: "", imageUrl: "" }],
       }));
     } else {
-      toast.warning("Maximum 5 actors allowed");
+      toast.warning("Maximum 10 actors allowed");
     }
+  };
+
+  const handleHonorableMentionChange = (index: number, value: string) => {
+    setFilm((prevFilm) => {
+      const updatedHonorableMentions = [...prevFilm.honorableMentions];
+      updatedHonorableMentions[index] = value;
+      return { ...prevFilm, honorableMentions: updatedHonorableMentions };
+    });
+  };
+
+  const addHonorableMention = () => {
+    setFilm((prevFilm) => ({
+      ...prevFilm,
+      honorableMentions: [...prevFilm.honorableMentions, ""],
+    }));
   };
 
   return (
@@ -218,6 +235,29 @@ const CreateFilms: React.FC = () => {
             className="border-2 text-black border-gray-500 px-4 py-2 w-full h-24"
             placeholder="Write a brief overview of the film..."
           />
+        </div>
+        <div className="my-4">
+          <label className="text-xl mr-4 text-white">Honorable Mentions</label>
+          {film.honorableMentions.map((mention, index) => (
+            <div key={index} className="my-2">
+              <input
+                type="url"
+                placeholder="YouTube video URL"
+                value={mention}
+                onChange={(e) =>
+                  handleHonorableMentionChange(index, e.target.value)
+                }
+                className="border-2 text-black border-gray-500 px-4 py-2 w-full mb-2"
+              />
+            </div>
+          ))}
+          <button
+            type="button"
+            className="p-2 bg-blue-500 text-white rounded-md mt-2"
+            onClick={addHonorableMention}
+          >
+            Add Bonus youtube video
+          </button>
         </div>
         <button
           type="submit"

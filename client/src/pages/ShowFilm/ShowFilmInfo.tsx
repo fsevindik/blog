@@ -4,6 +4,7 @@ import AverageIcon from "../../icons/AverageIcon";
 import { Film } from "../../icons/types";
 import FavoriteButton from "../components/FavoriteButton";
 import RateModal from "./RateModal";
+import YouTubeEmbed from "./YouTubeEmbed";
 
 interface FilmInfoProps {
   film: Film;
@@ -66,21 +67,7 @@ const FilmInfo: React.FC<FilmInfoProps> = ({ film: initialFilm, userId }) => {
           />
         </div>
       </div>
-      {trailerId && (
-        <div className="w-full flex justify-center">
-          <iframe
-            width="100%"
-            height="500"
-            src={`https://www.youtube.com/embed/${trailerId}`}
-            title={film.title}
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            className="rounded-lg shadow-lg border-4 border-gray-900"
-          ></iframe>
-        </div>
-      )}
-
+      {trailerId && <YouTubeEmbed trailerId={trailerId} title={film.title} />}
       <div className="space-y-4">
         <div>
           <h1 className="text-2xl md:text-3xl font-bold mb-2 text-gray-900">

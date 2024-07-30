@@ -56,7 +56,7 @@ const filmSchema = new mongoose.Schema(
     },
     actors: {
       type: [actorSchema],
-      validate: [arrayLimit, "{PATH} exceeds the limit of 5"],
+      validate: [arrayLimit, "{PATH} exceeds the limit of 10"],
     },
     ratings: [rateSchema],
     filmOverview: {
@@ -67,12 +67,16 @@ const filmSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    honorableMentions: {
+      type: [String],
+      required: false,
+    },
   },
   { timestamps: true }
 );
 
 function arrayLimit(val) {
-  return val.length <= 5;
+  return val.length <= 10;
 }
 
 filmSchema.methods.calculateAverageRating = function () {

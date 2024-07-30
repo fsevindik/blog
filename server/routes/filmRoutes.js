@@ -44,6 +44,7 @@ router.post("/", async (req, res) => {
       actors,
       filmOverview,
       trailerUrl,
+      honorableMentions,
     } = req.body;
     if (
       !title ||
@@ -68,6 +69,7 @@ router.post("/", async (req, res) => {
       actors,
       filmOverview,
       trailerUrl,
+      honorableMentions: honorableMentions || [],
       ratings: [],
     };
     const film = await Film.create(newFilm);
@@ -89,7 +91,7 @@ router.put("/:id", async (req, res) => {
     if (!result) {
       return res.status(404).json({ message: "Film not found" });
     }
-    return res.status(200).send(result); // Güncellenmiş film döndürülür
+    return res.status(200).send(result); // Return the updated film
   } catch (error) {
     console.log(error.message);
     res.status(500).send({ message: error.message });

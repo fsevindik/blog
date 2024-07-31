@@ -1,89 +1,95 @@
 import axios from "axios";
+import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 
 const API_URL = "http://localhost:3000";
 
 interface Message {
   _id: string;
-  sender: string;
+  sender: { _id: string; name: string };
   content: string;
   sentAt: string;
 }
 
-interface AdminMessageBoxProps {
-  adminId: string;
-}
-
-const AdminMessageBox: React.FC<AdminMessageBoxProps> = ({ adminId }) => {
+const AdminMessageBox: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [newMessage, setNewMessage] = useState("");
+  const { user } = useAuth();
 
   useEffect(() => {
-    fetchMessages();
-  }, [adminId]);
+    if (user && user.role === "admin") {
+      fetchMessages();
+    }
+  }, [user]);
 
   const fetchMessages = async () => {
     try {
-      const response = await axios.get(`${API_URL}/messages/${adminId}`);
-      if (Array.isArray(response.data)) {
-        setMessages(response.data);
-      } else {
-        console.error("Fetched data is not an array:", response.data);
-        setMessages([]);
-      }
+      const response = await axios.get(`${API_URL}/messages/admin/messages`);
+      setMessages(response.data);
     } catch (error) {
       console.error("Error fetching messages:", error);
       setMessages([]);
     }
   };
 
-  const sendMessage = async () => {
+  const handleDelete = async (id: string) => {
     try {
-      const response = await axios.post(`${API_URL}/messages`, {
-        userId: adminId, // Admin ID olarak kullanılır
-        content: newMessage,
-      });
-      setNewMessage("");
-      fetchMessages();
+      await axios.delete(`${API_URL}/messages/${id}`);
+      setMessages(messages.filter((message) => message._id !== id));
     } catch (error) {
-      console.error("Error sending message:", error);
+      console.error("Error deleting message:", error);
     }
   };
 
+  if (!user) {
+    return <div>Loading...</div>; // Kullanıcı bilgileri yükleniyor
+  }
+
+  if (user.role !== "admin") {
+    return <div>You do not have permission to view this page.</div>;
+  }
+
   return (
-    <div className="flex flex-col h-full bg-gray-700">
-      <div className="flex-grow overflow-auto p-2">
+    <div className="flex flex-col h-full bg-gray-800 text-white">
+      <div className="flex-grow overflow-auto p-4">
         {messages.length > 0 ? (
           messages.map((message) => (
             <div
               key={message._id}
-              className={`p-1 my-2 rounded ${
-                message.sender === adminId
-                  ? "bg-blue-500 self-end"
-                  : "bg-gray-300"
-              }`}
+              className="p-4 my-2 rounded bg-gray-900 border border-gray-700 flex justify-between items-center"
             >
-              {message.content}
+              <div>
+                <div className="text-sm text-gray-400">
+                  <strong>{message.sender.name}</strong> -{" "}
+                  {dayjs(message.sentAt).format("YYYY-MM-DD HH:mm:ss")}
+                </div>
+                <div className="mt-2 text-lg">{message.content}</div>
+              </div>
+              <button
+                onClick={() => handleDelete(message._id)}
+                className="ml-4 text-red-500 hover:text-red-700"
+                title="Delete message"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
             </div>
           ))
         ) : (
           <div className="text-white">No messages yet</div>
         )}
-      </div>
-      <div className="flex p-2 bg-slate-200">
-        <textarea
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          placeholder="Type your message"
-          className="flex-grow p-2 rounded bg-white text-black mr-2 mb-10 min-h-20 shadow-lg"
-          rows={1}
-        />
-        <button
-          onClick={sendMessage}
-          className="bg-blue-500 text-white rounded p-2 mt-2 h-16 w-15 hover:bg-red-600"
-        >
-          Send
-        </button>
       </div>
     </div>
   );

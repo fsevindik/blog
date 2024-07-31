@@ -1,5 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useAuth } from "../../context/AuthContext";
+
 const API_URL = "http://localhost:3000";
 
 interface Message {
@@ -9,21 +11,20 @@ interface Message {
   sentAt: string;
 }
 
-interface MessageBoxProps {
-  userId: string;
-}
-
-const MessageBox: React.FC<MessageBoxProps> = ({ userId }) => {
+const MessageBox: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState("");
+  const { user } = useAuth();
 
   useEffect(() => {
-    fetchMessages();
-  }, [userId]);
+    if (user) {
+      fetchMessages();
+    }
+  }, [user]);
 
   const fetchMessages = async () => {
     try {
-      const response = await axios.get(`${API_URL}/messages/${userId}`);
+      const response = await axios.get(`${API_URL}/messages/${user!.id}`);
       if (Array.isArray(response.data)) {
         setMessages(response.data);
       } else {
@@ -38,6 +39,10 @@ const MessageBox: React.FC<MessageBoxProps> = ({ userId }) => {
 
   const sendMessage = async () => {
     try {
+      await axios.post(`${API_URL}/messages`, {
+        userId: user!.id,
+        content: newMessage,
+      });
       setNewMessage("");
       fetchMessages();
     } catch (error) {
@@ -53,7 +58,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({ userId }) => {
             <div
               key={message._id}
               className={`p-2 my-2 rounded ${
-                message.sender === userId
+                message.sender === user!.id
                   ? "bg-blue-500 self-end text-white"
                   : "bg-gray-300"
               }`}

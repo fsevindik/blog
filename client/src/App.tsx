@@ -34,7 +34,7 @@ const App: React.FC = () => {
         </Routes>
       </div>
       <Footer />
-      {user && <MessageBarContainer userId={user.id} />}
+      {user?.role === "visitor" && <MessageBarContainer userId={user.id} />}
     </div>
   );
 };

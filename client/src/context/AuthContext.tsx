@@ -8,6 +8,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 const LOCAL_STORAGE_KEY_TOKEN = "token";
 const LOCAL_STORAGE_KEY_USER_ID = "userId";
 const LOCAL_STORAGE_KEY_USER_NAME = "userName";
+const LOCAL_STORAGE_KEY_USER_ROLE = "userRole";
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -15,7 +16,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [user, setUser] = useState<User | null>(() => {
     const userId = localStorage.getItem(LOCAL_STORAGE_KEY_USER_ID);
     const userName = localStorage.getItem(LOCAL_STORAGE_KEY_USER_NAME);
-    return userId && userName ? ({ id: userId, name: userName } as User) : null;
+    const userRole = localStorage.getItem(LOCAL_STORAGE_KEY_USER_ROLE);
+    return userId && userName && userRole
+      ? ({ id: userId, name: userName, role: userRole } as User)
+      : null;
   });
   const [isLoading, setIsLoading] = useState(true);
 
@@ -33,19 +37,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       const response = await axios.get<User>("http://localhost:3000/users/me", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setUser({
-        ...response.data,
-        id:
-          localStorage.getItem(LOCAL_STORAGE_KEY_USER_ID) || response.data._id,
-        name:
-          localStorage.getItem(LOCAL_STORAGE_KEY_USER_NAME) ||
-          response.data.name,
-      });
+      const { _id, role, ...userData } = response.data;
+      localStorage.setItem(LOCAL_STORAGE_KEY_USER_ID, _id);
+      localStorage.setItem(LOCAL_STORAGE_KEY_USER_NAME, userData.name);
+      localStorage.setItem(LOCAL_STORAGE_KEY_USER_ROLE, role);
+      setUser({ ...userData, id: _id, role });
     } catch (error) {
       console.error("Token validation error:", error);
       localStorage.removeItem(LOCAL_STORAGE_KEY_TOKEN);
       localStorage.removeItem(LOCAL_STORAGE_KEY_USER_ID);
       localStorage.removeItem(LOCAL_STORAGE_KEY_USER_NAME);
+      localStorage.removeItem(LOCAL_STORAGE_KEY_USER_ROLE);
     }
     setIsLoading(false);
   };
@@ -55,11 +57,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       email,
       password,
     });
-    const { token, _id, ...userData } = response.data;
+    const { token, _id, role, ...userData } = response.data;
     localStorage.setItem(LOCAL_STORAGE_KEY_TOKEN, token);
     localStorage.setItem(LOCAL_STORAGE_KEY_USER_ID, _id);
     localStorage.setItem(LOCAL_STORAGE_KEY_USER_NAME, userData.name);
-    setUser({ ...userData, id: _id });
+    localStorage.setItem(LOCAL_STORAGE_KEY_USER_ROLE, role);
+    setUser({ ...userData, id: _id, role });
   };
 
   const register = async (email: string, password: string, name: string) => {
@@ -68,17 +71,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       password,
       name,
     });
-    const { token, _id, ...userData } = response.data;
+    const { token, _id, role, ...userData } = response.data;
     localStorage.setItem(LOCAL_STORAGE_KEY_TOKEN, token);
     localStorage.setItem(LOCAL_STORAGE_KEY_USER_ID, _id);
     localStorage.setItem(LOCAL_STORAGE_KEY_USER_NAME, name);
-    setUser({ ...userData, id: _id });
+    localStorage.setItem(LOCAL_STORAGE_KEY_USER_ROLE, role);
+    setUser({ ...userData, id: _id, role });
   };
 
   const logout = () => {
-    localStorage.removeItem(LOCAL_STORAGE_KEY_TOKEN);
-    localStorage.removeItem(LOCAL_STORAGE_KEY_USER_ID);
-    localStorage.removeItem(LOCAL_STORAGE_KEY_USER_NAME);
+    localStorage.clear();
     setUser(null);
   };
 

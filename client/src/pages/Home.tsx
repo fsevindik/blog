@@ -48,12 +48,14 @@ const Home: React.FC = () => {
   return (
     <div>
       <div>
-        <Link
-          to="/films/create"
-          className="text-yellow-500 h-8 w-8 ml-auto hover:text-white flex items-center"
-        >
-          {userRole === "admin" ? <AddBoxIcon /> : null}
-        </Link>
+        {userRole === "admin" && (
+          <Link
+            to="/films/create"
+            className="text-yellow-500 h-8 w-8 ml-auto hover:text-white flex items-center"
+          >
+            <AddBoxIcon />
+          </Link>
+        )}
       </div>
       <FilmSlider films={films} />
       <FilmsTable films={films} />

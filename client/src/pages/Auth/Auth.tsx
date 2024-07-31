@@ -49,7 +49,7 @@ const Auth: React.FC = () => {
       } else {
         await register(email, password, userName);
       }
-      toast.success("Login successful Redirecting...", {
+      toast.success("Login successful! Redirecting...", {
         position: "bottom-right",
         autoClose: 2000,
       });
@@ -94,8 +94,9 @@ const Auth: React.FC = () => {
             Welcome, {user.name}!
           </h2>
           <p className="text-white mb-4">Login successful! Redirecting...</p>
-          <p className="mt-4 text-lg text-white font-bold">
-            You will be redirected in {countdown} seconds.
+          <p className="mt-4 text-sm text-white">
+            Redirecting in <span className="font-bold">{countdown}</span>{" "}
+            seconds...
           </p>
         </div>
       )}

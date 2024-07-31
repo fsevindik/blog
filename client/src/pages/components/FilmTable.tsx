@@ -41,7 +41,7 @@ const FilmsTable: React.FC<FilmsTableProps> = ({ films = [] }) => {
               <td className="relative pl-5   rounded-md    ">
                 <Link
                   to={`/Films/details/${film._id}`}
-                  className="flex items-center p-2 rounded-md border-b  border-white  hover:bg-yellow-500 cursor-pointer font-serif font-semibold flex-wrap md:flex-nowrap"
+                  className="flex items-center p-2 hover:rounded-md border-b  border-white  hover:bg-yellow-500 cursor-pointer font-serif font-semibold flex-wrap md:flex-nowrap"
                 >
                   <img
                     src={film.posterImageUrlA}

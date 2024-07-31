@@ -66,7 +66,7 @@ const Auth: React.FC = () => {
   return (
     <AuthContainer>
       {!user ? (
-        <div className="relative z-10 p-8 bg-black bg-opacity-30 rounded-lg shadow-xl border-4 border-gray-900 film-frame">
+        <div className="relative z-10 p-8 bg-black bg-opacity-20 rounded-lg shadow-xl border-2 border-gray-500 film-frame">
           <h2 className="text-3xl font-bold mb-6 text-white">
             {mode === "register" ? "Register" : "Login"}
           </h2>

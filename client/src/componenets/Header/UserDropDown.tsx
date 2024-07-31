@@ -15,7 +15,7 @@ const UserDropdown: React.FC = () => {
   };
 
   return (
-    <div className="py-2">
+    <div className="py-2 bg-gray-600 rounded-b-md z-40">
       <div className="p-4 flex items-center text-white">
         {user ? (
           <Link
@@ -36,7 +36,7 @@ const UserDropdown: React.FC = () => {
             )}
           </Link>
         ) : (
-          <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-black font-bold">
+          <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-black font-bold">
             {userNameFirstChar}
           </div>
         )}

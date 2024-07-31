@@ -12,7 +12,6 @@ const Home: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const API_URL = "http://localhost:3000";
-  const userName = localStorage.getItem("userName");
 
   const { user } = useAuth();
   const userRole = user?.role || "visitor";

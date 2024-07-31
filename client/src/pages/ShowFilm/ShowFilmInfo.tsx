@@ -20,7 +20,10 @@ const extractYouTubeVideoId = (url: string): string | null => {
   return match ? match[1] : null;
 };
 
-const FilmInfo: React.FC<FilmInfoProps> = ({ film: initialFilm, userId }) => {
+const ShowFilmInfo: React.FC<FilmInfoProps> = ({
+  film: initialFilm,
+  userId,
+}) => {
   const [film, setFilm] = useState(initialFilm);
   const [averageRating, setAverageRating] = useState(
     initialFilm.ratings.length > 0 ? initialFilm.ratings[0].rating : 0
@@ -37,11 +40,10 @@ const FilmInfo: React.FC<FilmInfoProps> = ({ film: initialFilm, userId }) => {
       });
 
       if (response.status === 200) {
-        const updatedFilm = {
+        setFilm({
           ...film,
-          ratings: [{ rating: response.data.averageRating }],
-        };
-        setFilm(updatedFilm);
+          ratings: response.data.ratings,
+        });
         setAverageRating(response.data.averageRating);
       }
     } catch (error) {
@@ -69,7 +71,7 @@ const FilmInfo: React.FC<FilmInfoProps> = ({ film: initialFilm, userId }) => {
       </div>
       {trailerId && <YouTubeEmbed trailerId={trailerId} title={film.title} />}
       <div className="space-y-4">
-        <div>
+        <div className="border-b-2 border-black">
           <h1 className="text-2xl md:text-3xl font-bold mb-2 text-gray-900">
             {film.title}
           </h1>
@@ -114,5 +116,5 @@ const FilmInfo: React.FC<FilmInfoProps> = ({ film: initialFilm, userId }) => {
     </div>
   );
 };
-
-export default FilmInfo;
+ShowFilmInfo;
+export default ShowFilmInfo;

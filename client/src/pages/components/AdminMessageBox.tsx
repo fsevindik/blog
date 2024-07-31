@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+
 const API_URL = "http://localhost:3000";
 
 interface Message {
@@ -9,21 +10,21 @@ interface Message {
   sentAt: string;
 }
 
-interface MessageBoxProps {
-  userId: string;
+interface AdminMessageBoxProps {
+  adminId: string;
 }
 
-const MessageBox: React.FC<MessageBoxProps> = ({ userId }) => {
+const AdminMessageBox: React.FC<AdminMessageBoxProps> = ({ adminId }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState("");
 
   useEffect(() => {
     fetchMessages();
-  }, [userId]);
+  }, [adminId]);
 
   const fetchMessages = async () => {
     try {
-      const response = await axios.get(`${API_URL}/messages/${userId}`);
+      const response = await axios.get(`${API_URL}/messages/${adminId}`);
       if (Array.isArray(response.data)) {
         setMessages(response.data);
       } else {
@@ -38,6 +39,10 @@ const MessageBox: React.FC<MessageBoxProps> = ({ userId }) => {
 
   const sendMessage = async () => {
     try {
+      const response = await axios.post(`${API_URL}/messages`, {
+        userId: adminId, // Admin ID olarak kullanılır
+        content: newMessage,
+      });
       setNewMessage("");
       fetchMessages();
     } catch (error) {
@@ -52,9 +57,9 @@ const MessageBox: React.FC<MessageBoxProps> = ({ userId }) => {
           messages.map((message) => (
             <div
               key={message._id}
-              className={`p-2 my-2 rounded ${
-                message.sender === userId
-                  ? "bg-blue-500 self-end text-white"
+              className={`p-1 my-2 rounded ${
+                message.sender === adminId
+                  ? "bg-blue-500 self-end"
                   : "bg-gray-300"
               }`}
             >
@@ -70,12 +75,12 @@ const MessageBox: React.FC<MessageBoxProps> = ({ userId }) => {
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
           placeholder="Type your message"
-          className="flex-grow p-2 rounded bg-white text-black mr-2 min-h-20 shadow-lg"
+          className="flex-grow p-2 rounded bg-white text-black mr-2 mb-10 min-h-20 shadow-lg"
           rows={1}
         />
         <button
           onClick={sendMessage}
-          className="bg-blue-500 text-white rounded p-2 h-16 w-15 hover:bg-blue-600"
+          className="bg-blue-500 text-white rounded p-2 mt-2 h-16 w-15 hover:bg-red-600"
         >
           Send
         </button>
@@ -84,4 +89,4 @@ const MessageBox: React.FC<MessageBoxProps> = ({ userId }) => {
   );
 };
 
-export default MessageBox;
+export default AdminMessageBox;

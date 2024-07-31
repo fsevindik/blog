@@ -5,19 +5,22 @@ import HearthIcon from "../../icons/HearthIcon";
 
 interface FavoriteButtonProps {
   filmId: string;
+  userId: string | null;
 }
+
+const API_URL = "http://localhost:3000";
 
 const FavoriteButton: React.FC<FavoriteButtonProps> = ({ filmId }) => {
   const [isFavorited, setIsFavorited] = useState<boolean>(false);
-
   const userId = localStorage.getItem("userId");
-  const userName = localStorage.getItem("userName");
 
   useEffect(() => {
     const checkIfFavorited = async () => {
+      if (!userId) return;
+
       try {
         const response = await axios.get(
-          `http://localhost:3000/users/${userId}/favorites`
+          `${API_URL}/users/${userId}/favorites`
         );
         const { favorites } = response.data;
         setIsFavorited(favorites.includes(filmId));
@@ -26,21 +29,20 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ filmId }) => {
       }
     };
 
-    if (userId) {
-      checkIfFavorited();
-    }
+    checkIfFavorited();
   }, [filmId, userId]);
 
   const handleFavorite = async () => {
+    if (!userId) {
+      alert("Lütfen giriş yapın!");
+      return;
+    }
+
     try {
       if (isFavorited) {
-        await axios.delete(
-          `http://localhost:3000/users/${userId}/favorites/${filmId}`
-        );
+        await axios.delete(`${API_URL}/users/${userId}/favorites/${filmId}`);
       } else {
-        await axios.post(
-          `http://localhost:3000/users/${userId}/favorites/${filmId}`
-        );
+        await axios.post(`${API_URL}/users/${userId}/favorites/${filmId}`);
       }
       setIsFavorited(!isFavorited);
     } catch (error) {
@@ -49,17 +51,19 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ filmId }) => {
   };
 
   return (
-    <>
-      {userId && userName && (
-        <button onClick={handleFavorite}>
-          {isFavorited ? (
-            <HearthIcon size={16} className="text-red-700" />
-          ) : (
-            <HeartIcon size={16} className="text-white" />
-          )}
-        </button>
+    <button
+      onClick={handleFavorite}
+      disabled={!userId}
+      className={`cursor-${userId ? "pointer" : "not-allowed"} ${
+        !userId ? "opacity-50" : ""
+      }`}
+    >
+      {isFavorited ? (
+        <HearthIcon size={16} className="text-red-700" />
+      ) : (
+        <HeartIcon className="text-white" />
       )}
-    </>
+    </button>
   );
 };
 

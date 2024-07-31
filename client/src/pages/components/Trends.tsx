@@ -72,17 +72,17 @@ const Trends = () => {
                 </div>
                 <div className="mt-4 flex flex-col justify-between">
                   <div>
-                    <p className="text-blue-600 font-bold text-center md:text-md sm:text-sm mb-1">
-                      <span className="text-white font-serif">
-                        {truncateText(film.director, 20)}
-                      </span>
-                    </p>
                     <h3 className="font-semibold text-center md:text-md sm:text-sm h-10 overflow-hidden">
                       {truncateText(film.title, 30)}
                     </h3>
+                    <p className="font-bold text-center md:text-md sm:text-sm p-2 mb-1">
+                      <span className=" font-serif text-gray-900 ">
+                        {truncateText(film.director, 20)}
+                      </span>
+                    </p>
                   </div>
                   <div className="flex items-center justify-center mt-2">
-                    <StarIcon className="text-blue-500 mr-1 text-sm" size={5} />
+                    <StarIcon className="text-gray-700 mr-1 text-sm" size={5} />
                     <span className="text-white md:text-md sm:text-xs font-bold">
                       {film.averageRating
                         ? film.averageRating.toFixed(1)

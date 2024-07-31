@@ -1,5 +1,6 @@
 import express from "express";
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 import User from "../models/userModel.js";
 
 const router = express.Router();
@@ -60,7 +61,7 @@ router.post("/login", async (request, response) => {
 });
 
 // Get user by- ID
-router.get("/users/me", async (req, res) => {
+router.get("/me", async (req, res) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -82,9 +83,11 @@ router.get("/users/me", async (req, res) => {
 });
 
 // Get user's favorite films
-router.get("/users/:userId/favorites", async (req, res) => {
+router.get("/:userId/favorites", async (req, res) => {
   try {
-    const user = await User.findById(req.params.userId);
+    const userId = req.params.userId;
+    const user = await User.findById(userId).populate("favorites");
+
     if (user) {
       res.json({
         favorites: user.favorites,
@@ -97,13 +100,18 @@ router.get("/users/:userId/favorites", async (req, res) => {
     res.status(500).send({ message: error.message });
   }
 });
+
 // Add a film to user's favorites
-router.post("/users/:userId/favorites/:filmId", async (req, res) => {
+router.post("/:userId/favorites/:filmId", async (req, res) => {
   try {
-    const user = await User.findById(req.params.userId);
+    const userId = req.params.userId;
+    const filmId = new mongoose.Types.ObjectId(req.params.filmId);
+
+    const user = await User.findById(userId);
+
     if (user) {
-      if (!user.favorites.includes(req.params.filmId)) {
-        user.favorites.push(req.params.filmId);
+      if (!user.favorites.includes(filmId)) {
+        user.favorites.push(filmId);
         await user.save();
         res.status(200).send("Film added to favorites");
       } else {
@@ -119,12 +127,15 @@ router.post("/users/:userId/favorites/:filmId", async (req, res) => {
 });
 
 // Remove a film from user's favorites
-router.delete("/users/:userId/favorites/:filmId", async (req, res) => {
+router.delete("/:userId/favorites/:filmId", async (req, res) => {
   try {
-    const user = await User.findById(req.params.userId);
+    const userId = req.params.userId;
+    const filmId = new mongoose.Types.ObjectId(req.params.filmId);
+
+    const user = await User.findById(userId);
     if (user) {
       user.favorites = user.favorites.filter(
-        (filmId) => filmId !== req.params.filmId
+        (favoriteFilmId) => !favoriteFilmId.equals(filmId)
       );
       await user.save();
       res.status(200).send("Film removed from favorites");

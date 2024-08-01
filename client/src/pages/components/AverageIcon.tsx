@@ -1,4 +1,4 @@
-const AverageIcon = ({ rating }) => {
+const AverageIcon = ({ rating }: { rating: number }) => {
   return (
     <div className="border-2 border-gray-700 p-1 rounded-md bg-blue-500">
       <span className="text-bold ">⭐️</span>

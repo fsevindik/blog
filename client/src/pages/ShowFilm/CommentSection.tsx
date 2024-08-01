@@ -102,8 +102,11 @@ const CommentSection: React.FC<CommentSectionProps> = ({
 
   if (!userId || !userName) {
     return (
-      <div className="my-4 bg-red-700 p-4 rounded-lg shadow-lg w-full max-w-3xl mx-auto text-white">
-        ⚠️ You need to login to comment and for many other features.
+      <div className="flex my-2 justify-center bg-red-700 p-2 rounded-lg shadow-lg w-full max-w-3xl mx-auto text-white overflow-hidden">
+        <p className="text-center">
+          You need to login to comment and for many other features.
+        </p>
+        ⚠️
       </div>
     );
   }

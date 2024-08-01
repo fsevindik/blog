@@ -49,9 +49,12 @@ const commentSchema = new mongoose.Schema({
       },
     },
   ],
-  reaction: [reactionSchema],
+  reaction: {
+    type: reactionSchema,
+    default: () => ({}),
+  },
 });
 
 const Comment = mongoose.model("Comment", commentSchema);
 
-export { Comment };
+export default Comment;

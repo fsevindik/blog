@@ -70,8 +70,12 @@ const CommentSection: React.FC<CommentSectionProps> = ({
     }
   };
 
-  const handleLike = async (commentId: string) => {
+  const handleLike = async (commentId: string, commentUserId: string) => {
     if (!currentUserId) return;
+    if (currentUserId === commentUserId) {
+      console.log("You can't like your own comment");
+      return;
+    }
 
     try {
       const response = await axios.post(
@@ -139,24 +143,32 @@ const CommentSection: React.FC<CommentSectionProps> = ({
           key={comment._id}
           className="bg-gray-900 p-4 rounded-lg mb-4 border border-yellow-500"
         >
-          <p className="text-white">{comment.content}</p>
+          <div className="flex items-center mb-2">
+            <button
+              onClick={() => handleLike(comment._id)}
+              className={`mr-2 ${
+                comment.reaction &&
+                comment.reaction[0] &&
+                comment.reaction[0].usersLiked &&
+                comment.reaction[0].usersLiked.includes(currentUserId)
+                  ? "text-blue-500"
+                  : "text-gray-400"
+              } hover:text-blue-600`}
+            >
+              👍{" "}
+              {comment.reaction && comment.reaction[0]
+                ? comment.reaction[0].like
+                : 0}
+            </button>
+            <p className="text-white">{comment.content}</p>
+          </div>
           <p className="text-sm text-gray-400 border-b border-yellow-500">
             By: {comment.userId.name}
           </p>
           <div className="flex items-center mt-2">
             <button
-              onClick={() => handleLike(comment._id)}
-              className={`mr-2 ${
-                comment.likes && comment.likes.includes(currentUserId)
-                  ? "text-blue-500"
-                  : "text-gray-400"
-              } hover:text-blue-600`}
-            >
-              👍 {comment.likes ? comment.likes.length : 0}
-            </button>
-            <button
               onClick={() => setReplyingTo(comment._id)}
-              className="text-yellow-500 hover:text-white hover:scale-90 text-sm   p-1 rounded-md bg-slate-600 hover:bg-yellow-500"
+              className="text-yellow-500 hover:text-white hover:scale-90 text-sm p-1 rounded-md bg-slate-600 hover:bg-yellow-500"
             >
               Reply
             </button>

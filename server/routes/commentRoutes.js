@@ -1,5 +1,5 @@
 import express from "express";
-import { Comment } from "../models/commentModel.js";
+import Comment from "../models/commentModel.js";
 import { Film } from "../models/filmModel.js";
 
 const router = express.Router();
@@ -92,39 +92,23 @@ router.post("/:commentId/replies", async (req, res) => {
   }
 });
 
-// add reaction
-router.post("/:commentId/reactions", async (req, res) => {
+// Like or unlike a comment
+router.post("/:commentId/likes", async (req, res) => {
+  const { filmId, userId, content } = req.body;
+
   try {
-    const comment = await Comment.findById(req.params.commentId);
-    if (!comment) {
-      return res.status(404).json({ message: "Comment not found" });
-    }
+    const newComment = new Comment({
+      filmId,
+      userId,
+      content,
+      reaction: { like: 0, usersLiked: [] },
+    });
 
-    const { userId, reactionType } = req.body;
-
-    let reaction = comment.reactions.find((r) => r.type === reactionType);
-
-    if (!reaction) {
-      reaction = {
-        type: reactionType,
-        users: [],
-      };
-      comment.reactions.push(reaction);
-    }
-
-    const userIndex = reaction.users.findIndex(
-      (user) => user.toString() === userId
-    );
-    if (userIndex === -1) {
-      reaction.users.push(userId);
-    } else {
-      reaction.users.splice(userIndex, 1);
-    }
-
-    const updatedComment = await comment.save();
-    res.status(201).json(updatedComment);
+    const savedComment = await newComment.save();
+    res.status(201).json(savedComment);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    console.error("Error creating comment:", error);
+    res.status(500).json({ message: "Server error", error });
   }
 });
 

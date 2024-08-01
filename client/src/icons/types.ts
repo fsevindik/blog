@@ -113,6 +113,8 @@ export interface User {
 }
 
 export interface Comment {
+  reaction: any;
+  usersLiked: any;
   _id: string;
   content: string;
   userId: User;

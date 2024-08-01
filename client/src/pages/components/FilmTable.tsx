@@ -61,7 +61,7 @@ const FilmsTable: React.FC<FilmsTableProps> = ({ films = [] }) => {
                 {film.releaseYear}
               </td>
               {userRole === "admin" && (
-                <td className="border    border-black  rounded-md text-center w-1/6">
+                <td className="border    border-white  rounded-md text-center w-1/6">
                   <div className="flex justify-center gap-x-2 md:gap-x-4 ">
                     <Link to={`/Films/edit/${film._id}`}>
                       <EditIcon

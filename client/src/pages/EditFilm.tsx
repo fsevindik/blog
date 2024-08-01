@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Spinner from "../componenets/Spinner";
 import { Film } from "../types/Film";
 import BackButton from "./components/BackButton";
+const API_URL = "http://localhost:3000";
 
 interface Actor {
   name: string;
@@ -35,7 +36,7 @@ const EditFilm: React.FC = () => {
   useEffect(() => {
     const fetchFilm = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/films/${id}`);
+        const response = await axios.get(`${API_URL}/films/${id}`);
         setFilm(response.data);
       } catch (error) {
         toast.error("Error fetching film data");
@@ -64,7 +65,7 @@ const EditFilm: React.FC = () => {
 
     setLoading(true);
     try {
-      await axios.put(`http://localhost:3000/films/${id}`, film);
+      await axios.put(`${API_URL}/films/${id}`, film);
       toast.success("Film Updated Successfully");
       navigate("/");
     } catch (error) {

@@ -61,35 +61,30 @@ export interface Rating {
   rating: number;
 }
 
-export interface ratingPtops {
+export interface RatingProps {
   rating: number;
 }
 
-export interface commentProps {
+export interface CommentProps {
   comment: string;
 }
 
-interface Actor {
+export interface Actor {
   name: string;
   imageUrl: string;
 }
+
 export interface Film {
   bonusVideos: any;
-  honorableMentions: never[];
+  honorableMentions: string[];
   _id: string;
   title: string;
   director: string;
   releaseYear: number;
   posterImageUrlA: string;
   bannerImageUrlB: string;
-  actors: {
-    name: string;
-    imageUrl: string;
-  }[];
-  ratings: {
-    userId: string;
-    rating: number;
-  }[];
+  actors: Actor[];
+  ratings: Rating[];
   filmOverview: string;
   trailerUrl: string;
   averageRating: number;
@@ -141,4 +136,16 @@ export interface Message {
   sender: { _id: string; name: string };
   content: string;
   sentAt: string;
+}
+
+export interface CreateFilm {
+  title: string;
+  director: string;
+  releaseYear: number;
+  posterImageUrlA: string;
+  bannerImageUrlB: string;
+  actors: Actor[];
+  filmOverview: string;
+  trailerUrl?: string;
+  honorableMentions: string[];
 }

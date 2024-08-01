@@ -98,7 +98,7 @@ const ShowFilmInfo: React.FC<FilmInfoProps> = ({
                 <img
                   src={actor.imageUrl}
                   alt={actor.name}
-                  className="w-20 h-28 sm:w-24 sm:h-32 object-cover rounded-full mx-auto mb-2 border-2 bg-slate-800 border-gray-900"
+                  className="w-20 h-28 sm:w-24 sm:h-32 object-cover p-1 rounded-md -auto mb-2 border-1 bg-slate-100 border-gray-800"
                 />
                 <p className="text-gray-900 text-sm sm:text-base">
                   {actor.name}

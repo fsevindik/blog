@@ -4,27 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Spinner from "../componenets/Spinner";
+import { Actor, CreateFilm } from "../icons/types";
 import BackButton from "./components/BackButton";
-
-interface Actor {
-  name: string;
-  imageUrl: string;
-}
-
-interface Film {
-  title: string;
-  director: string;
-  releaseYear: number;
-  posterImageUrlA: string;
-  bannerImageUrlB: string;
-  actors: Actor[];
-  filmOverview: string;
-  trailerUrl?: string;
-  honorableMentions: string[];
-}
+const API_URL = "http://localhost:3000";
 
 const CreateFilms: React.FC = () => {
-  const [film, setFilm] = useState<Film>({
+  const [film, setFilm] = useState<CreateFilm>({
     title: "",
     director: "",
     releaseYear: 2024,
@@ -55,7 +40,7 @@ const CreateFilms: React.FC = () => {
 
     setLoading(true);
     try {
-      await axios.post(`http://localhost:3000/films`, film);
+      await axios.post(`${API_URL}/films`, film);
       toast.success("Film Created Successfully");
       navigate("/");
     } catch (error) {
@@ -232,8 +217,8 @@ const CreateFilms: React.FC = () => {
             name="filmOverview"
             value={film.filmOverview}
             onChange={handleChange}
-            className="border-2 text-black border-gray-500 px-4 py-2 w-full h-24"
-            placeholder="Write a brief overview of the film..."
+            className="border-2 text-black border-gray-500 px-4 py-2 w-full"
+            rows={4}
           />
         </div>
         <div className="my-4">
@@ -241,13 +226,13 @@ const CreateFilms: React.FC = () => {
           {film.honorableMentions.map((mention, index) => (
             <div key={index} className="my-2">
               <input
-                type="url"
-                placeholder="YouTube video URL"
+                type="text"
+                placeholder="Honorable Mention"
                 value={mention}
                 onChange={(e) =>
                   handleHonorableMentionChange(index, e.target.value)
                 }
-                className="border-2 text-black border-gray-500 px-4 py-2 w-full mb-2"
+                className="border-2 text-black border-gray-500 px-4 py-2 w-full"
               />
             </div>
           ))}
@@ -256,14 +241,14 @@ const CreateFilms: React.FC = () => {
             className="p-2 bg-blue-500 text-white rounded-md mt-2"
             onClick={addHonorableMention}
           >
-            Add Bonus youtube video
+            Add Honorable Mention
           </button>
         </div>
         <button
           type="submit"
-          className="p-2 bg-yellow-500 hover:bg-red-600 m-8 rounded-md"
+          className="p-2 bg-green-500 text-white rounded-md mt-4"
         >
-          Save
+          Save Film
         </button>
       </form>
       <ToastContainer />

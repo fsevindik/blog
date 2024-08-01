@@ -51,7 +51,7 @@ const Home: React.FC = () => {
         {userRole === "admin" && (
           <Link
             to="/films/create"
-            className="text-yellow-500 h-8 w-8 ml-auto hover:text-white flex items-center"
+            className="text-yellow-500 h-8 w-8 ml-auto mr-5 mt-5 border-b-2 border-r-2  border-yellow-500 rounded-md hover:text-white hover:bg-green-400 flex items-center"
           >
             <AddBoxIcon />
           </Link>

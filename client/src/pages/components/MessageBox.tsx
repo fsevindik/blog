@@ -57,7 +57,7 @@ const MessageBox: React.FC = () => {
           messages.map((message) => (
             <div
               key={message._id}
-              className={`p-2 my-2 rounded ${
+              className={`rounded ${
                 message.sender === user!.id
                   ? "bg-blue-500 self-end text-white"
                   : "bg-gray-300"
@@ -70,12 +70,12 @@ const MessageBox: React.FC = () => {
           <div className="text-white">No messages yet</div>
         )}
       </div>
-      <div className="flex p-2 bg-slate-200">
+      <div className="flex mb-10 p-1 bg-slate-200">
         <textarea
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
-          placeholder="Type your message"
-          className="flex-grow p-2 rounded bg-white text-black mr-2 min-h-20 shadow-lg"
+          placeholder="Type your message to filmolog  like:      dear admin you should add that movies too   --The Island-- "
+          className="flex-grow p-5 rounded bg-white text-black mr-2 min-h-20 shadow-lg "
           rows={1}
         />
         <button

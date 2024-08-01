@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import AddBoxIcon from "../../icons/AddBoxIcon";
 import AdminIcon from "../../icons/AdminIcon ";
 import MessageBox from "./MessageBox";
 
@@ -18,9 +17,7 @@ const MessageBar: React.FC<MessageBarProps> = ({ userId }) => {
         <button
           className="p-4 bg-blue-500 text-white rounded-full shadow-lg hover:bg-blue-600"
           onClick={toggleMessageBar}
-        >
-          <AddBoxIcon />
-        </button>
+        ></button>
       </div>
 
       {showMessageBar && (

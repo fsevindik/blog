@@ -26,8 +26,8 @@ const Admin: React.FC = () => {
       </div>
       <div className="flex justify-center mb-4">
         <Link to="/">
-          <div className="bg-red-600 w-48 hover:bg-red-700 text-white py-4 px-6 rounded-lg text-center transition-all duration-300 transform hover:scale-105">
-            <p className="text-xl font-semibold">Manage Books</p>
+          <div className="bg-red-600 w-48 hover:bg-green-600 text-white py-4 px-6 rounded-lg text-center transition-all duration-300 transform hover:scale-105">
+            <p className="text-xl font-semibold">Manage Films</p>
           </div>
         </Link>
       </div>
@@ -36,7 +36,7 @@ const Admin: React.FC = () => {
           className="p-4 bg-blue-500 text-white rounded-full shadow-lg hover:bg-blue-600"
           onClick={toggleMessageBar}
         >
-          <span className="text-xl">Message</span>
+          <span className="text-xl">Messages</span>
         </button>
       </div>
       {showMessageBar && (

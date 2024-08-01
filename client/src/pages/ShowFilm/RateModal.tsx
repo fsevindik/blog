@@ -1,29 +1,13 @@
+// src/pages/ShowFilm/RateModal.tsx
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import useOutsideClick from "../../hooks/useOutsideClick"; // Hook'u import et
 import StarIcon from "../../icons/StarIcon";
 import { RateModalProps } from "../../icons/types";
 
 const API_URL = "http://localhost:3000";
-
-type RefType = React.RefObject<HTMLDivElement>;
-type HandlerType = () => void;
-
-const useOutsideClick = (ref: RefType, handler: HandlerType) => {
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (ref.current && !ref.current.contains(event.target as Node)) {
-        handler();
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [ref, handler]);
-};
 
 const RateModal: React.FC<RateModalProps> = ({ film, onRate }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -59,7 +43,7 @@ const RateModal: React.FC<RateModalProps> = ({ film, onRate }) => {
           }
         }
       } catch (error) {
-        console.error("Error fetching user rating:", error.response || error);
+        console.error("Error fetching user rating:", error);
       }
     };
 
@@ -78,14 +62,14 @@ const RateModal: React.FC<RateModalProps> = ({ film, onRate }) => {
       if (response.status === 200) {
         setRating(rate);
         setIsOpen(false);
-        toast.dismiss(); // Close any existing toasts
+        toast.dismiss();
         toast.success(`Rated ${rate} stars`);
         onRate(rate);
       } else {
         throw new Error("Failed to rate the film.");
       }
     } catch (error) {
-      console.error("Error rating the film:", error.response || error);
+      console.error("Error rating the film:", error);
       toast.error("Failed to rate the film");
     }
   };
@@ -101,9 +85,9 @@ const RateModal: React.FC<RateModalProps> = ({ film, onRate }) => {
             ? "hover:bg-gray-800 hover:animate-none "
             : "hover:bg-yellow-500"
         }`}
-        onMouseEnter={userId ? handleHover : null}
-        onMouseLeave={userId ? handleMouseLeave : null}
-        onClick={userId ? handleClick : null}
+        onMouseEnter={userId ? handleHover : undefined}
+        onMouseLeave={userId ? handleMouseLeave : undefined}
+        onClick={userId ? handleClick : undefined}
         style={{
           color: isHovered ? "#fff" : "inherit",
           opacity: userId ? 1 : 0.5,

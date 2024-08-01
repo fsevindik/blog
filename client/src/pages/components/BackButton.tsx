@@ -15,7 +15,7 @@ const BackButton: React.FC = () => {
         onClick={handleClick}
         className="bg-red-700 sm:h-8 md:h-12 md:w-28 text-white font-bold px-4 py-1 rounded-lg flex items-center hover:bg-gray-500"
       >
-        <ArrowLeftIcon className="text-2xl" />
+        <ArrowLeftIcon className="text-2xl" size={5} />
         <span className="ml-2">Back</span>
       </button>
     </div>

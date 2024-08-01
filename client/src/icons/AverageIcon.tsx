@@ -1,5 +1,3 @@
-import React from "react";
-
 interface AverageIconProps {
   rating?: number;
   className?: string;

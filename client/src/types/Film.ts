@@ -18,6 +18,7 @@ export interface Film {
   actors: Actor[];
   filmOverview: string;
   publishYear: ReactNode;
+  description?: string;
 }
 
 export interface Rating {

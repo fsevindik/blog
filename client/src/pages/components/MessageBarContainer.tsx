@@ -12,10 +12,7 @@ const MessageBarContainer: React.FC<MessageBarContainerProps> = ({
 }) => {
   const [showMessageBar, setShowMessageBar] = useState(false);
 
-  const toggleMessageBar = () => {
-    setShowMessageBar(!showMessageBar);
-    console.log("Message bar toggled:", !showMessageBar);
-  };
+  const toggleMessageBar = () => setShowMessageBar(!showMessageBar);
 
   return (
     <>
@@ -30,9 +27,9 @@ const MessageBarContainer: React.FC<MessageBarContainerProps> = ({
 
       {showMessageBar && (
         <div className="fixed bottom-5 right-5 z-50 w-full max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl bg-white shadow-lg rounded-lg overflow-hidden h-96">
-          <div className="bg-red-600 text-white p-2 flex justify-between ">
+          <div className="bg-red-600 text-white p-2 flex justify-between items-center">
             <div className="flex items-center mx-auto">
-              <h3 className="mb-auto">
+              <h3>
                 Direct Line to
                 <AdminIcon />
               </h3>

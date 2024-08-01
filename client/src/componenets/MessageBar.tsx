@@ -4,7 +4,6 @@ import XIcon from "../icons/XIcon";
 interface MessageBarProps {
   show: boolean;
   onClose: () => void;
-  userId: string;
 }
 
 const MessageBar: React.FC<MessageBarProps> = ({ show, onClose }) => {

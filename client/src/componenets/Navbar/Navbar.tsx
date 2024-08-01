@@ -16,7 +16,9 @@ const Navbar: React.FC = () => {
   };
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleClick: MouseEventHandler<HTMLButtonElement> = (
+      event: MouseEvent
+    ) => {
       if (
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)

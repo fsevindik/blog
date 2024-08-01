@@ -15,6 +15,10 @@ const userSchema = new mongoose.Schema({
       ref: "Film",
     },
   ],
+  online: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 //  hash the password
@@ -31,7 +35,6 @@ userSchema.pre("save", async function (next) {
   }
 });
 
-//  compare entered password
 userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };

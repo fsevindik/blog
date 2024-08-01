@@ -12,6 +12,9 @@ const CommentSection: React.FC<CommentSectionProps> = ({
   const [newComment, setNewComment] = useState("");
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
   const [replyContent, setReplyContent] = useState("");
+  const [visibleReplies, setVisibleReplies] = useState<{
+    [key: string]: boolean;
+  }>({});
 
   const userId = localStorage.getItem("userId");
   const userName = localStorage.getItem("userName");
@@ -90,6 +93,13 @@ const CommentSection: React.FC<CommentSectionProps> = ({
     }
   };
 
+  const toggleRepliesVisibility = (commentId: string) => {
+    setVisibleReplies((prev) => ({
+      ...prev,
+      [commentId]: !prev[commentId],
+    }));
+  };
+
   if (!userId || !userName) {
     return (
       <div className="my-4 bg-red-700 p-4 rounded-lg shadow-lg w-full max-w-3xl mx-auto text-white">
@@ -110,7 +120,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
             className="flex-grow p-2 border rounded bg-gray-700 text-white mr-2"
-            placeholder="Write a comment here...   yeah I have wacthed this film its amazing ...  thank you admin its one of my favorites "
+            placeholder="Write a comment here..."
           />
           <button
             type="submit"
@@ -122,9 +132,14 @@ const CommentSection: React.FC<CommentSectionProps> = ({
       </div>
 
       {comments.map((comment) => (
-        <div key={comment._id} className="bg-gray-700 p-4 rounded-lg mb-4">
+        <div
+          key={comment._id}
+          className="bg-gray-900 p-4 rounded-lg mb-4 border border-yellow-500"
+        >
           <p className="text-white">{comment.content}</p>
-          <p className="text-sm text-gray-400">By: {comment.userId.name}</p>
+          <p className="text-sm text-gray-400 border-b border-yellow-500">
+            By: {comment.userId.name}
+          </p>
           <div className="flex items-center mt-2">
             <button
               onClick={() => handleLike(comment._id)}
@@ -138,19 +153,32 @@ const CommentSection: React.FC<CommentSectionProps> = ({
             </button>
             <button
               onClick={() => setReplyingTo(comment._id)}
-              className="text-yellow-500 hover:text-yellow-600 text-sm"
+              className="text-yellow-500 hover:text-white hover:scale-90 text-sm   p-1 rounded-md bg-slate-600 hover:bg-yellow-500"
             >
               Reply
             </button>
+            <button
+              onClick={() => toggleRepliesVisibility(comment._id)}
+              className={`ml-4 text-sm hover:text-white hover:scale-95 p-1 rounded-md bg-slate-600 hover:bg-yellow-500 ${
+                comment.replies && comment.replies.length > 0
+                  ? "text-blue-400"
+                  : "text-gray-400"
+              }`}
+            >
+              {visibleReplies[comment._id] ? "Hide Replies" : "Show Replies"}
+            </button>
           </div>
-          {comment.replies &&
+          {visibleReplies[comment._id] &&
+            comment.replies &&
             comment.replies.map((reply) => (
               <div
                 key={reply._id}
-                className="ml-8 mt-2 bg-gray-600 p-2 rounded"
+                className="ml-8 mt-2 h-10 bg-gray-600 p-1 text-center flex rounded border"
               >
                 <p className="text-white">{reply.content}</p>
-                <p className="text-sm text-gray-400">By: {reply.userId.name}</p>
+                <p className="text-sm text-gray-400 ml-auto">
+                  By: {reply.userId.name}
+                </p>
               </div>
             ))}
           {replyingTo === comment._id && (

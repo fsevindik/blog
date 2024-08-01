@@ -2,10 +2,11 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import AdminIcon from "../icons/AdminIcon ";
 import AdminMessageBox from "./components/AdminMessageBox";
+import UserList from "./components/UserList ";
 
 const ADMIN_ID = "66a0e182a8e577dcb198e92c";
 
-const Admin = () => {
+const Admin: React.FC = () => {
   const [showMessageBar, setShowMessageBar] = useState(false);
 
   const toggleMessageBar = () => {
@@ -54,6 +55,9 @@ const Admin = () => {
           </div>
         </div>
       )}
+      <div className="w-full p-4">
+        <UserList />
+      </div>
     </div>
   );
 };

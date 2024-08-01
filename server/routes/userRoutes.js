@@ -5,6 +5,17 @@ import User from "../models/userModel.js";
 
 const router = express.Router();
 
+// Get all users
+router.get("/", async (req, res) => {
+  try {
+    const users = await User.find().select("_id name email online");
+    res.json(users);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send({ message: error.message });
+  }
+});
+
 // register
 router.post("/register", async (request, response) => {
   try {

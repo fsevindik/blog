@@ -30,7 +30,9 @@ const App: React.FC = () => {
           <Route path="/films/trends" element={<Trends />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/welcome" element={<WelcomePage />} />
-          <Route path="/admin" element={<Admin />} />
+          {user?.role === "admin" && (
+            <Route path="/admin" element={<Admin />} />
+          )}
         </Routes>
       </div>
       <Footer />

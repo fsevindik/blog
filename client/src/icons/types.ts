@@ -88,6 +88,7 @@ export interface Film {
   filmOverview: string;
   trailerUrl: string;
   averageRating: number;
+  description?: string;
 }
 
 export interface Reaction {
@@ -110,6 +111,7 @@ export interface User {
   role: string;
   _id: string;
   name: string;
+  email?: string;
 }
 
 export interface Comment {

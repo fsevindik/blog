@@ -1,26 +1,17 @@
 import axios from "axios";
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../../context/AuthContext";
+import { Message } from "../../icons/types";
 
 const API_URL = "http://localhost:3000";
 
-interface Message {
-  _id: string;
-  sender: { _id: string; name: string };
-  content: string;
-  sentAt: string;
-}
-
 const AdminMessageBox: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
-  const { user } = useAuth();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (user && user.role === "admin") {
-      fetchMessages();
-    }
-  }, [user]);
+    fetchMessages();
+  }, []);
 
   const fetchMessages = async () => {
     try {
@@ -28,51 +19,50 @@ const AdminMessageBox: React.FC = () => {
       setMessages(response.data);
     } catch (error) {
       console.error("Error fetching messages:", error);
-      setMessages([]);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleDelete = async (id: string) => {
     try {
-      await axios.delete(`${API_URL}/messages/${id}`);
+      await axios.delete(`${API_URL}/messages/delete/${id}`);
       setMessages(messages.filter((message) => message._id !== id));
     } catch (error) {
       console.error("Error deleting message:", error);
     }
   };
 
-  if (!user) {
-    return <div>Loading...</div>; // Kullanıcı bilgileri yükleniyor
-  }
-
-  if (user.role !== "admin") {
-    return <div>You do not have permission to view this page.</div>;
+  if (loading) {
+    return <div className="text-white">Loading...</div>;
   }
 
   return (
     <div className="flex flex-col h-full bg-gray-800 text-white">
-      <div className="flex-grow overflow-auto p-4">
+      <div className="flex-grow overflow-auto p-2 sm:p-4">
         {messages.length > 0 ? (
           messages.map((message) => (
             <div
               key={message._id}
-              className="p-4 my-2 rounded bg-gray-900 border border-gray-700 flex justify-between items-center"
+              className="p-3 sm:p-4 my-2 rounded bg-gray-900 border border-gray-700 flex flex-col sm:flex-row justify-between items-start sm:items-center"
             >
-              <div>
-                <div className="text-sm text-gray-400">
+              <div className="w-full sm:w-4/5">
+                <div className="text-xs sm:text-sm text-gray-400">
                   <strong>{message.sender.name}</strong> -{" "}
                   {dayjs(message.sentAt).format("YYYY-MM-DD HH:mm:ss")}
                 </div>
-                <div className="mt-2 text-lg">{message.content}</div>
+                <div className="mt-2 text-sm sm:text-lg break-words">
+                  {message.content}
+                </div>
               </div>
               <button
                 onClick={() => handleDelete(message._id)}
-                className="ml-4 text-red-500 hover:text-red-700"
+                className="mt-2 sm:mt-0 sm:ml-4 text-red-500 hover:text-red-700"
                 title="Delete message"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
+                  className="h-5 w-5 sm:h-6 sm:w-6"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"

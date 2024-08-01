@@ -135,3 +135,10 @@ export interface RateModalProps {
   film: Film;
   onRate: (rate: number) => Promise<void>;
 }
+
+export interface Message {
+  _id: string;
+  sender: { _id: string; name: string };
+  content: string;
+  sentAt: string;
+}

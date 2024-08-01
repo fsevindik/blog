@@ -92,18 +92,26 @@ router.delete("/:messageId", async (req, res) => {
 });
 
 //
-router.delete("/:messageId", async (req, res) => {
+router.delete("/delete/:messageId", async (req, res) => {
   try {
+    console.log("Attempting to delete message with ID:", req.params.messageId);
+
     const message = await Message.findById(req.params.messageId);
     if (!message) {
+      console.log("Message not found");
       return res.status(404).json({ message: "Message not found" });
     }
 
-    await Message.findByIdAndDelete(req.params.messageId);
+    const result = await Message.findByIdAndDelete(req.params.messageId);
+    console.log("Delete result:", result);
+
     res.json({ message: "Message deleted successfully" });
   } catch (error) {
     console.error("Error deleting message:", error);
-    res.status(500).json({ message: error.message });
+    res.status(500).json({
+      message: "An error occurred while deleting the message",
+      error: error.toString(),
+    });
   }
 });
 

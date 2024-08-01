@@ -34,7 +34,7 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ filmId }) => {
 
   const handleFavorite = async () => {
     if (!userId) {
-      alert("Lütfen giriş yapın!");
+      alert("Please log in!");
       return;
     }
 
@@ -61,7 +61,7 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ filmId }) => {
       {isFavorited ? (
         <HearthIcon size={16} className="text-red-700" />
       ) : (
-        <HeartIcon className="text-white" />
+        <HeartIcon className="text-white" size={20} />
       )}
     </button>
   );

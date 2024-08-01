@@ -11,7 +11,7 @@ interface Message {
   sentAt: string;
 }
 
-const MessageBox: React.FC<{ userId: string }> = ({ userId }) => {
+const MessageBox: React.FC<{ userId: string }> = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState("");
   const { user } = useAuth();
@@ -52,7 +52,39 @@ const MessageBox: React.FC<{ userId: string }> = ({ userId }) => {
 
   return (
     <div className="flex flex-col h-full bg-gray-700">
-      {/* ... Rest of your component code */}
+      <div className="flex-grow overflow-auto p-2">
+        {messages.length > 0 ? (
+          messages.map((message) => (
+            <div
+              key={message._id}
+              className={`rounded ${
+                message.sender === user!.id
+                  ? "bg-blue-500 self-end text-white"
+                  : "bg-gray-300"
+              }`}
+            >
+              {message.content}
+            </div>
+          ))
+        ) : (
+          <div className="text-white">No messages yet</div>
+        )}
+      </div>
+      <div className="flex mb-10 p-1 bg-slate-200">
+        <textarea
+          value={newMessage}
+          onChange={(e) => setNewMessage(e.target.value)}
+          placeholder="Type your message to filmolog  like:      dear admin you should add that movies too   --The Island-- "
+          className="flex-grow p-5 rounded bg-white text-black mr-2 min-h-20 shadow-lg "
+          rows={1}
+        />
+        <button
+          onClick={sendMessage}
+          className="bg-blue-500 text-white rounded p-2 h-16 w-15 hover:bg-blue-600"
+        >
+          Send
+        </button>
+      </div>
     </div>
   );
 };

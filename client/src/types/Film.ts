@@ -19,6 +19,9 @@ export interface Film {
   filmOverview: string;
   publishYear: ReactNode;
   description?: string;
+  bonusVideos?: string[];
+  honorableMentions?: string[];
+  averageRating?: number;
 }
 
 export interface Rating {

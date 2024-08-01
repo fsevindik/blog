@@ -9,7 +9,7 @@ interface AdminMessageBoxProps {
 
 const API_URL = "http://localhost:3000";
 
-const AdminMessageBox: React.FC<AdminMessageBoxProps> = ({ adminId }) => {
+const AdminMessageBox: React.FC<AdminMessageBoxProps> = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
 

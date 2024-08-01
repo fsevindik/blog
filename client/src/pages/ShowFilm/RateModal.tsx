@@ -13,9 +13,7 @@ const RateModal: React.FC<RateModalProps> = ({ film, onRate }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
-  const [userId, setUserId] = useState<string | null>(
-    localStorage.getItem("userId")
-  );
+  const [userId] = useState<string | null>(localStorage.getItem("userId"));
 
   const modalRef = useRef<HTMLDivElement>(null);
 

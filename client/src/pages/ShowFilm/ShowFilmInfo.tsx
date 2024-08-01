@@ -1,7 +1,9 @@
+// Example ShowFilmInfo component
+
 import axios from "axios";
 import React, { useState } from "react";
 import AverageIcon from "../../icons/AverageIcon";
-import { Film } from "../../icons/types";
+import { Film } from "../../icons/types"; // Adjust path if necessary
 import FavoriteButton from "../components/FavoriteButton";
 import RateModal from "./RateModal";
 import YouTubeEmbed from "./YouTubeEmbed";
@@ -24,7 +26,7 @@ const ShowFilmInfo: React.FC<FilmInfoProps> = ({
   film: initialFilm,
   userId,
 }) => {
-  const [film, setFilm] = useState(initialFilm);
+  const [film, setFilm] = useState<Film>(initialFilm);
   const [averageRating, setAverageRating] = useState(
     initialFilm.ratings.length > 0 ? initialFilm.ratings[0].rating : 0
   );
@@ -119,5 +121,5 @@ const ShowFilmInfo: React.FC<FilmInfoProps> = ({
     </div>
   );
 };
-ShowFilmInfo;
+
 export default ShowFilmInfo;

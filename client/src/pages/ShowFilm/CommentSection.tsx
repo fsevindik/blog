@@ -145,7 +145,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({
         >
           <div className="flex items-center mb-2">
             <button
-              onClick={() => handleLike(comment._id)}
+              onClick={() => handleLike(comment._id, comment.userId._id)}
               className={`mr-2 ${
                 comment.reaction &&
                 comment.reaction[0] &&

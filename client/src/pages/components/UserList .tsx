@@ -13,7 +13,7 @@ const UserList: React.FC = () => {
         const { data } = await axios.get<User[]>(`${API_URL}/users`);
         setUsers(data);
       } catch (error) {
-        console.error(error.message);
+        console.error((error as Error).message);
       }
     };
 

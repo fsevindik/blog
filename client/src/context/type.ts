@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { User } from "../icons/types";
+import { Film, User } from "../icons/types";
 
 export interface AuthContextType {
   user: User | null;
@@ -10,8 +10,12 @@ export interface AuthContextType {
 }
 
 export interface FilmContextProps {
+  films: Film[];
+  loading: boolean;
+  error: string | null;
   search: string;
   handleSearch: (newSearch: string) => void;
+  fetchFilms: () => void;
 }
 
 export interface FilmProviderProps {

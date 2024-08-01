@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Spinner from "../../componenets/Spinner";
-import { Film } from "../../types/Film";
+import { Film } from "../../icons/types";
 import BackButton from "../components/BackButton";
 import CommentSection from "./CommentSection";
 import FilmInfo from "./ShowFilmInfo";

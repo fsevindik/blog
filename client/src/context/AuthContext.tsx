@@ -41,7 +41,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       localStorage.setItem(LOCAL_STORAGE_KEY_USER_ID, _id);
       localStorage.setItem(LOCAL_STORAGE_KEY_USER_NAME, userData.name);
       localStorage.setItem(LOCAL_STORAGE_KEY_USER_ROLE, role);
-      setUser({ ...userData, id: _id, role });
+      setUser({ ...userData, _id, role });
     } catch (error) {
       console.error("Token validation error:", error);
       localStorage.removeItem(LOCAL_STORAGE_KEY_TOKEN);

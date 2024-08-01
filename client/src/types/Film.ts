@@ -26,3 +26,7 @@ export interface Rating {
   filmId: string;
   ratings: Rating[];
 }
+
+export interface FilmSliderProps {
+  films: Film[];
+}

@@ -12,7 +12,7 @@ export type IconProps = {
   className?: string;
   onMouseEnter?: React.MouseEventHandler<SVGSVGElement>;
   onMouseLeave?: React.MouseEventHandler<SVGSVGElement>;
-  isHovered?: boolean; // Yeni prop
+  isHovered?: boolean;
   disabled?: boolean;
 };
 

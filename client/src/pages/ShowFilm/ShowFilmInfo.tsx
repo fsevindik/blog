@@ -13,7 +13,7 @@ interface FilmInfoProps {
   userId: string | null;
 }
 
-const API_URL = "http://localhost:3000";
+const API_URL = "https://serverfilmolog.onrender.com";
 
 const extractYouTubeVideoId = (url: string): string | null => {
   const match = url.match(

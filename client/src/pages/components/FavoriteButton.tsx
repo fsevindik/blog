@@ -8,7 +8,7 @@ interface FavoriteButtonProps {
   userId: string | null;
 }
 
-const API_URL = "http://localhost:3000";
+const API_URL = "https://serverfilmolog.onrender.com";
 
 const FavoriteButton: React.FC<FavoriteButtonProps> = ({ filmId }) => {
   const [isFavorited, setIsFavorited] = useState<boolean>(false);

@@ -9,7 +9,7 @@ import BackButton from "../components/BackButton";
 import CommentSection from "./CommentSection";
 import FilmInfo from "./ShowFilmInfo";
 
-const API_URL = "http://localhost:3000";
+const API_URL = "https://serverfilmolog.onrender.com";
 const userId = localStorage.getItem("userId");
 
 const ShowFilm: React.FC = () => {

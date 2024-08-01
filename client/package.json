@@ -39,5 +39,5 @@
     "typescript": "^5.5.4",
     "vite": "^5.3.4"
   },
-  "proxy": "http://localhost:3000"
+  "proxy": "https://serverfilmolog.onrender.com"
 }

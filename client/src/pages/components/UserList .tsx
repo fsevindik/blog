@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { User } from "../../icons/types";
 
-const API_URL = "http://localhost:3000";
+const API_URL = "https://serverfilmolog.onrender.com";
 
 const UserList: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);

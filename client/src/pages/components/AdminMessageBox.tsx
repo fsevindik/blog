@@ -7,7 +7,7 @@ interface AdminMessageBoxProps {
   adminId: string;
 }
 
-const API_URL = "http://localhost:3000";
+const API_URL = "https://serverfilmolog.onrender.com";
 
 const AdminMessageBox: React.FC<AdminMessageBoxProps> = () => {
   const [messages, setMessages] = useState<Message[]>([]);

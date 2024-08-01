@@ -5,7 +5,7 @@ import Spinner from "../../componenets/Spinner";
 import StarIcon from "../../icons/StarIcon";
 import { Film } from "../../icons/types";
 import BackButton from "./BackButton";
-const API_URL = "http://localhost:3000";
+const API_URL = "https://serverfilmolog.onrender.com";
 
 const Trends = () => {
   const [films, setFilms] = useState<Film[]>([]);

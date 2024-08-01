@@ -34,9 +34,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const validateToken = async (token: string) => {
     try {
-      const response = await axios.get<User>("http://localhost:3000/users/me", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.get<User>(
+        "https://serverfilmolog.onrender.com/users/me",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       const { _id, role, ...userData } = response.data;
       localStorage.setItem(LOCAL_STORAGE_KEY_USER_ID, _id);
       localStorage.setItem(LOCAL_STORAGE_KEY_USER_NAME, userData.name);
@@ -53,10 +56,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const login = async (email: string, password: string) => {
-    const response = await axios.post("http://localhost:3000/users/login", {
-      email,
-      password,
-    });
+    const response = await axios.post(
+      "https://serverfilmolog.onrender.com/users/login",
+      {
+        email,
+        password,
+      }
+    );
     const { token, _id, role, ...userData } = response.data;
     localStorage.setItem(LOCAL_STORAGE_KEY_TOKEN, token);
     localStorage.setItem(LOCAL_STORAGE_KEY_USER_ID, _id);
@@ -66,11 +72,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const register = async (email: string, password: string, name: string) => {
-    const response = await axios.post("http://localhost:3000/users/register", {
-      email,
-      password,
-      name,
-    });
+    const response = await axios.post(
+      "https://serverfilmolog.onrender.com/users/register",
+      {
+        email,
+        password,
+        name,
+      }
+    );
     const { token, _id, role, ...userData } = response.data;
     localStorage.setItem(LOCAL_STORAGE_KEY_TOKEN, token);
     localStorage.setItem(LOCAL_STORAGE_KEY_USER_ID, _id);

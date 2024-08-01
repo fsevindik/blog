@@ -6,7 +6,7 @@ import useOutsideClick from "../../hooks/useOutsideClick";
 import StarIcon from "../../icons/StarIcon";
 import { RateModalProps } from "../../icons/types";
 
-const API_URL = "http://localhost:3000";
+const API_URL = "https://serverfilmolog.onrender.com";
 
 const RateModal: React.FC<RateModalProps> = ({ film, onRate }) => {
   const [isHovered, setIsHovered] = useState(false);

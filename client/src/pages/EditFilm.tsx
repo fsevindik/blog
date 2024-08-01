@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Spinner from "../componenets/Spinner";
 import { Film } from "../types/Film";
 import BackButton from "./components/BackButton";
-const API_URL = "http://localhost:3000";
+const API_URL = "https://serverfilmolog.onrender.com";
 
 interface Actor {
   name: string;

@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Comment, CommentSectionProps } from "../../icons/types";
 
-const API_URL = "http://localhost:3000";
+const API_URL = "https://serverfilmolog.onrender.com";
 
 const CommentSection: React.FC<CommentSectionProps> = ({
   filmId,

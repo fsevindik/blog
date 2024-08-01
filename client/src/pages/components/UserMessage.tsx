@@ -30,7 +30,7 @@ const UserMessage: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/messages/sendmessage",
+        "https://serverfilmolog.onrender.com/messages/sendmessage",
         {
           sender,
           recipient,

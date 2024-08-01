@@ -18,7 +18,7 @@ export const FilmProvider: React.FC<FilmProviderProps> = ({ children }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState<string>("");
-  const API_URL = "http://localhost:3000/films";
+  const API_URL = "https://serverfilmolog.onrender.com/films";
 
   const fetchFilms = async () => {
     setLoading(true);

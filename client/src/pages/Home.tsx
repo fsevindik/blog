@@ -11,7 +11,7 @@ const Home: React.FC = () => {
   const [films, setFilms] = useState<Film[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const API_URL = "http://localhost:3000";
+  const API_URL = "https://serverfilmolog.onrender.com";
 
   const { user } = useAuth();
   const userRole = user?.role || "visitor";

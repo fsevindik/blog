@@ -7,7 +7,7 @@ import Spinner from "../../componenets/Spinner";
 import { Film } from "../../types/Film";
 import RatingComponent from "./RatingComponent";
 
-const API_URL = "http://localhost:3000";
+const API_URL = "https://serverfilmolog.onrender.com";
 interface FilmDetailProps {
   film: Film;
 }

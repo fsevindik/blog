@@ -13,7 +13,7 @@ const FavoriteFilms: React.FC = () => {
     const fetchFavorites = async () => {
       try {
         const response = await axios.get<{ favorites: Film[] }>(
-          `http://localhost:3000/users/${userId}/favorites`
+          `https://serverfilmolog.onrender.com/users/${userId}/favorites`
         );
         setFavorites(response.data.favorites);
       } catch (error) {

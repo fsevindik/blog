@@ -94,7 +94,7 @@ const RateModal: React.FC<RateModalProps> = ({ film, onRate }) => {
           cursor: userId ? "pointer" : "not-allowed",
         }}
       >
-        <StarIcon isHovered={isHovered} disabled={!userId} />
+        <StarIcon isHovered={isHovered} disabled={!userId} size={4} />
         <span
           className={`ml-2 text-sm sm:text-base lg:text-lg xl:text-xl font-bold ${
             isHovered ? "text-white" : "text-gray-800"
@@ -140,6 +140,7 @@ const RateModal: React.FC<RateModalProps> = ({ film, onRate }) => {
                   onMouseEnter={() => handleHoverRating(index + 1)}
                   onMouseLeave={handleLeaveRating}
                   disabled={!userId}
+                  size={0}
                 />
               ))}
             </div>

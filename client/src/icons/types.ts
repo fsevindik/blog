@@ -12,6 +12,8 @@ export type IconProps = {
   className?: string;
   onMouseEnter?: React.MouseEventHandler<SVGSVGElement>;
   onMouseLeave?: React.MouseEventHandler<SVGSVGElement>;
+  isHovered?: boolean; // Yeni prop
+  disabled?: boolean;
 };
 
 export interface AuthFormProps {

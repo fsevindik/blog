@@ -1,4 +1,4 @@
-import { IconProps } from "react-toastify";
+import { IconProps } from "./types";
 
 const HeartIcon = ({ size = 24, className = "", ...props }: IconProps) => {
   return (

@@ -153,3 +153,11 @@ export interface CreateFilm {
   trailerUrl?: string;
   honorableMentions: string[];
 }
+
+export interface NavbarProps {
+  user: User | null;
+}
+
+export interface UserDropdownProps {
+  user: User | null;
+}

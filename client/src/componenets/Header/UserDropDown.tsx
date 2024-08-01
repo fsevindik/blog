@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { UserDropdownProps } from "../../icons/types";
 
-const UserDropdown: React.FC = () => {
+const UserDropdown: React.FC<UserDropdownProps> = () => {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const [showTooltip, setShowTooltip] = useState(false);

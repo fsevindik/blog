@@ -34,7 +34,7 @@ const MessageBarContainer: React.FC<MessageBarContainerProps> = ({
                 <AdminIcon />
               </h3>
             </div>
-            <button onClick={toggleMessageBar}>&times;</button>
+            <button onClick={toggleMessageBar}>×</button>
           </div>
           <div className="p-2 h-full overflow-y-auto">
             <MessageBox userId={userId} />

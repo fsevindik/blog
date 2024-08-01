@@ -3,9 +3,13 @@ import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { Message } from "../../icons/types";
 
+interface AdminMessageBoxProps {
+  adminId: string;
+}
+
 const API_URL = "http://localhost:3000";
 
-const AdminMessageBox: React.FC = () => {
+const AdminMessageBox: React.FC<AdminMessageBoxProps> = ({ adminId }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
 

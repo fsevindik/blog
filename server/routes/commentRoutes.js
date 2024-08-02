@@ -93,22 +93,56 @@ router.post("/:commentId/replies", async (req, res) => {
 });
 
 // Like or unlike a comment
-router.post("/:commentId/likes", async (req, res) => {
-  const { filmId, userId, content } = req.body;
-
+router.post("/:commentId/like", async (req, res) => {
   try {
-    const newComment = new Comment({
-      filmId,
-      userId,
-      content,
-      reaction: { like: 0, usersLiked: [] },
-    });
+    const { commentId } = req.params;
+    const { userId } = req.body;
 
-    const savedComment = await newComment.save();
-    res.status(201).json(savedComment);
+    const comment = await Comment.findById(commentId);
+    if (!comment) {
+      return res.status(404).json({ message: "Comment not found" });
+    }
+
+    if (!comment.reaction) {
+      comment.reaction = { like: 0, usersLiked: [] };
+    }
+
+    const userLikedIndex = comment.reaction.usersLiked.indexOf(userId);
+
+    if (userLikedIndex === -1) {
+      comment.reaction.usersLiked.push(userId);
+      comment.reaction.like += 1;
+    } else {
+      comment.reaction.usersLiked.splice(userLikedIndex, 1);
+      comment.reaction.like -= 1;
+    }
+
+    const updatedComment = await comment.save();
+    res.json(updatedComment);
   } catch (error) {
-    console.error("Error creating comment:", error);
-    res.status(500).json({ message: "Server error", error });
+    console.error("Error updating like:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+// Get  who liked a comment
+router.get("/:commentId/likes", async (req, res) => {
+  try {
+    const { commentId } = req.params;
+
+    const comment = await Comment.findById(commentId).populate(
+      "reaction.usersLiked",
+      "name"
+    );
+    if (!comment) {
+      return res.status(404).json({ message: "Comment not found" });
+    }
+
+    const likedUsers = comment.reaction ? comment.reaction.usersLiked : [];
+    res.json(likedUsers);
+  } catch (error) {
+    console.error("Error fetching liked users:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 

@@ -1,3 +1,4 @@
+import { Tooltip } from "@material-ui/core";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Comment, CommentSectionProps } from "../../icons/types";
@@ -15,6 +16,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({
   const [visibleReplies, setVisibleReplies] = useState<{
     [key: string]: boolean;
   }>({});
+  const [likedComments, setLikedComments] = useState<Set<string>>(new Set());
 
   const userId = localStorage.getItem("userId");
   const userName = localStorage.getItem("userName");
@@ -32,6 +34,16 @@ const CommentSection: React.FC<CommentSectionProps> = ({
         `${API_URL}/comments/film/${filmId}`
       );
       setComments(response.data);
+      const liked = new Set(
+        response.data
+          .filter(
+            (comment) =>
+              comment.reaction &&
+              comment.reaction.usersLiked.includes(currentUserId)
+          )
+          .map((comment) => comment._id)
+      );
+      setLikedComments(liked);
     } catch (error) {
       console.error("Error fetching comments:", error);
     }
@@ -39,7 +51,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({
 
   const handleCommentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!currentUserId || !newComment.trim() || !filmId) return;
+    if (!userId || !newComment.trim() || !filmId) return;
 
     try {
       await axios.post(`${API_URL}/comments`, {
@@ -55,7 +67,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({
   };
 
   const handleReplySubmit = async (commentId: string) => {
-    if (!currentUserId || !replyContent.trim()) return;
+    if (!userId || !replyContent.trim()) return;
 
     try {
       await axios.post(`${API_URL}/comments/${commentId}/replies`, {
@@ -71,7 +83,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({
   };
 
   const handleLike = async (commentId: string, commentUserId: string) => {
-    if (!currentUserId) return;
+    if (!userId) return;
     if (currentUserId === commentUserId) {
       console.log("You can't like your own comment");
       return;
@@ -92,6 +104,16 @@ const CommentSection: React.FC<CommentSectionProps> = ({
           comment._id === commentId ? updatedComment : comment
         )
       );
+
+      setLikedComments((prev) => {
+        const newSet = new Set(prev);
+        if (updatedComment.reaction.usersLiked.includes(currentUserId)) {
+          newSet.add(commentId);
+        } else {
+          newSet.delete(commentId);
+        }
+        return newSet;
+      });
     } catch (error) {
       console.error("Error liking comment:", error);
     }
@@ -104,39 +126,48 @@ const CommentSection: React.FC<CommentSectionProps> = ({
     }));
   };
 
-  if (!userId || !userName) {
-    return (
-      <div className="flex my-2 justify-center bg-red-700 p-2 rounded-lg shadow-lg w-full max-w-3xl mx-auto text-white overflow-hidden">
-        <p className="text-center">
-          You need to login to comment and for many other features.
-        </p>
-        ⚠️
-      </div>
-    );
-  }
+  const fetchLikedUsers = async (commentId: string) => {
+    try {
+      const response = await axios.get(
+        `${API_URL}/comments/${commentId}/likes`
+      );
+      return response.data.map((user: any) => user.name).join(", ");
+    } catch (error) {
+      console.error("Error fetching liked users:", error);
+      return "";
+    }
+  };
 
   return (
     <div className="my-4 bg-gray-800 p-4 rounded-lg shadow-lg w-full max-w-3xl mx-auto">
       <h2 className="text-xl font-semibold text-white mb-4">Comments</h2>
-      <div className="border border-white flex items-center">
-        <form
-          onSubmit={handleCommentSubmit}
-          className="flex w-full items-center p-2"
-        >
-          <textarea
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-            className="flex-grow p-2 border rounded bg-gray-700 text-white mr-2"
-            placeholder="Write a comment here..."
-          />
-          <button
-            type="submit"
-            className="px-1 py-1 bg-red-600 text-white text-mmd rounded font-cursive hover:bg-blue-600"
+      {userId && userName ? (
+        <div className="border border-white flex items-center">
+          <form
+            onSubmit={handleCommentSubmit}
+            className="flex w-full items-center p-2"
           >
-            Send
-          </button>
-        </form>
-      </div>
+            <textarea
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+              className="flex-grow p-2 border rounded bg-gray-700 text-white mr-2"
+              placeholder="Write a comment here..."
+            />
+            <button
+              type="submit"
+              className="px-1 py-1 bg-red-600 text-white text-mmd rounded font-cursive hover:bg-blue-600"
+            >
+              Send
+            </button>
+          </form>
+        </div>
+      ) : (
+        <div className="flex my-2 justify-center bg-red-700 p-2 rounded-lg shadow-lg w-full max-w-3xl mx-auto text-white overflow-hidden">
+          <p className="text-center">
+            You need to login to comment and for many other features. ⚠️
+          </p>
+        </div>
+      )}
 
       {comments.map((comment) => (
         <div
@@ -144,44 +175,62 @@ const CommentSection: React.FC<CommentSectionProps> = ({
           className="bg-gray-900 p-4 rounded-lg mb-4 border border-yellow-500"
         >
           <div className="flex items-center mb-2">
-            <button
-              onClick={() => handleLike(comment._id, comment.userId._id)}
-              className={`mr-2 ${
-                comment.reaction &&
-                comment.reaction[0] &&
-                comment.reaction[0].usersLiked &&
-                comment.reaction[0].usersLiked.includes(currentUserId)
-                  ? "text-blue-500"
-                  : "text-gray-400"
-              } hover:text-blue-600`}
-            >
-              👍{" "}
-              {comment.reaction && comment.reaction[0]
-                ? comment.reaction[0].like
-                : 0}
-            </button>
+            {userId ? (
+              <Tooltip title={() => fetchLikedUsers(comment._id)}>
+                <button
+                  onClick={() => handleLike(comment._id, comment.userId._id)}
+                  className={`mr-2 ${
+                    likedComments.has(comment._id)
+                      ? "text-blue-500"
+                      : "text-gray-400"
+                  } hover:text-blue-600`}
+                >
+                  👍 {comment.reaction ? comment.reaction.like : 0}
+                </button>
+              </Tooltip>
+            ) : (
+              <button
+                className={`mr-2 text-gray-400 cursor-not-allowed`}
+                disabled
+              >
+                👍 {comment.reaction ? comment.reaction.like : 0}
+              </button>
+            )}
             <p className="text-white">{comment.content}</p>
           </div>
           <p className="text-sm text-gray-400 border-b border-yellow-500">
             By: {comment.userId.name}
           </p>
           <div className="flex items-center mt-2">
-            <button
-              onClick={() => setReplyingTo(comment._id)}
-              className="text-yellow-500 hover:text-white hover:scale-90 text-sm p-1 rounded-md bg-slate-600 hover:bg-yellow-500"
-            >
-              Reply
-            </button>
-            <button
-              onClick={() => toggleRepliesVisibility(comment._id)}
-              className={`ml-4 text-sm hover:text-white hover:scale-95 p-1 rounded-md bg-slate-600 hover:bg-yellow-500 ${
-                comment.replies && comment.replies.length > 0
-                  ? "text-blue-400"
-                  : "text-gray-400"
-              }`}
-            >
-              {visibleReplies[comment._id] ? "Hide Replies" : "Show Replies"}
-            </button>
+            {userId ? (
+              <>
+                <button
+                  onClick={() => setReplyingTo(comment._id)}
+                  className="text-yellow-500 hover:text-white hover:scale-90 text-sm p-1 rounded-md bg-slate-600 hover:bg-yellow-500"
+                >
+                  Reply
+                </button>
+                <button
+                  onClick={() => toggleRepliesVisibility(comment._id)}
+                  className={`ml-4 text-sm hover:text-white hover:scale-95 p-1 rounded-md bg-slate-600 hover:bg-yellow-500 ${
+                    comment.replies && comment.replies.length > 0
+                      ? "text-blue-400"
+                      : "text-gray-400"
+                  }`}
+                >
+                  {visibleReplies[comment._id]
+                    ? "Hide Replies"
+                    : "Show Replies"}
+                </button>
+              </>
+            ) : (
+              <button
+                className="text-gray-400 cursor-not-allowed text-sm p-1 rounded-md bg-slate-600"
+                disabled
+              >
+                Reply
+              </button>
+            )}
           </div>
           {visibleReplies[comment._id] &&
             comment.replies &&

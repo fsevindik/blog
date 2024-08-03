@@ -16,44 +16,43 @@ router.get("/", async (req, res) => {
   }
 });
 
-// register
-router.post("/register", async (request, response) => {
+// Register
+router.post("/register", async (req, res) => {
   try {
-    const { email, password, name } = request.body;
-    const user = await User.create({ email, password, name });
+    const { email, password, name } = req.body;
+    const user = await User.create({ email, password, name, online: true });
     console.log("New user created");
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "30d",
     });
 
-    return response.status(201).json({
-      _id: user._id, // dont forget to type like _id   not .id for fe
+    res.status(201).json({
+      _id: user._id,
       name: user.name,
       email: user.email,
       token,
       role: user.role,
+      online: user.online,
     });
   } catch (error) {
     console.log(error.message);
-    response.status(500).send({ message: error.message });
+    res.status(500).send({ message: error.message });
   }
 });
 
-//  login
-router.post("/login", async (request, response) => {
-  const { email, password } = request.body;
-
+//login
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
     if (user && (await user.matchPassword(password))) {
-      console.log("User logged in successfully");
-
+      user.online = true;
+      await user.save();
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
         expiresIn: "30d",
       });
-
-      return response.status(200).json({
+      return res.status(200).json({
         _id: user._id,
         name: user.name,
         email: user.email,
@@ -61,20 +60,40 @@ router.post("/login", async (request, response) => {
         role: user.role,
       });
     } else {
-      return response
-        .status(401)
-        .json({ message: "Invalid email or password" });
+      return res.status(401).json({ message: "Invalid email or password" });
     }
   } catch (error) {
     console.log(error.message);
-    response.status(500).send({ message: error.message });
+    res.status(500).send({ message: error.message });
   }
 });
 
-// Get user by- ID
-router.get("/me", async (req, res) => {
+// Logout
+router.post("/logout", async (req, res) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) return res.status(401).send("No token provided");
+
   try {
-    const token = req.headers.authorization.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id);
+    if (user) {
+      user.online = false;
+      await user.save();
+      res.status(200).send("User logged out and status updated");
+    } else {
+      res.status(404).send("User not found");
+    }
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+});
+// Get user by ID
+router.get("/me", async (req, res) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) return res.status(401).send("No token provided");
+
+  try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(decoded.id);
     if (user) {
@@ -100,9 +119,7 @@ router.get("/:userId/favorites", async (req, res) => {
     const user = await User.findById(userId).populate("favorites");
 
     if (user) {
-      res.json({
-        favorites: user.favorites,
-      });
+      res.json({ favorites: user.favorites });
     } else {
       res.status(404).send("User not found");
     }
@@ -119,7 +136,6 @@ router.post("/:userId/favorites/:filmId", async (req, res) => {
     const filmId = new mongoose.Types.ObjectId(req.params.filmId);
 
     const user = await User.findById(userId);
-
     if (user) {
       if (!user.favorites.includes(filmId)) {
         user.favorites.push(filmId);
@@ -150,6 +166,26 @@ router.delete("/:userId/favorites/:filmId", async (req, res) => {
       );
       await user.save();
       res.status(200).send("Film removed from favorites");
+    } else {
+      res.status(404).send("User not found");
+    }
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send({ message: error.message });
+  }
+});
+
+// Update user online status
+router.patch("/:userId/online", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const { online } = req.body;
+
+    const user = await User.findById(userId);
+    if (user) {
+      user.online = online;
+      await user.save();
+      res.status(200).send("User online status updated");
     } else {
       res.status(404).send("User not found");
     }

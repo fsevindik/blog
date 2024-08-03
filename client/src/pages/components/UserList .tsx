@@ -18,16 +18,19 @@ const UserList: React.FC = () => {
     };
 
     fetchUsers();
+    const intervalId = setInterval(fetchUsers, 30000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
-    <div className="md:w-1/2 lg:w-1/3  sm:w-full  bg-gray-600">
+    <div className="md:w-1/2 lg:w-1/3 sm:w-full bg-gray-600">
       <h2 className="text-2xl font-semibold mb-4 border-b">Users</h2>
-      <div className="flex flex-col gap-2   ">
+      <div className="flex flex-col gap-2">
         {users.map((user) => (
           <div
             key={user._id}
-            className="p-2 rounded-lg shadow-md flex items-center "
+            className="p-2 rounded-lg shadow-md flex items-center"
           >
             <div className="flex items-center space-x-5">
               <span

@@ -4,22 +4,25 @@ import { Film } from "../models/filmModel.js";
 
 const router = express.Router();
 
-// take all comments for a film
+// Get all comments for a film
 router.get("/film/:filmId", async (req, res) => {
   try {
     const { filmId } = req.params;
-
     const comments = await Comment.find({ filmId })
       .populate("userId", "name")
+      .populate("replies.userId", "name")
       .sort("-createdAt");
+
+    console.log("Populated comments:", JSON.stringify(comments, null, 2));
 
     res.json(comments);
   } catch (error) {
+    console.error("Error fetching comments:", error);
     res.status(500).json({ message: error.message });
   }
 });
 
-// add enw comment
+// Add new comment
 router.post("/", async (req, res) => {
   try {
     const film = await Film.findById(req.body.filmId);
@@ -34,13 +37,18 @@ router.post("/", async (req, res) => {
     });
 
     const savedComment = await newComment.save();
-    res.status(201).json(savedComment);
+    const populatedComment = await Comment.findById(savedComment._id).populate(
+      "userId",
+      "name"
+    );
+
+    res.status(201).json(populatedComment);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
 
-// update
+// Update comment
 router.put("/:commentId", async (req, res) => {
   try {
     const comment = await Comment.findById(req.params.commentId);
@@ -56,7 +64,7 @@ router.put("/:commentId", async (req, res) => {
   }
 });
 
-// delete comment
+// Delete comment
 router.delete("/:commentId", async (req, res) => {
   try {
     const comment = await Comment.findById(req.params.commentId);
@@ -71,7 +79,7 @@ router.delete("/:commentId", async (req, res) => {
   }
 });
 
-// add comment
+// Add reply to a comm.
 router.post("/:commentId/replies", async (req, res) => {
   try {
     const comment = await Comment.findById(req.params.commentId);
@@ -85,14 +93,19 @@ router.post("/:commentId/replies", async (req, res) => {
     };
 
     comment.replies.push(newReply);
-    const updatedComment = await comment.save();
+    await comment.save();
+
+    const updatedComment = await Comment.findById(req.params.commentId)
+      .populate("userId", "name")
+      .populate("replies.userId", "name");
+
     res.status(201).json(updatedComment);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
 
-// Like or unlike a comment
+// Like or unlike comm.
 router.post("/:commentId/like", async (req, res) => {
   try {
     const { commentId } = req.params;
@@ -125,7 +138,7 @@ router.post("/:commentId/like", async (req, res) => {
   }
 });
 
-// Get  who liked a comment
+// Get users who liked a comment
 router.get("/:commentId/likes", async (req, res) => {
   try {
     const { commentId } = req.params;

@@ -176,13 +176,20 @@ const CommentSection: React.FC<CommentSectionProps> = ({
         >
           <div className="flex items-center justify-between mb-2">
             <p className="text-white">{comment.content}</p>
-            <p className="text-sm text-yellow-500">
-              By: {comment.userId ? comment.userId.name : "Unknown User"}
+            <p className="text-sm text-yellow-500 mt-auto">
+              {comment.userId ? comment.userId.name : "Unknown User"}
             </p>
           </div>
           <div className="flex items-center mb-2">
             {userId ? (
-              <Tooltip title={() => fetchLikedUsers(comment._id)}>
+              <Tooltip
+                title={async () => await fetchLikedUsers(comment._id)}
+                className={`mr-2 ${
+                  likedComments.has(comment._id)
+                    ? "text-blue-500"
+                    : "text-gray-400"
+                } hover:text-blue-600`}
+              >
                 <button
                   onClick={() => handleLike(comment._id, comment.userId._id)}
                   className={`mr-2 ${
@@ -242,8 +249,11 @@ const CommentSection: React.FC<CommentSectionProps> = ({
                 className="ml-8 mt-2 bg-gray-700 p-3 rounded-md border border-gray-600"
               >
                 <p className="text-white mb-1">{reply.content}</p>
-                <p className="text-sm text-yellow-400 text-right">
-                  By: {reply.userId ? reply.userId.name : "Unknown User"}
+                <p className="text-sm text-yellow-400 text-right mt-auto">
+                  By:{" "}
+                  {reply.userId && reply.userId.name
+                    ? reply.userId.name
+                    : "Unknown User"}
                 </p>
               </div>
             ))}

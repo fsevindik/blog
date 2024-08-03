@@ -1,4 +1,4 @@
-import { Tooltip } from "@material-ui/core";
+import { Tooltip } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Comment, CommentSectionProps } from "../../icons/types";
@@ -13,6 +13,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({
   const [newComment, setNewComment] = useState("");
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
   const [replyContent, setReplyContent] = useState("");
+  const [likedUsers, setLikedUsers] = useState<{ [key: string]: string }>({});
   const [visibleReplies, setVisibleReplies] = useState<{
     [key: string]: boolean;
   }>({});
@@ -20,6 +21,18 @@ const CommentSection: React.FC<CommentSectionProps> = ({
 
   const userId = localStorage.getItem("userId");
   const userName = localStorage.getItem("userName");
+  useEffect(() => {
+    const fetchLikedUsersData = async () => {
+      const usersMap: { [key: string]: string } = {};
+      for (const comment of comments) {
+        const likedUsersString = await fetchLikedUsers(comment._id);
+        usersMap[comment._id] = likedUsersString;
+      }
+      setLikedUsers(usersMap);
+    };
+
+    fetchLikedUsersData();
+  }, [comments]);
 
   useEffect(() => {
     if (filmId) {
@@ -183,7 +196,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({
           <div className="flex items-center mb-2">
             {userId ? (
               <Tooltip
-                title={async () => await fetchLikedUsers(comment._id)}
+                title={likedUsers[comment._id] || "Loading..."}
                 className={`mr-2 ${
                   likedComments.has(comment._id)
                     ? "text-blue-500"

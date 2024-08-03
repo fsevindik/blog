@@ -263,7 +263,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({
               >
                 <p className="text-white mb-1">{reply.content}</p>
                 <p className="text-sm text-yellow-400 text-right mt-auto">
-                  By:{" "}
+                   {" "}
                   {reply.userId && reply.userId.name
                     ? reply.userId.name
                     : "Unknown User"}

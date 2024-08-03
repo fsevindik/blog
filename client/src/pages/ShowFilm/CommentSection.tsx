@@ -174,6 +174,12 @@ const CommentSection: React.FC<CommentSectionProps> = ({
           key={comment._id}
           className="bg-gray-900 p-4 rounded-lg mb-4 border border-yellow-500"
         >
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-white">{comment.content}</p>
+            <p className="text-sm text-yellow-500">
+              By: {comment.userId ? comment.userId.name : "Unknown User"}
+            </p>
+          </div>
           <div className="flex items-center mb-2">
             {userId ? (
               <Tooltip title={() => fetchLikedUsers(comment._id)}>
@@ -196,11 +202,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({
                 👍 {comment.reaction ? comment.reaction.like : 0}
               </button>
             )}
-            <p className="text-white">{comment.content}</p>
           </div>
-          <p className="text-sm text-gray-400 border-b border-yellow-500">
-            By: {comment.userId.name}
-          </p>
           <div className="flex items-center mt-2">
             {userId ? (
               <>
@@ -237,11 +239,11 @@ const CommentSection: React.FC<CommentSectionProps> = ({
             comment.replies.map((reply) => (
               <div
                 key={reply._id}
-                className="ml-8 mt-2 h-10 bg-gray-600 p-1 text-center flex rounded border"
+                className="ml-8 mt-2 bg-gray-700 p-3 rounded-md border border-gray-600"
               >
-                <p className="text-white">{reply.content}</p>
-                <p className="text-sm text-gray-400 ml-auto">
-                  By: {reply.userId.name}
+                <p className="text-white mb-1">{reply.content}</p>
+                <p className="text-sm text-yellow-400 text-right">
+                  By: {reply.userId ? reply.userId.name : "Unknown User"}
                 </p>
               </div>
             ))}

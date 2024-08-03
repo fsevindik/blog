@@ -61,25 +61,25 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
             </p>
           </div>
 
-          <div className="flex flex-col lg:flex-row items-center w-full lg:w-auto">
-            {location.pathname === "/" && (
-              <div className="flex items-center w-full lg:w-auto mb-4 lg:mb-0 lg:mr-4">
-                <input
-                  type="text"
-                  placeholder="Search from My List"
-                  className="p-2 w-full lg:w-64 bg-gray-700 text-white border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
-                  ref={inputRef}
-                  onChange={handleInputChange}
-                />
-                <button
-                  className="p-2 w-1/4 lg:w-auto bg-yellow-500 text-white rounded-md ml-2 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500"
-                  onClick={handleButtonClick}
-                >
-                  Search
-                </button>
-              </div>
-            )}
+          {location.pathname === "/" && (
+            <div className="flex-grow flex items-center justify-center mb-4 lg:mb-0 lg:mr-4">
+              <input
+                type="text"
+                placeholder="Search from My List"
+                className="p-2 w-full lg:w-64 bg-gray-700 text-white border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                ref={inputRef}
+                onChange={handleInputChange}
+              />
+              <button
+                className="p-2 w-1/4 lg:w-auto bg-yellow-500 text-white rounded-md ml-2 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                onClick={handleButtonClick}
+              >
+                Search
+              </button>
+            </div>
+          )}
 
+          <div className="flex items-center lg:ml-auto">
             <Navbar user={user} />
           </div>
         </div>

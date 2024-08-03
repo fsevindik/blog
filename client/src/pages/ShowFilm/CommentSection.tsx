@@ -259,10 +259,10 @@ const CommentSection: React.FC<CommentSectionProps> = ({
             comment.replies.map((reply) => (
               <div
                 key={reply._id}
-                className="ml-8 mt-2 bg-gray-700 p-3 rounded-md border border-gray-600"
+                className="ml-8 mt-2  bg-gray-700   rounded-r-md rounded-bl-md border border-gray-600"
               >
-                <p className="text-white mb-1">{reply.content}</p>
-                <p className="text-sm text-yellow-400 text-right mt-auto">
+                <p className="text-white mb-1 mt-2">{reply.content}</p>
+                <p className="text-sm text-yellow-400 text-right mt-auto p-1">
                    {" "}
                   {reply.userId && reply.userId.name
                     ? reply.userId.name

@@ -8,7 +8,9 @@ const router = express.Router();
 // Get all users
 router.get("/", async (req, res) => {
   try {
-    const users = await User.find().select("_id name email online");
+    const users = await User.find().select(
+      "_id name email online lastActiveAt"
+    );
     res.json(users);
   } catch (error) {
     console.error(error.message);
@@ -20,7 +22,13 @@ router.get("/", async (req, res) => {
 router.post("/register", async (req, res) => {
   try {
     const { email, password, name } = req.body;
-    const user = await User.create({ email, password, name, online: true });
+    const user = await User.create({
+      email,
+      password,
+      name,
+      online: true,
+      lastActiveAt: new Date(),
+    });
     console.log("New user created");
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
@@ -34,6 +42,7 @@ router.post("/register", async (req, res) => {
       token,
       role: user.role,
       online: user.online,
+      lastActiveAt: user.lastActiveAt,
     });
   } catch (error) {
     console.log(error.message);
@@ -41,13 +50,14 @@ router.post("/register", async (req, res) => {
   }
 });
 
-//login
+// Login
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
     if (user && (await user.matchPassword(password))) {
       user.online = true;
+      user.lastActiveAt = new Date();
       await user.save();
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
         expiresIn: "30d",
@@ -58,6 +68,8 @@ router.post("/login", async (req, res) => {
         email: user.email,
         token,
         role: user.role,
+        online: user.online,
+        lastActiveAt: user.lastActiveAt,
       });
     } else {
       return res.status(401).json({ message: "Invalid email or password" });
@@ -88,6 +100,7 @@ router.post("/logout", async (req, res) => {
     res.status(500).send({ message: error.message });
   }
 });
+
 // Get user by ID
 router.get("/me", async (req, res) => {
   const token = req.headers.authorization?.split(" ")[1];
@@ -102,6 +115,8 @@ router.get("/me", async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        online: user.online,
+        lastActiveAt: user.lastActiveAt,
       });
     } else {
       res.status(404).send("User not found");
@@ -175,7 +190,7 @@ router.delete("/:userId/favorites/:filmId", async (req, res) => {
   }
 });
 
-// Update user online status
+// Update user  status
 router.patch("/:userId/online", async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -184,6 +199,7 @@ router.patch("/:userId/online", async (req, res) => {
     const user = await User.findById(userId);
     if (user) {
       user.online = online;
+      user.lastActiveAt = new Date();
       await user.save();
       res.status(200).send("User online status updated");
     } else {
@@ -191,6 +207,28 @@ router.patch("/:userId/online", async (req, res) => {
     }
   } catch (error) {
     console.error(error.message);
+    res.status(500).send({ message: error.message });
+  }
+});
+
+// Update user online status
+router.patch("/update-online-status", async (req, res) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) return res.status(401).send("No token provided");
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id);
+    if (user) {
+      user.online = true;
+      user.lastActiveAt = new Date();
+      await user.save();
+      res.status(200).send("User online status updated");
+    } else {
+      res.status(404).send("User not found");
+    }
+  } catch (error) {
+    console.log(error.message);
     res.status(500).send({ message: error.message });
   }
 });

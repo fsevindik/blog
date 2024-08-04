@@ -109,6 +109,7 @@ export interface CommentSectionProps {
 }
 
 export interface User {
+  lastActiveAt: string;
   online: boolean;
   id: string | null;
   role: string;

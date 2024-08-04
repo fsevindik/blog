@@ -26,3 +26,4 @@ The link can take a minute to load because of render.com's cold-start mechanism.
 - Context API (useContext Hook)
 - Tailwind CSS
 - Axios
+- Tooltip and React-Toastify

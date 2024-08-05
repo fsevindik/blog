@@ -21,32 +21,21 @@ const CommentSection: React.FC<CommentSectionProps> = ({
 
   const userId = localStorage.getItem("userId");
   const userName = localStorage.getItem("userName");
-  useEffect(() => {
-    const fetchLikedUsersData = async () => {
-      const usersMap: { [key: string]: string } = {};
-      for (const comment of comments) {
-        const likedUsersString = await fetchLikedUsers(comment._id);
-        usersMap[comment._id] = likedUsersString;
-      }
-      setLikedUsers(usersMap);
-    };
-
-    fetchLikedUsersData();
-  }, [comments]);
 
   useEffect(() => {
     if (filmId) {
-      fetchComments();
+      fetchCommentsAndLikedUsers();
     }
   }, [filmId]);
 
-  const fetchComments = async () => {
+  const fetchCommentsAndLikedUsers = async () => {
     if (!filmId) return;
     try {
       const response = await axios.get<Comment[]>(
         `${API_URL}/comments/film/${filmId}`
       );
       setComments(response.data);
+
       const liked = new Set(
         response.data
           .filter(
@@ -57,8 +46,15 @@ const CommentSection: React.FC<CommentSectionProps> = ({
           .map((comment) => comment._id)
       );
       setLikedComments(liked);
+
+      const usersMap: { [key: string]: string } = {};
+      for (const comment of response.data) {
+        const likedUsersString = await fetchLikedUsers(comment._id);
+        usersMap[comment._id] = likedUsersString;
+      }
+      setLikedUsers(usersMap);
     } catch (error) {
-      console.error("Error fetching comments:", error);
+      console.error("Error fetching comments and liked users:", error);
     }
   };
 
@@ -73,7 +69,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({
         content: newComment,
       });
       setNewComment("");
-      fetchComments();
+      fetchCommentsAndLikedUsers();
     } catch (error) {
       console.error("Error submitting comment:", error);
     }
@@ -89,7 +85,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({
       });
       setReplyingTo(null);
       setReplyContent("");
-      fetchComments();
+      fetchCommentsAndLikedUsers();
     } catch (error) {
       console.error("Error submitting reply:", error);
     }
@@ -110,23 +106,31 @@ const CommentSection: React.FC<CommentSectionProps> = ({
         }
       );
 
-      const updatedComment = response.data;
+      const updatedReaction = response.data.reaction;
 
       setComments((prevComments) =>
         prevComments.map((comment) =>
-          comment._id === commentId ? updatedComment : comment
+          comment._id === commentId
+            ? { ...comment, reaction: updatedReaction }
+            : comment
         )
       );
 
       setLikedComments((prev) => {
         const newSet = new Set(prev);
-        if (updatedComment.reaction.usersLiked.includes(currentUserId)) {
+        if (updatedReaction.usersLiked.includes(currentUserId)) {
           newSet.add(commentId);
         } else {
           newSet.delete(commentId);
         }
         return newSet;
       });
+
+      const likedUsersString = await fetchLikedUsers(commentId);
+      setLikedUsers((prev) => ({
+        ...prev,
+        [commentId]: likedUsersString,
+      }));
     } catch (error) {
       console.error("Error liking comment:", error);
     }
@@ -190,7 +194,9 @@ const CommentSection: React.FC<CommentSectionProps> = ({
           <div className="flex items-center justify-between mb-2">
             <p className="text-white">{comment.content}</p>
             <p className="text-sm text-yellow-500 mt-auto">
-              {comment.userId ? comment.userId.name : "Unknown User"}
+              {comment.userId && comment.userId.name
+                ? comment.userId.name
+                : "Unknown User"}
             </p>
           </div>
           <div className="flex items-center mb-2">
@@ -263,7 +269,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({
               >
                 <p className="text-white mb-1 mt-2">{reply.content}</p>
                 <p className="text-sm text-yellow-400 text-right mt-auto p-1">
-                   {" "}
+                  {" "}
                   {reply.userId && reply.userId.name
                     ? reply.userId.name
                     : "Unknown User"}

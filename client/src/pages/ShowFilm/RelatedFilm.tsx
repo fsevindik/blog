@@ -39,7 +39,7 @@ const RelatedFilms: React.FC = () => {
             <img
               src={film.posterImageUrlA}
               alt={film.title}
-              className="w-full h-40 object-cover rounded-lg shadow-md mb-2"
+              className="w-20 h-25 object-cover rounded-lg shadow-md mb-2"
             />
             <p className="text-center text-gray-900 font-semibold">
               {film.title}

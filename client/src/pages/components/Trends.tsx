@@ -56,7 +56,7 @@ const Trends = () => {
       <BackButton />
       <div className="mx-auto mt-5"></div>
       <div className="flex-grow w-full my-8 mx-auto max-w-6xl px-4">
-        <h2 className="text-4xl font-bold text-center mb-8 text-white border-b border-white p-1 font-extralight">
+        <h2 className="text-4xl font-bold text-center mb-8 text-white border-b border-white p-1">
           Top Rated
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">

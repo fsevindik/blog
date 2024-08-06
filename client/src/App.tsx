@@ -4,15 +4,16 @@ import Header from "./componenets/Header/Header";
 import { useAuth } from "./context/AuthContext";
 import Admin from "./pages/Admin";
 import Auth from "./pages/Auth/Auth";
+import Footer from "./pages/components/Footer";
+import MessageBarContainer from "./pages/components/MessageBarContainer";
+import Trends from "./pages/components/Trends";
 import CreateFilms from "./pages/CreateFilm";
 import DeleteFilm from "./pages/DeleteFilm";
 import EditFilm from "./pages/EditFilm";
 import Home from "./pages/Home";
+import RelatedFilms from "./pages/ShowFilm/RelatedFilm";
 import ShowFilm from "./pages/ShowFilm/ShowFilm";
 import WelcomePage from "./pages/WelcomePage";
-import Footer from "./pages/components/Footer";
-import MessageBarContainer from "./pages/components/MessageBarContainer";
-import Trends from "./pages/components/Trends";
 
 const App: React.FC = () => {
   const { user } = useAuth();
@@ -30,6 +31,7 @@ const App: React.FC = () => {
           <Route path="/films/trends" element={<Trends />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/welcome" element={<WelcomePage />} />
+          <Route path="/actor/:actorName" element={<RelatedFilms />} />
           {user?.role === "admin" && (
             <Route path="/admin" element={<Admin />} />
           )}

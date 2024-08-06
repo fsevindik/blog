@@ -162,4 +162,31 @@ router.get("/:id/averageRating", async (req, res) => {
   }
 });
 
+// Get films by actor name
+router.get("/actor/:actorName", async (req, res) => {
+  try {
+    const { actorName } = req.params;
+    console.log("Actor Name:", actorName);
+    const films = await Film.find({ "actors.name": actorName });
+
+    if (films.length === 0) {
+      return res.status(404).json({ message: "No films found for this actor" });
+    }
+
+    const simplifiedFilms = films.map((film) => ({
+      _id: film._id,
+      title: film.title,
+      posterImageUrlA: film.posterImageUrlA,
+    }));
+
+    return res.status(200).json({
+      actorName: actorName,
+      films: simplifiedFilms,
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+});
+
 export default router;

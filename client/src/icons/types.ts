@@ -1,5 +1,3 @@
-import { Key } from "readline";
-
 type Visibility = "visible" | "hidden" | "collapse";
 
 export type IconProps = {
@@ -74,7 +72,6 @@ export interface CommentProps {
 }
 
 export interface Actor {
-  _id: Key | null | undefined;
   name: string;
   imageUrl: string;
 }
@@ -160,17 +157,10 @@ export interface CreateFilm {
   trailerUrl?: string;
   honorableMentions: string[];
 }
-
 export interface NavbarProps {
   user: User | null;
 }
 
 export interface UserDropdownProps {
   user: User | null;
-}
-
-export interface Actor {
-  id: string;
-  name: string;
-  image: string;
 }

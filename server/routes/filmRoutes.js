@@ -91,7 +91,7 @@ router.put("/:id", async (req, res) => {
     if (!result) {
       return res.status(404).json({ message: "Film not found" });
     }
-    return res.status(200).send(result); // Return the updated film
+    return res.status(200).send(result);
   } catch (error) {
     console.log(error.message);
     res.status(500).send({ message: error.message });

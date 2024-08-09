@@ -13,7 +13,6 @@ const FilmsTable: React.FC<FilmsTableProps> = ({ films = [] }) => {
   const { user } = useAuth();
   const userRole = user?.role || "visitor";
 
-  // Filmleri alfabetik olarak sıralama
   const sortedFilms = films.sort((a, b) => a.title.localeCompare(b.title));
 
   return (

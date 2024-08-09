@@ -33,24 +33,26 @@ const RelatedFilms: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-4 bg-yellow-500 rounded-xl shadow-lg">
+    <div className="max-w-4xl mx-auto p-4 sm:p-6 bg-yellow-500 rounded-xl shadow-lg">
       <BackButton />
-      <h2 className="text-2xl font-bold mb-4 text-gray-900">
+      <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-gray-900">
         Films Featuring {actorName}
       </h2>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2 sm:gap-4">
         {films.map((film) => (
           <div
             key={film._id}
-            className="flex flex-col items-center cursor-pointer"
+            className="flex flex-col items-center cursor-pointer transition-all duration-300 hover:transform hover:scale-105"
             onClick={() => handleFilmClick(film._id)}
           >
-            <img
-              src={film.posterImageUrlA}
-              alt={film.title}
-              className="w-20 h-25 object-cover rounded-lg shadow-md mb-2 transition-transform duration-300 transform hover:scale-110"
-            />
-            <p className="text-center text-gray-900 font-semibold">
+            <div className="w-full aspect-[2/3] mb-2 sm:mb-3 overflow-hidden rounded-lg shadow-md">
+              <img
+                src={film.posterImageUrlA}
+                alt={film.title}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <p className="text-center text-gray-900 font-semibold text-xs sm:text-sm">
               {film.title}
             </p>
           </div>

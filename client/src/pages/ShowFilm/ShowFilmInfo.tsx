@@ -84,10 +84,10 @@ const ShowFilmInfo: React.FC<FilmInfoProps> = ({
           </p>
         </div>
         <div>
-          <h2 className="text-xl md:text-2xl font-semibold mb-2 text-gray-900">
-            Overview
+          <h2 className="text-xl md:text-2xl font-bold mb-2 text-gray-900">
+            Filmolog's View"
           </h2>
-          <p className="text-gray-800">{film.filmOverview}</p>
+          <p className="text-gray-800 font-cursive ">{film.filmOverview}</p>
         </div>
         <CastSection actors={film.actors} />
         <div className="flex flex-grow items-center">

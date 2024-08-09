@@ -13,6 +13,9 @@ const FilmsTable: React.FC<FilmsTableProps> = ({ films = [] }) => {
   const { user } = useAuth();
   const userRole = user?.role || "visitor";
 
+  // Filmleri alfabetik olarak sıralama
+  const sortedFilms = films.sort((a, b) => a.title.localeCompare(b.title));
+
   return (
     <div className="overflow-x-auto bg-gray-700 m-5 p-1">
       <h1 className="font-mono bg-gray-900 p-2">filmolog's prescription</h1>
@@ -36,7 +39,7 @@ const FilmsTable: React.FC<FilmsTableProps> = ({ films = [] }) => {
           </tr>
         </thead>
         <tbody>
-          {films.map((film) => (
+          {sortedFilms.map((film) => (
             <tr key={film._id} className="h-10 bg-gray-700">
               <td className="relative pl-5 rounded-md">
                 <Link
@@ -46,7 +49,7 @@ const FilmsTable: React.FC<FilmsTableProps> = ({ films = [] }) => {
                   <img
                     src={film.posterImageUrlA}
                     alt={film.title}
-                    className="h-12 w-12 object-cover mb-2 md:mb-0 md:h-16 md:w-16"
+                    className="h-16 w-16 object-cover mb-2 md:mb-0 md:h-16 md:w-16 sm:h-20 sm:w-20"
                   />
                   <span className="text-sm md:text-base ml-2  ">
                     {film.title}

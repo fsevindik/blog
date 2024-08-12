@@ -7,6 +7,7 @@ import Auth from "./pages/Auth/Auth";
 import Footer from "./pages/components/Footer";
 import MessageBarContainer from "./pages/components/MessageBarContainer";
 import Trends from "./pages/components/Trends";
+import WishList from "./pages/components/WishList";
 import CreateFilms from "./pages/CreateFilm";
 import DeleteFilm from "./pages/DeleteFilm";
 import EditFilm from "./pages/EditFilm";
@@ -41,6 +42,7 @@ const App: React.FC = () => {
       {user?.role === "visitor" && user?.id && (
         <MessageBarContainer userId={user.id} />
       )}
+      <WishList />
     </div>
   );
 };

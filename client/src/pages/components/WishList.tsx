@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ListIcon from "../../icons/ListIcon ";
 
 const WishList: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,13 +22,15 @@ const WishList: React.FC = () => {
   };
 
   return (
-    <div className="fixed top-4 left-4 cursor-poin ">
-      <button
-        className="bg-yellow-600 animate-pulse hover:bg-gray-700 text-white p-2 rounded-full focus:outline-none"
+    <div className="fixed top-4 left-4 cursor-pointer">
+      <div
         onClick={toggleWishList}
+        className={`bg-yellow-600 p-2 rounded-full hover:bg-gray-700 ${
+          !isOpen ? "animate-pulse" : ""
+        }`}
       >
-        {isOpen ? "Clsoe" : "Wishlist"}
-      </button>
+        <ListIcon className="text-white" size={2} />
+      </div>
       {isOpen && (
         <div className="mt-2 bg-white text-black p-2 rounded-lg shadow-lg w-48 sm:w-64">
           <h3 className="text-base font-semibold mb-2">Wish List</h3>

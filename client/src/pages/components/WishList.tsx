@@ -22,15 +22,15 @@ const WishList: React.FC = () => {
   };
 
   return (
-    <div className="fixed top-4 left-4 cursor-pointer z-50 ">
+    <div className="absolute top-4 left-4 cursor-pointer z-50">
       <div className="flex items-center mb-2">
         <div
           onClick={toggleWishList}
-          className={`bg-yellow-600 p-2 rounded-full hover:bg-gray-700 ${
+          className={`bg-gray-500 p-2 rounded-full hover:bg-gray-700 ${
             !isOpen ? "animate-pulse" : ""
           } w-12 h-12 flex items-center justify-center mr-2`}
         >
-          <ListIcon className="text-white " size={4} />
+          <ListIcon className="text-white" size={4} />
         </div>
       </div>
       {isOpen && (
@@ -49,7 +49,7 @@ const WishList: React.FC = () => {
               value={newWish}
               onChange={handleInputChange}
               placeholder="Add a film"
-              className="w-full p-2 m-2 border items-center border-gray-300 rounded  text-sm"
+              className="w-full p-2 m-2 border border-gray-300 rounded text-sm"
             />
           </div>
 

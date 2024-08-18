@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import FilmContext from "../../context/FilmDb";
 import useDebounce from "../../hooks/useDebounce";
 import DoctorIcon from "../../icons/DoctorIcon";
+import WishList from "../../pages/components/WishList";
 import Navbar from "../Navbar/Navbar";
 
 interface HeaderProps {
@@ -54,8 +55,12 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
     <header className="bg-gray-900 text-white p-4 shadow-lg">
       <div className="container mx-auto">
         <div className="flex flex-col lg:flex-row items-center justify-between">
-          <div className="flex items-center mb-4 lg:mb-0">
-            <DoctorIcon className="w-8 h-8 text-yellow-300 mr-2" size={12} />
+          <div className="flex  items-center mb-4 lg:mb-0">
+            <WishList />
+            <DoctorIcon
+              className="w-8 h-8 text-yellow-300 mr-2 ml-12"
+              size={12}
+            />
             <p className="text-sm lg:text-lg font-semibold text-yellow-300 mr-5">
               Dr. Filmolog: Your cinematic cure
             </p>

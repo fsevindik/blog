@@ -22,7 +22,7 @@ const WishList: React.FC = () => {
   };
 
   return (
-    <div className="fixed top-4 left-4 cursor-pointer">
+    <div className="fixed top-4 left-4 cursor-pointer z-50 ">
       <div className="flex items-center mb-2">
         <div
           onClick={toggleWishList}
@@ -30,32 +30,35 @@ const WishList: React.FC = () => {
             !isOpen ? "animate-pulse" : ""
           } w-12 h-12 flex items-center justify-center mr-2`}
         >
-          <ListIcon className="text-white" size={6} />
+          <ListIcon className="text-white " size={4} />
         </div>
       </div>
       {isOpen && (
-        <div className="mt-2 bg-white text-black p-2 rounded-lg shadow-lg w-64">
+        <div className="mt-2 bg-slate-400 text-black p-2 rounded-lg shadow-lg w-64">
           <h3 className="text-base font-semibold mb-2">Wish List</h3>
-          <input
-            type="text"
-            value={newWish}
-            onChange={handleInputChange}
-            placeholder="Add a film"
-            className="w-full p-1 border border-gray-300 rounded mb-2 text-sm"
-          />
-          <button
-            onClick={handleAddWish}
-            className="bg-gray-400 hover:bg-slate-700 text-white p-2 rounded w-full text-sm"
-          >
-            Add
-          </button>
           <ul className="mt-4 space-y-1 text-sm">
             {wishList.map((wish, index) => (
-              <li key={index} className="bg-gray-100 p-1 rounded">
+              <li key={index} className="bg-yellow-400 p-1 rounded">
                 {wish}
               </li>
             ))}
           </ul>
+          <div className="flex">
+            <input
+              type="text"
+              value={newWish}
+              onChange={handleInputChange}
+              placeholder="Add a film"
+              className="w-full p-2 m-2 border items-center border-gray-300 rounded  text-sm"
+            />
+          </div>
+
+          <button
+            onClick={handleAddWish}
+            className="bg-gray-500 hover:bg-yellow-600 text-white p-2 rounded w-full text-sm"
+          >
+            Add
+          </button>
         </div>
       )}
     </div>

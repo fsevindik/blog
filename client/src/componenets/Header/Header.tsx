@@ -18,6 +18,7 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 400);
   const location = useLocation();
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const performSearch = async () => {
@@ -56,7 +57,8 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
       <div className="container mx-auto">
         <div className="flex flex-col lg:flex-row items-center justify-between">
           <div className="flex  items-center mb-4 lg:mb-0">
-            <WishList />
+            {!token ? null : <WishList />}
+
             <DoctorIcon
               className="w-8 h-8 text-yellow-300 mr-2 ml-12"
               size={12}

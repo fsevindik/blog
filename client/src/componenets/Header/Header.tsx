@@ -53,17 +53,17 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
   };
 
   return (
-    <header className="bg-gray-900 text-white p-4 shadow-lg">
+    <header className="bg-gray-900 text-white p-4 shadow-lg border-b-2 border-yellow-500">
       <div className="container mx-auto">
         <div className="flex flex-col lg:flex-row items-center justify-between">
-          <div className="flex  items-center mb-4 lg:mb-0">
+          <div className="flex items-center mb-4 lg:mb-0">
             {!token ? null : <WishList />}
 
             <DoctorIcon
-              className="w-8 h-8 text-yellow-300 mr-2 ml-12"
+              className="w-8 h-8 text-yellow-400 mr-2 ml-12"
               size={12}
             />
-            <p className="text-sm lg:text-lg font-semibold text-yellow-300 mr-5">
+            <p className="text-sm lg:text-lg font-semibold text-yellow-400 mr-5">
               Dr. Filmolog: Your cinematic cure
             </p>
           </div>
@@ -73,12 +73,12 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
               <input
                 type="text"
                 placeholder="Search from My List"
-                className="p-2 w-full lg:w-64 bg-gray-700 text-white border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                className="p-2 w-full lg:w-64 bg-gray-800 text-white border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
                 ref={inputRef}
                 onChange={handleInputChange}
               />
               <button
-                className="p-2 w-1/4 lg:w-auto bg-yellow-500 text-white rounded-md ml-2 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                className="p-2 w-1/4 lg:w-auto bg-yellow-500 text-gray-900 font-semibold rounded-md ml-2 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition duration-300"
                 onClick={handleButtonClick}
               >
                 Search

@@ -48,29 +48,31 @@ const WishList: React.FC = () => {
     <div className="fixed top-4 left-4 z-50" ref={wishListRef}>
       <button
         onClick={toggleWishList}
-        className={`bg-gray-500 p-2 rounded-full hover:bg-gray-700 transition-colors duration-300 ${
+        className={`bg-yellow-500 p-2 rounded-full hover:bg-yellow-600 transition-colors duration-300 ${
           !isOpen ? "animate-pulse" : ""
-        } w-12 h-12 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500`}
+        } w-12 h-12 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500`}
         aria-label="Toggle Wish List"
       >
-        <ListIcon className="text-white" size={4} />
+        <ListIcon className="text-gray-900" size={4} />
       </button>
       {isOpen && (
-        <div className="mt-2 bg-slate-400 text-black p-4 rounded-lg shadow-lg w-full sm:w-80 max-h-[80vh] overflow-y-auto">
-          <h3 className="text-lg font-semibold mb-4">Wish List</h3>
+        <div className="mt-2 bg-gray-800 text-white p-4 rounded-lg shadow-lg w-full sm:w-80 max-h-[80vh] overflow-y-auto border border-yellow-500">
+          <h3 className="text-lg font-semibold mb-4 text-yellow-400">
+            Wish List
+          </h3>
           {wishList.length > 0 ? (
             <ul className="space-y-2 mb-4">
               {wishList.map((wish, index) => (
                 <li
                   key={index}
-                  className="bg-yellow-400 p-2 rounded break-words"
+                  className="bg-gray-700 p-2 rounded break-words border-l-4 border-yellow-500"
                 >
                   {wish}
                 </li>
               ))}
             </ul>
           ) : (
-            <p className="text-sm mb-4">Add some films!</p>
+            <p className="text-sm mb-4 text-gray-400">Add some films!</p>
           )}
           <div className="flex flex-col">
             <input
@@ -79,11 +81,11 @@ const WishList: React.FC = () => {
               onChange={handleInputChange}
               onKeyPress={handleKeyPress}
               placeholder="Add a film"
-              className="w-full p-2 mb-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-gray-500"
+              className="w-full p-2 mb-2 bg-gray-700 border border-gray-600 rounded text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 text-white placeholder-gray-400"
             />
             <button
               onClick={handleAddWish}
-              className="bg-gray-500 hover:bg-yellow-600 text-white p-2 rounded w-full text-sm transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+              className="bg-yellow-500 hover:bg-yellow-600 text-gray-900 p-2 rounded w-full text-sm font-semibold transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
             >
               Add
             </button>

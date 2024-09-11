@@ -164,3 +164,9 @@ export interface NavbarProps {
 export interface UserDropdownProps {
   user: User | null;
 }
+
+export interface WishItem {
+  id: string;
+  text: string;
+  added: boolean;
+}

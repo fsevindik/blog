@@ -1,13 +1,23 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import ListIcon from "../../icons/ListIcon ";
+import { WishItem } from "../../icons/types";
 
 const WishList: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [newWish, setNewWish] = useState("");
-  const [wishList, setWishList] = useState<string[]>([]);
+  const [wishList, setWishList] = useState<WishItem[]>([]);
+  const [isFilmolog, setIsFilmolog] = useState(false);
   const wishListRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const checkUsername = () => {
+      const storedUsername = localStorage.getItem("userName");
+      setIsFilmolog(storedUsername === "filmolog");
+    };
+
+    checkUsername();
+    window.addEventListener("storage", checkUsername);
+
     const handleClickOutside = (event: MouseEvent) => {
       if (
         wishListRef.current &&
@@ -18,34 +28,51 @@ const WishList: React.FC = () => {
     };
 
     document.addEventListener("mousedown", handleClickOutside);
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      window.removeEventListener("storage", checkUsername);
     };
   }, []);
 
-  const toggleWishList = () => {
-    setIsOpen(!isOpen);
-  };
+  const toggleWishList = useCallback(() => setIsOpen((prev) => !prev), []);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewWish(e.target.value);
-  };
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setNewWish(e.target.value);
+    },
+    []
+  );
 
-  const handleAddWish = () => {
+  const handleAddWish = useCallback(() => {
     if (newWish.trim()) {
-      setWishList([...wishList, newWish]);
+      setWishList((prev) => [
+        ...prev,
+        { id: Date.now().toString(), text: newWish.trim(), added: false },
+      ]);
       setNewWish("");
     }
-  };
+  }, [newWish]);
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      handleAddWish();
-    }
-  };
+  const handleKeyPress = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === "Enter") {
+        handleAddWish();
+      }
+    },
+    [handleAddWish]
+  );
+
+  const handleToggleAdded = useCallback((id: string) => {
+    setWishList((prev) =>
+      prev.map((wish) =>
+        wish.id === id ? { ...wish, added: !wish.added } : wish
+      )
+    );
+  }, []);
 
   return (
-    <div className="fixed top-4 left-4 z-50" ref={wishListRef}>
+    <div className="fixed top-2 left-2 z-50" ref={wishListRef}>
       <button
         onClick={toggleWishList}
         className={`bg-yellow-500 p-2 rounded-full hover:bg-yellow-600 transition-colors duration-300 ${
@@ -62,12 +89,19 @@ const WishList: React.FC = () => {
           </h3>
           {wishList.length > 0 ? (
             <ul className="space-y-2 mb-4">
-              {wishList.map((wish, index) => (
+              {wishList.map(({ id, text, added }) => (
                 <li
-                  key={index}
-                  className="bg-gray-700 p-2 rounded break-words border-l-4 border-yellow-500"
+                  key={id}
+                  className="bg-gray-700 p-2 rounded break-words border-l-4 border-yellow-500 flex items-center justify-between"
                 >
-                  {wish}
+                  <span>{text}</span>
+                  <button
+                    className={`w-4 h-4 rounded-full transition-colors duration-300 ${
+                      added ? "bg-green-500" : "bg-red-500"
+                    } ${isFilmolog ? "cursor-pointer" : "cursor-not-allowed"}`}
+                    onClick={() => isFilmolog && handleToggleAdded(id)}
+                    disabled={!isFilmolog}
+                  />
                 </li>
               ))}
             </ul>

@@ -166,6 +166,7 @@ export interface UserDropdownProps {
 }
 
 export interface WishItem {
+  added: any;
   id: string;
   text: string;
   status: "pending" | "approved" | "rejected";

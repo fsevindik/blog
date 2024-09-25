@@ -14,10 +14,8 @@ const WishList: React.FC = () => {
       const storedUsername = localStorage.getItem("userName");
       setIsFilmolog(storedUsername === "filmolog");
     };
-
     checkUsername();
     window.addEventListener("storage", checkUsername);
-
     const handleClickOutside = (event: MouseEvent) => {
       if (
         wishListRef.current &&
@@ -28,7 +26,6 @@ const WishList: React.FC = () => {
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
       window.removeEventListener("storage", checkUsername);
@@ -48,7 +45,12 @@ const WishList: React.FC = () => {
     if (newWish.trim()) {
       setWishList((prev) => [
         ...prev,
-        { id: Date.now().toString(), text: newWish.trim(), added: false },
+        {
+          id: Date.now().toString(),
+          text: newWish.trim(),
+          added: false,
+          status: "pending",
+        },
       ]);
       setNewWish("");
     }
@@ -62,7 +64,6 @@ const WishList: React.FC = () => {
     },
     [handleAddWish]
   );
-
   const handleToggleAdded = useCallback((id: string) => {
     setWishList((prev) =>
       prev.map((wish) =>

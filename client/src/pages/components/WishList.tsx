@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import ListIcon from "../../icons/ListIcon ";
 import { WishItem } from "../../icons/types";
+import ListIcon from "../../icons/ListIcon ";
+
+const API_URL = "https://serverfilmolog.onrender.com"; 
 
 const WishList: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -41,18 +43,27 @@ const WishList: React.FC = () => {
     []
   );
 
-  const handleAddWish = useCallback(() => {
+  const handleAddWish = useCallback(async () => {
     if (newWish.trim()) {
-      setWishList((prev) => [
-        ...prev,
-        {
-          id: Date.now().toString(),
-          text: newWish.trim(),
-          added: false,
-          status: "pending",
-        },
-      ]);
-      setNewWish("");
+      try {
+        const response = await fetch(`${API_URL}/wishlist`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ filmTitle: newWish.trim() }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to add wish');
+        }
+
+        const data = await response.json();
+        setWishList((prev) => [...prev, data]);
+        setNewWish('');
+      } catch (error) {
+        console.error('Error adding wish:', error);
+      }
     }
   }, [newWish]);
 
@@ -64,13 +75,32 @@ const WishList: React.FC = () => {
     },
     [handleAddWish]
   );
-  const handleToggleAdded = useCallback((id: string) => {
-    setWishList((prev) =>
-      prev.map((wish) =>
-        wish.id === id ? { ...wish, added: !wish.added } : wish
-      )
-    );
-  }, []);
+
+  const handleToggleAdded = useCallback(async (id: string) => {
+    try {
+      const updatedWish = wishList.find((wish) => wish.id === id);
+      if (updatedWish) {
+        const response = await fetch(`${API_URL}/wishlist/${id}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ status: updatedWish.added ? 'pending' : 'added' }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to update wish');
+        }
+
+        const data = await response.json();
+        setWishList((prev) =>
+          prev.map((wish) => (wish.id === id ? data : wish))
+        );
+      }
+    } catch (error) {
+      console.error('Error updating wish:', error);
+    }
+  }, [wishList]);
 
   return (
     <div className="fixed top-2 left-2 z-50" ref={wishListRef}>

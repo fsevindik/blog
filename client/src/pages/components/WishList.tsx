@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { WishItem } from "../../icons/types";
 import ListIcon from "../../icons/ListIcon ";
+import { WishItem } from "../../icons/types";
 
-const API_URL = "https://serverfilmolog.onrender.com"; 
+const API_URL = "https://serverfilmolog.onrender.com";
 
 const WishList: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,37 +11,50 @@ const WishList: React.FC = () => {
   const [isFilmolog, setIsFilmolog] = useState(false);
   const wishListRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const checkUsername = () => {
-      const storedUsername = localStorage.getItem("userName");
-      setIsFilmolog(storedUsername === "filmolog");
-    };
-    checkUsername();
-    window.addEventListener("storage", checkUsername);
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        wishListRef.current &&
-        !wishListRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
+  const fetchWishList = useCallback(async () => {
+    try {
+      const response = await fetch(`${API_URL}/wishlist`);
+      if (!response.ok) throw new Error('Failed to fetch wishlist');
+      const data = await response.json();
+      setWishList(data);
+    } catch (error) {
+      console.error('Error fetching wishlist:', error);
+    }
+  }, []);
 
+  const checkUsername = useCallback(() => {
+    const storedUsername = localStorage.getItem("userName");
+    setIsFilmolog(storedUsername === "filmolog");
+  }, []);
+
+  const handleClickOutside = useCallback((event: MouseEvent) => {
+    if (
+      wishListRef.current &&
+      !wishListRef.current.contains(event.target as Node)
+    ) {
+      setIsOpen(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    checkUsername();
+    fetchWishList();
+    window.addEventListener("storage", checkUsername);
     document.addEventListener("mousedown", handleClickOutside);
+    
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
       window.removeEventListener("storage", checkUsername);
     };
+  }, [checkUsername, handleClickOutside, fetchWishList]);
+
+  const toggleWishList = useCallback(() => {
+    setIsOpen(prev => !prev);
   }, []);
 
-  const toggleWishList = useCallback(() => setIsOpen((prev) => !prev), []);
-
-  const handleInputChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setNewWish(e.target.value);
-    },
-    []
-  );
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewWish(e.target.value);
+  }, []);
 
   const handleAddWish = useCallback(async () => {
     if (newWish.trim()) {
@@ -59,7 +72,7 @@ const WishList: React.FC = () => {
         }
 
         const data = await response.json();
-        setWishList((prev) => [...prev, data]);
+        setWishList(prev => [...prev, data]);
         setNewWish('');
       } catch (error) {
         console.error('Error adding wish:', error);
@@ -67,25 +80,22 @@ const WishList: React.FC = () => {
     }
   }, [newWish]);
 
-  const handleKeyPress = useCallback(
-    (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === "Enter") {
-        handleAddWish();
-      }
-    },
-    [handleAddWish]
-  );
+  const handleKeyPress = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleAddWish();
+    }
+  }, [handleAddWish]);
 
   const handleToggleAdded = useCallback(async (id: string) => {
     try {
-      const updatedWish = wishList.find((wish) => wish.id === id);
-      if (updatedWish) {
+      const wishItem = wishList.find(wish => wish.id === id);
+      if (wishItem) {
         const response = await fetch(`${API_URL}/wishlist/${id}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ status: updatedWish.added ? 'pending' : 'added' }),
+          body: JSON.stringify({ status: wishItem.added ? 'pending' : 'added' }),
         });
 
         if (!response.ok) {
@@ -93,8 +103,8 @@ const WishList: React.FC = () => {
         }
 
         const data = await response.json();
-        setWishList((prev) =>
-          prev.map((wish) => (wish.id === id ? data : wish))
+        setWishList(prev =>
+          prev.map(wish => (wish.id === id ? data : wish))
         );
       }
     } catch (error) {
@@ -113,11 +123,13 @@ const WishList: React.FC = () => {
       >
         <ListIcon className="text-gray-900" size={4} />
       </button>
+
       {isOpen && (
         <div className="mt-2 bg-gray-800 text-white p-4 rounded-lg shadow-lg w-full sm:w-80 max-h-[80vh] overflow-y-auto border border-yellow-500">
           <h3 className="text-lg font-semibold mb-4 text-yellow-400">
             Wish List
           </h3>
+          
           {wishList.length > 0 ? (
             <ul className="space-y-2 mb-4">
               {wishList.map(({ id, text, added }) => (
@@ -139,6 +151,7 @@ const WishList: React.FC = () => {
           ) : (
             <p className="text-sm mb-4 text-gray-400">Add some films!</p>
           )}
+
           <div className="flex flex-col">
             <input
               type="text"

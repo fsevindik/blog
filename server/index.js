@@ -8,7 +8,7 @@ import filmRoutes from "./routes/filmRoutes.js";
 import messageRoutes from "./routes/messageRoutes.js";
 import reactionRoutes from "./routes/reactionRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
-import wishListRoutes from "./routes/wishListRoutes"
+import wishListRoutes from "./routes/wishListRoutes.js"
 
 dotenv.config();
 const PORT = process.env.PORT || 3000;

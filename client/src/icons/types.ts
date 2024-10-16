@@ -1,4 +1,12 @@
+import React from 'react';
+
 type Visibility = "visible" | "hidden" | "collapse";
+
+export interface BonusVideo {
+  title: string;
+  url: string;
+  description?: string;
+}
 
 export type IconProps = {
   color?: string;
@@ -17,7 +25,7 @@ export type IconProps = {
 };
 
 export interface AuthFormProps {
-  mode: string;
+  mode: 'login' | 'register';
   email: string;
   setEmail: (email: string) => void;
   password: string;
@@ -56,10 +64,8 @@ export interface AuthContainerProps {
   children: React.ReactNode;
 }
 
-type ObjectId = string;
-
 export interface Rating {
-  userId: ObjectId;
+  userId: string;
   rating: number;
 }
 
@@ -77,7 +83,7 @@ export interface Actor {
 }
 
 export interface Film {
-  bonusVideos: any;
+  bonusVideos: BonusVideo[];
   honorableMentions: string[];
   _id: string;
   title: string;
@@ -118,9 +124,18 @@ export interface User {
   email?: string;
 }
 
+export interface ReactionData {
+  count: number;
+  users: string[];
+}
+
 export interface Comment {
-  reaction: any;
-  usersLiked: any;
+  reaction: {
+    likes: ReactionData;
+    hearts: ReactionData;
+    smiles: ReactionData;
+  };
+  usersLiked: string[];
   _id: string;
   content: string;
   userId: User;
@@ -141,7 +156,10 @@ export interface RateModalProps {
 
 export interface Message {
   _id: string;
-  sender: { _id: string; name: string };
+  sender: {
+    _id: string;
+    name: string;
+  };
   content: string;
   sentAt: string;
 }
@@ -157,6 +175,7 @@ export interface CreateFilm {
   trailerUrl?: string;
   honorableMentions: string[];
 }
+
 export interface NavbarProps {
   user: User | null;
 }
@@ -166,8 +185,43 @@ export interface UserDropdownProps {
 }
 
 export interface WishItem {
-  added: any;
   id: string;
   text: string;
+  added: boolean;
   status: "pending" | "approved" | "rejected";
+}
+
+
+//  not use what follows right now, but it may come in handy in the future and would be  cool Captain oh my captain...:)
+// API Response Types
+export interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+  message?: string;
+}
+
+// Error Types
+export interface ApiError {
+  status: number;
+  message: string;
+  errors?: Record<string, string[]>;
+}
+
+// Utility Types
+export type Optional<T> = {
+  [P in keyof T]?: T[P];
+};
+
+export type WithId<T> = T & {
+  _id: string;
+};
+
+// Form Event Types
+export type FormSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => void;
+export type InputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => void;
+
+// Common Props Types
+export interface BaseComponentProps {
+  className?: string;
+  style?: React.CSSProperties;
 }

@@ -1,23 +1,23 @@
 import express from "express";
-import auth from "../middleware/auth.js";
 import WishList from "../models/WishList.js";
 
 const router = express.Router();
 
-router.get("/", auth, async (req, res) => {
+
+router.get("/", async (req, res) => {
   try {
-    const wishListItems = await WishList.find({ user: req.user.id });
+    const wishListItems = await WishList.find();
     res.json(wishListItems);
   } catch (error) {
     res.status(500).json({ message: "Server error" });
   }
 });
 
-router.post("/", auth, async (req, res) => {
+
+router.post("/", async (req, res) => {
   try {
     const { filmTitle } = req.body;
     const newWishListItem = new WishList({
-      user: req.user.id,
       filmTitle,
     });
     const savedItem = await newWishListItem.save();
@@ -27,7 +27,7 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
-router.patch("/:id", auth, async (req, res) => {
+router.patch("/:id", async (req, res) => {
   try {
     const { status } = req.body;
     const updatedItem = await WishList.findByIdAndUpdate(

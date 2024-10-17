@@ -1,12 +1,4 @@
-import React from 'react';
-
 type Visibility = "visible" | "hidden" | "collapse";
-
-export interface BonusVideo {
-  title: string;
-  url: string;
-  description?: string;
-}
 
 export type IconProps = {
   color?: string;
@@ -25,7 +17,7 @@ export type IconProps = {
 };
 
 export interface AuthFormProps {
-  mode: 'login' | 'register';
+  mode: "login" | "register" | string;
   email: string;
   setEmail: (email: string) => void;
   password: string;
@@ -64,8 +56,10 @@ export interface AuthContainerProps {
   children: React.ReactNode;
 }
 
+type ObjectId = string;
+
 export interface Rating {
-  userId: string;
+  userId: ObjectId;
   rating: number;
 }
 
@@ -83,7 +77,7 @@ export interface Actor {
 }
 
 export interface Film {
-  bonusVideos: BonusVideo[];
+  bonusVideos: string[]; // Daha önce any idi, şimdi string array yaptık
   honorableMentions: string[];
   _id: string;
   title: string;
@@ -124,18 +118,9 @@ export interface User {
   email?: string;
 }
 
-export interface ReactionData {
-  count: number;
-  users: string[];
-}
-
 export interface Comment {
-  reaction: {
-    likes: ReactionData;
-    hearts: ReactionData;
-    smiles: ReactionData;
-  };
-  usersLiked: string[];
+  reaction: Reaction; // any'yi Reaction tipi ile değiştirdik
+  usersLiked: string[]; // any'yi string[] ile değiştirdik
   _id: string;
   content: string;
   userId: User;
@@ -156,10 +141,7 @@ export interface RateModalProps {
 
 export interface Message {
   _id: string;
-  sender: {
-    _id: string;
-    name: string;
-  };
+  sender: { _id: string; name: string };
   content: string;
   sentAt: string;
 }
@@ -185,9 +167,9 @@ export interface UserDropdownProps {
 }
 
 export interface WishItem {
+  added: boolean;
   id: string;
   text: string;
-  added: boolean;
   status: "pending" | "approved" | "rejected";
 }
 

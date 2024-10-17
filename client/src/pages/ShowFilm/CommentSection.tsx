@@ -1,7 +1,7 @@
 import { Tooltip } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Comment, CommentSectionProps } from "../../icons/types";
+import { Comment, CommentSectionProps, User } from "../../icons/types";
 
 const API_URL = "https://serverfilmolog.onrender.com";
 
@@ -41,7 +41,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({
           .filter(
             (comment) =>
               comment.reaction &&
-              comment.reaction.usersLiked.includes(currentUserId)
+              comment.reaction.usersLiked.includes(currentUserId ?? "")
           )
           .map((comment) => comment._id)
       );
@@ -148,7 +148,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({
       const response = await axios.get(
         `${API_URL}/comments/${commentId}/likes`
       );
-      return response.data.map((user: any) => user.name).join(", ");
+      return response.data.map((user: User) => user.name).join(", ");
     } catch (error) {
       console.error("Error fetching liked users:", error);
       return "";

@@ -8,6 +8,7 @@ import filmRoutes from "./routes/filmRoutes.js";
 import messageRoutes from "./routes/messageRoutes.js";
 import reactionRoutes from "./routes/reactionRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import wishListRoutes from "./routes/wishlistRoutes.js";
 //import wishListRoutes from "./routes/wishlistRoutes.js"
 
 
@@ -37,7 +38,7 @@ app.use("/films/:filmId/reactions", reactionRoutes);
 app.use("/users", userRoutes);
 app.use("/messages", messageRoutes);
 app.use("/comments", commentRoutes); // end of project maybe I can make all of them like api/...
-//app.use("/wishlist", wishListRoutes)
+app.use("/wishlist", wishListRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

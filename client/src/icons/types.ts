@@ -172,6 +172,14 @@ export interface WishItem {
   text: string;
   status: "pending" | "approved" | "rejected";
 }
+export interface WishListItemProps {
+  id: string;
+  text: string;
+  added: boolean;
+  isFilmolog: boolean;
+  onToggleAdded: (id: string) => void;
+}
+
 
 
 //  not use what follows right now, but it may come in handy in the future and would be  cool Captain oh my captain...:)

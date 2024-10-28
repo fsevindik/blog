@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Actor } from "../../icons/types";
+import { Actor } from "../../types/types";
 
 interface CastSectionProps {
   actors: Actor[];

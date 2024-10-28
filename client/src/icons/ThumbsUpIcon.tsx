@@ -1,5 +1,5 @@
 import React from "react";
-import { IconProps } from "./types";
+import { IconProps } from "../types/types";
 
 const ThumbsUpIcon: React.FC<IconProps> = ({
   className,

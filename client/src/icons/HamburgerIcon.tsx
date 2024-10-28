@@ -1,4 +1,4 @@
-import { IconProps } from "./types";
+import { IconProps } from "../types/types";
 
 const HamburgerIcon = (props: IconProps) => {
   return (

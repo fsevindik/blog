@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { User } from "../../icons/types";
+import { User } from "../../types/types";
 
 const API_URL = "https://serverfilmolog.onrender.com";
 

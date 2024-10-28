@@ -1,6 +1,6 @@
 import React from "react";
 
-import { AuthFormProps } from "../../icons/types";
+import { AuthFormProps } from "../../types/types";
 import FormInputComp from "./FormInputComp";
 import PasswordInput from "./PasswordInput";
 import PasswordRequirements from "./passwordCheck/PasswordRequirements";

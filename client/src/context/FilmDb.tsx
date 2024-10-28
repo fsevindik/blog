@@ -1,7 +1,7 @@
 // FilmContext.tsx
 import axios from "axios";
 import React, { createContext, useEffect, useState } from "react";
-import { Film } from "../icons/types";
+import { Film } from "../types/types";
 import { FilmContextProps, FilmProviderProps } from "./type";
 
 const FilmContext = createContext<FilmContextProps>({

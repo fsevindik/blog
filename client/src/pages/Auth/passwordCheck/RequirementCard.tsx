@@ -1,6 +1,6 @@
 import CheckCircleIcon from "../../../icons/CheckCircleIcon";
 import DotCircleIcon from "../../../icons/DotCircleIcon";
-import { RequirementCardProps } from "../../../icons/types";
+import { RequirementCardProps } from "../../../types/types";
 
 const RequirementCard: React.FC<RequirementCardProps> = ({
   text,

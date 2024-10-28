@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Film } from "../../icons/types";
+import { Film } from "../../types/types";
 import BackButton from "../components/BackButton";
 
 const API_URL = "https://serverfilmolog.onrender.com";

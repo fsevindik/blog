@@ -1,5 +1,5 @@
 import React from "react";
-import { WishListItemProps } from "../../icons/types";
+import { WishListItemProps } from "../../types/types";
 
 export const WishListItem: React.FC<WishListItemProps> = ({
     id,

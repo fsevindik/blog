@@ -1,4 +1,4 @@
-import { IconProps } from "./types";
+import { IconProps } from "../types/types";
 
 const DoctorIcon = (props: IconProps) => {
   const { className, ...otherProps } = props;

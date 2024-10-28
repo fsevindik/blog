@@ -4,7 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useOutsideClick from "../../hooks/useOutsideClick";
 import StarIcon from "../../icons/StarIcon";
-import { RateModalProps } from "../../icons/types";
+import { RateModalProps } from "../../types/types";
 
 const API_URL = "https://serverfilmolog.onrender.com";
 

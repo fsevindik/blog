@@ -1,4 +1,4 @@
-import { IconProps } from "./types";
+import { IconProps } from "../types/types";
 
 const DotCircleIcon = (props: IconProps) => {
   const { className, ...otherProps } = props;

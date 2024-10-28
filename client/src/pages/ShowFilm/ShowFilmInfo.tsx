@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import AverageIcon from "../../icons/AverageIcon";
-import { Film } from "../../icons/types";
+import { Film } from "../../types/types";
 import FavoriteButton from "../components/FavoriteButton";
 import CastSection from "./CastSection";
 import RateModal from "./RateModal";

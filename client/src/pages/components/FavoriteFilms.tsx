@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Film } from "../../icons/types";
+import { Film } from "../../types/types";
 
 const FavoriteFilms: React.FC = () => {
   const [favorites, setFavorites] = useState<Film[]>([]);

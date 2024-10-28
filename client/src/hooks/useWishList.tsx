@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { WishItem } from '../icons/types';
+import { WishItem } from '../types/types';
 
 const API_URL = "https://serverfilmolog.onrender.com";
 

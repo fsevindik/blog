@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Spinner from "../../componenets/Spinner";
 import StarIcon from "../../icons/StarIcon";
-import { Film } from "../../icons/types";
+import { Film } from "../../types/types";
 import BackButton from "./BackButton";
 const API_URL = "https://serverfilmolog.onrender.com";
 

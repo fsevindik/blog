@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Film, User } from "../icons/types";
+import { Film, User } from "../types/types";
 
 export interface AuthContextType {
   user: User | null;

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Spinner from "../componenets/Spinner";
-import { Actor, CreateFilm } from "../icons/types";
+import { Actor, CreateFilm } from "../types/types";
 import BackButton from "./components/BackButton";
 const API_URL = "https://serverfilmolog.onrender.com";
 

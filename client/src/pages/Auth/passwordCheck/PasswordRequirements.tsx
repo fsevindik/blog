@@ -1,4 +1,4 @@
-import { PasswordRequirementProps } from "../../../icons/types";
+import { PasswordRequirementProps } from "../../../types/types";
 import RequirementCard from "./RequirementCard";
 
 const PasswordRequirements: React.FC<PasswordRequirementProps> = ({

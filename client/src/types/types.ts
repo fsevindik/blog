@@ -77,7 +77,7 @@ export interface Actor {
 }
 
 export interface Film {
-  bonusVideos: string[]; // Daha önce any idi, şimdi string array yaptık
+  bonusVideos: string[]; 
   honorableMentions: string[];
   _id: string;
   title: string;
@@ -119,8 +119,8 @@ export interface User {
 }
 
 export interface Comment {
-  reaction: Reaction; // any'yi Reaction tipi ile değiştirdik
-  usersLiked: string[]; // any'yi string[] ile değiştirdik
+  reaction: Reaction; 
+  usersLiked: string[]; 
   _id: string;
   content: string;
   userId: User;

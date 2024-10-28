@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import HeartIcon from "../../icons/HeartIcon";
 import HomeIcon from "../../icons/HomeIcon";
-import { NavbarProps } from "../../icons/types";
+import { NavbarProps } from "../../types/types";
 import UserIcon from "../../icons/UserIcon";
 import UserDropdown from "../Header/UserDropDown";
 

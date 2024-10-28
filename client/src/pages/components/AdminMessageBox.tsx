@@ -1,7 +1,7 @@
 import axios from "axios";
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
-import { Message } from "../../icons/types";
+import { Message } from "../../types/types";
 
 interface AdminMessageBoxProps {
   adminId: string;

@@ -1,7 +1,7 @@
 import { Tooltip } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Comment, CommentSectionProps, User } from "../../icons/types";
+import { Comment, CommentSectionProps, User } from "../../types/types";
 
 const API_URL = "https://serverfilmolog.onrender.com";
 

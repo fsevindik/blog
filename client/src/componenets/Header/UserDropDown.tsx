@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import { UserDropdownProps } from "../../icons/types";
+import { UserDropdownProps } from "../../types/types";
 
 const UserDropdown: React.FC<UserDropdownProps> = () => {
   const navigate = useNavigate();

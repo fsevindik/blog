@@ -16,9 +16,11 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const { filmTitle } = req.body;
+    const { text } = req.body;
     const newWishListItem = new WishList({
-      filmTitle,
+      text,
+      added: false,
+      status: "pending",
     });
     const savedItem = await newWishListItem.save();
     res.json(savedItem);
@@ -27,13 +29,16 @@ router.post("/", async (req, res) => {
   }
 });
 
+//update wishlist item status not wishitem's itself
 router.patch("/:id", async (req, res) => {
   try {
-    const { status } = req.body;
+    const { added, status } = req.body;
     const updatedItem = await WishList.findByIdAndUpdate(
       req.params.id,
-      { status },
-      { new: true }
+      { added, status },
+      { new: true,
+        runValidators: true,
+       }
     );
     if (!updatedItem) {
       return res.status(404).json({ message: "Wish list item not found" });

@@ -31,7 +31,7 @@ export const useWishList = () => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ filmTitle: newWish.trim() }),
+          body: JSON.stringify({ text: newWish.trim() }),
         });
 
         if (!response.ok) throw new Error('Failed to add wish');
@@ -50,12 +50,18 @@ export const useWishList = () => {
     try {
       const wishItem = wishList.find(wish => wish.id === id);
       if (wishItem) {
+        const newAdded = !wishItem.added;
+        const newStatus = newAdded ? 'approved' : 'pending';
+        
         const response = await fetch(`${API_URL}/wishlist/${id}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ status: wishItem.added ? 'pending' : 'added' }),
+          body: JSON.stringify({ 
+            added: newAdded,
+            status: newStatus
+          }),
         });
 
         if (!response.ok) throw new Error('Failed to update wish');

@@ -58,7 +58,7 @@ const Home: React.FC = () => {
         )}
       </div>
       <FilmSlider films={films} />
-      <FilmsTable films={films} />
+      <FilmsTable films={films} setFilms={setFilms} />
     </div>
   );
 };

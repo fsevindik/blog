@@ -12,9 +12,10 @@ const API_URL = "https://serverfilmolog.onrender.com";
 
 interface FilmsTableProps {
   films?: Film[];
+  setFilms: React.Dispatch<React.SetStateAction<Film[]>>;
 }
 
-const FilmsTable: React.FC<FilmsTableProps> = ({ films = [] }) => {
+const FilmsTable: React.FC<FilmsTableProps> = ({ films = [], setFilms }) => {
   const { user } = useAuth();
   const userRole = user?.role || "visitor";
 
@@ -26,7 +27,7 @@ const FilmsTable: React.FC<FilmsTableProps> = ({ films = [] }) => {
       const response = await axios.delete(`${API_URL}/films/${filmId}`);
       if (response.status === 200) {
         toast.success("Film successfully deleted.");
-        // Silme sonrası tabloyu güncellemek için sayfayı yeniden yükleyin veya durumu güncelleyin
+        setFilms((prevFilms) => prevFilms.filter((film) => film._id !== filmId));
       } else {
         toast.error("Failed to delete the film.");
       }
@@ -45,12 +46,8 @@ const FilmsTable: React.FC<FilmsTableProps> = ({ films = [] }) => {
         <thead>
           <tr>
             <th className="w-3/5 border border-slate-600 rounded-md bg-yellow-600 font-serif">Film</th>
-            <th className="w-1/6 border border-slate-600 rounded-md bg-yellow-600 hidden md:table-cell font-serif">
-              Director
-            </th>
-            <th className="w-1/6 border border-slate-600 rounded-md bg-yellow-600 hidden md:table-cell font-serif">
-              Release Date
-            </th>
+            <th className="w-1/6 border border-slate-600 rounded-md bg-yellow-600 hidden md:table-cell font-serif">Director</th>
+            <th className="w-1/6 border border-slate-600 rounded-md bg-yellow-600 hidden md:table-cell font-serif">Release Date</th>
             {userRole === "admin" && (
               <th className="w-1/6 border border-slate-600 rounded-md bg-yellow-600 font-serif">Operations</th>
             )}
@@ -72,23 +69,16 @@ const FilmsTable: React.FC<FilmsTableProps> = ({ films = [] }) => {
                   <span className="text-sm md:text-base ml-2">{film.title}</span>
                 </Link>
               </td>
-
               <td className="rounded-md text-center font-semibold hidden md:table-cell w-1/6">{film.director}</td>
               <td className="rounded-md text-center font-semibold hidden md:table-cell w-1/6">{film.releaseYear}</td>
               {userRole === "admin" && (
                 <td className="border border-white rounded-md text-center w-1/6">
                   <div className="flex justify-center gap-x-2 md:gap-x-4">
                     <Link to={`/Films/edit/${film._id}`}>
-                      <EditIcon
-                        className="h-6 w-6 text-yellow-500 hover:text-white hover:scale-105"
-                        size={0}
-                      />
+                      <EditIcon className="h-6 w-6 text-yellow-500 hover:text-white hover:scale-105" size={0} />
                     </Link>
                     <button onClick={() => handleDelete(film._id)}>
-                      <DeleteIcon
-                        className="h-6 w-6 text-red-500 hover:text-black hover:scale-105"
-                        size={0}
-                      />
+                      <DeleteIcon className="h-6 w-6 text-red-500 hover:text-black hover:scale-105" size={0} />
                     </button>
                   </div>
                 </td>

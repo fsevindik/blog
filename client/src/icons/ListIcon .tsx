@@ -16,8 +16,8 @@ const ListIcon = (props: IconProps) => {
     >
       <path d="M8 6h13M8 12h13M8 18h13" />
       <circle cx="4" cy="6" r="2" />
-      <circle cx="4" cy="12" r="2" />
-      <circle cx="4" cy="18" r="2" />
+      <circle cx="4" cy="10" r="2" />
+      <circle cx="4" cy="16" r="2" />
     </svg>
   );
 };

@@ -57,7 +57,7 @@ const WishList: React.FC = () => {
         } w-12 h-12 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500`}
         aria-label="Toggle Wish List"
       >
-        <ListIcon className="text-gray-900" size={4} />
+        <ListIcon className="text-gray-900 mt-2 size={4}" size={0} />
       </button>
 
       {isOpen && (

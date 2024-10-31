@@ -9,7 +9,7 @@ export const WishListItem: React.FC<WishListItemProps> = ({
     onToggleAdded,
   }) => (
     <li className="bg-gray-700 p-2 rounded break-words border-l-4 border-yellow-500 flex items-center justify-between">
-      <span>{text}</span>
+      <span className="font-medium text-sm">{text}</span>
       <button
         className={`w-4 h-4 rounded-full transition-colors duration-300 ${
           added ? "bg-green-500" : "bg-red-500"

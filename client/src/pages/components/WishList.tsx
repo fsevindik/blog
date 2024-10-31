@@ -90,7 +90,7 @@ const WishList: React.FC = () => {
             />
             <button
               onClick={handleSubmit}
-              className="bg-yellow-500 hover:bg-yellow-600 text-gray-900 p-2 rounded w-full text-sm font-semibold transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
+              className="bg-yellow-500 hover:bg-red-500 text-gray-900 p-2 rounded w-full text-sm font-semibold transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
             >
               Add
             </button>

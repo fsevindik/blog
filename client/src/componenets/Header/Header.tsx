@@ -78,7 +78,7 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
                 onChange={handleInputChange}
               />
               <button
-                className="p-2 w-1/4 lg:w-auto bg-yellow-500 text-gray-900 font-semibold rounded-md ml-2 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition duration-300"
+                className="p-2 w-1/4 lg:w-auto bg-yellow-500 text-gray-900 font-semibold rounded-md ml-2 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition duration-300"
                 onClick={handleButtonClick}
               >
                 Search

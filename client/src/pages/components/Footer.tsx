@@ -9,15 +9,14 @@ const Footer: React.FC = () => {
         <p className="text-gray-300 font-semibold">
           &copy; 2024{" "}
           <a
-            href="https://muratcan23.github.io/myportfolio/"
+            href="https://fsevindik.github.io/myportfolio/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sky-400 hover:text-yellow-500 mr-4"
+            className="text-sky-400 hover:text-yellow-500 mr-2 font-cursive"
           >
-            Murat Can
-          </a>
+           Fırat Sevindik</a>
           <a
-            href="https://github.com/muratcan23"
+            href="https://github.com/fsevindik"
             target="_blank"
             rel="noopener noreferrer"
             className="text-gray-300 hover:text-yellow-500"
@@ -29,7 +28,7 @@ const Footer: React.FC = () => {
             />
           </a>
           <a
-            href="https://www.linkedin.com/in/murat-can-7660a8282/"
+            href="https://www.linkedin.com/in/f%C4%B1rat-sevindik-7660a8282/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-gray-300 hover:text-blue-400 mr-2"

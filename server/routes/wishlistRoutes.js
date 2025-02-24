@@ -29,7 +29,6 @@ router.post("/", async (req, res) => {
   }
 });
 
-//update wishlist item status not wishitem's itself
 router.patch("/:id", async (req, res) => {
   try {
     const { added, status } = req.body;

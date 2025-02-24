@@ -4,7 +4,7 @@ import User from "../models/userModel.js";
 
 const router = express.Router();
 
-// Admin'in tüm mesajları alması
+
 router.get("/admin/messages", async (req, res) => {
   try {
     const adminUser = await User.findOne({ role: "admin" });
@@ -23,7 +23,7 @@ router.get("/admin/messages", async (req, res) => {
   }
 });
 
-// Kullanıcıdan admin'e mesaj gönderme
+
 router.post("/", async (req, res) => {
   const { userId, content } = req.body;
 
@@ -47,7 +47,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Belirli bir kullanıcıya ait mesajları alma
+
 router.get("/:userId", async (req, res) => {
   try {
     const adminUser = await User.findOne({ role: "admin" });
@@ -72,7 +72,7 @@ router.get("/:userId", async (req, res) => {
   }
 });
 
-// Mesaj silme
+
 router.delete("/:messageId", async (req, res) => {
   try {
     const message = await Message.findById(req.params.messageId);

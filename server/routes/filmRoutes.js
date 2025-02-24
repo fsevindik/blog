@@ -3,7 +3,7 @@ import { Film } from "../models/filmModel.js";
 
 const router = express.Router();
 
-// Get all films
+
 router.get("/", async (req, res) => {
   try {
     const films = await Film.find({});
@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Get a specific film
+
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -32,7 +32,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// Create a new film
+
 router.post("/", async (req, res) => {
   try {
     const {
@@ -80,7 +80,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Update a film
+
 router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -98,7 +98,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-// Delete a film
+
 router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -113,7 +113,7 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-// Rate a film
+
 router.post("/:id/rate", async (req, res) => {
   try {
     const { id } = req.params;
@@ -144,7 +144,7 @@ router.post("/:id/rate", async (req, res) => {
   }
 });
 
-// Get average rating of a film
+
 router.get("/:id/averageRating", async (req, res) => {
   try {
     const { id } = req.params;
@@ -162,7 +162,7 @@ router.get("/:id/averageRating", async (req, res) => {
   }
 });
 
-// Get films by actor name
+
 router.get("/actor/:actorName", async (req, res) => {
   try {
     const { actorName } = req.params;

@@ -5,7 +5,6 @@ import User from "../models/userModel.js";
 
 const router = express.Router();
 
-// Get all users
 router.get("/", async (req, res) => {
   try {
     const users = await User.find().select(
@@ -18,7 +17,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Register
 router.post("/register", async (req, res) => {
   try {
     const { email, password, name } = req.body;
@@ -50,7 +48,6 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// Login
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -80,7 +77,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// Logout
+
 router.post("/logout", async (req, res) => {
   const token = req.headers.authorization?.split(" ")[1];
   if (!token) return res.status(401).send("No token provided");
@@ -101,7 +98,7 @@ router.post("/logout", async (req, res) => {
   }
 });
 
-// Get user by ID
+
 router.get("/me", async (req, res) => {
   const token = req.headers.authorization?.split(" ")[1];
   if (!token) return res.status(401).send("No token provided");
@@ -127,7 +124,6 @@ router.get("/me", async (req, res) => {
   }
 });
 
-// Get user's favorite films
 router.get("/:userId/favorites", async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -144,7 +140,6 @@ router.get("/:userId/favorites", async (req, res) => {
   }
 });
 
-// Add a film to user's favorites
 router.post("/:userId/favorites/:filmId", async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -168,7 +163,6 @@ router.post("/:userId/favorites/:filmId", async (req, res) => {
   }
 });
 
-// Remove a film from user's favorites
 router.delete("/:userId/favorites/:filmId", async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -190,7 +184,6 @@ router.delete("/:userId/favorites/:filmId", async (req, res) => {
   }
 });
 
-// Update user  status
 router.patch("/:userId/online", async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -211,7 +204,6 @@ router.patch("/:userId/online", async (req, res) => {
   }
 });
 
-// Update user online status
 router.patch("/update-online-status", async (req, res) => {
   const token = req.headers.authorization?.split(" ")[1];
   if (!token) return res.status(401).send("No token provided");

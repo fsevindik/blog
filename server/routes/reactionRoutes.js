@@ -2,7 +2,7 @@ import express from "express";
 
 const router = express.Router({ mergeParams: true });
 
-// Add reaction
+
 router.post("/:filmId/comments/:commentId/postreactions", async (req, res) => {
   try {
     const { FilmId, commentId } = req.params;
@@ -49,7 +49,7 @@ router.post("/:filmId/comments/:commentId/postreactions", async (req, res) => {
   }
 });
 
-// Get reactions
+
 router.get("/:FilmId/comments/:commentId/getreactions", async (req, res) => {
   try {
     const { FilmId, commentId } = req.params;

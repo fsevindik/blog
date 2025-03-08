@@ -4,7 +4,6 @@ import { Film } from "../models/filmModel.js";
 
 const router = express.Router();
 
-// Get all comments for a film
 router.get("/film/:filmId", async (req, res) => {
   try {
     const { filmId } = req.params;
@@ -22,7 +21,6 @@ router.get("/film/:filmId", async (req, res) => {
   }
 });
 
-// Add new comment
 router.post("/", async (req, res) => {
   try {
     const film = await Film.findById(req.body.filmId);
@@ -48,7 +46,6 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Update comment
 router.put("/:commentId", async (req, res) => {
   try {
     const comment = await Comment.findById(req.params.commentId);
@@ -64,7 +61,6 @@ router.put("/:commentId", async (req, res) => {
   }
 });
 
-// Delete comment
 router.delete("/:commentId", async (req, res) => {
   try {
     const comment = await Comment.findById(req.params.commentId);
@@ -79,7 +75,6 @@ router.delete("/:commentId", async (req, res) => {
   }
 });
 
-// Add reply to a comm.
 router.post("/:commentId/replies", async (req, res) => {
   try {
     const comment = await Comment.findById(req.params.commentId);
@@ -105,7 +100,6 @@ router.post("/:commentId/replies", async (req, res) => {
   }
 });
 
-// Like or unlike comm.
 router.post("/:commentId/like", async (req, res) => {
   try {
     const { commentId } = req.params;
@@ -138,7 +132,6 @@ router.post("/:commentId/like", async (req, res) => {
   }
 });
 
-// Get users who liked a comment
 router.get("/:commentId/likes", async (req, res) => {
   try {
     const { commentId } = req.params;

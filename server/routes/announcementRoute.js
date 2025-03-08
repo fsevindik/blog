@@ -1,5 +1,4 @@
 import express from 'express';
-import { isAdmin } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 

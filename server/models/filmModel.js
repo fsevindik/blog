@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-// Rate schema
 const rateSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -26,7 +25,6 @@ const actorSchema = new mongoose.Schema({
   },
 });
 
-// Film Schema
 const filmSchema = new mongoose.Schema(
   {
     filmId: {

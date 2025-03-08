@@ -19,7 +19,7 @@ const wishListSchema = new mongoose.Schema({
   toJSON: { 
     virtuals: true,
     transform: function(doc, ret) {
-      ret.id = ret._id; // MongoDB _id converts to id hmm yes
+      ret.id = ret._id; 
       delete ret._id;
       delete ret.__v;
       return ret;

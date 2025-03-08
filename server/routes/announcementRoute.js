@@ -1,4 +1,5 @@
 import express from 'express';
+import { Announcement } from '../models/announcementModel.js';
 
 const router = express.Router();
 
@@ -11,12 +12,13 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post('/', isAdmin, async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const announcement = new Announcement({
-            title: req.body.title,
-            content: req.body.content,
-            adminId: req.user.id
+            message: req.body.message,
+            priority: req.body.priority || 'low',
+            status: req.body.status || 'active',
+            createdBy: req.body.userId
         });
         const newAnnouncement = await announcement.save();
         res.status(201).json(newAnnouncement);
@@ -25,15 +27,16 @@ router.post('/', isAdmin, async (req, res) => {
     }
 });
 
-router.patch('/:id', isAdmin, async (req, res) => {
+router.patch('/:id', async (req, res) => {
     try {
         const announcement = await Announcement.findById(req.params.id);
         if (!announcement) {
             return res.status(404).json({ message: 'Announcement not found' });
         }
         
-        if (req.body.title) announcement.title = req.body.title;
-        if (req.body.content) announcement.content = req.body.content;
+        if (req.body.message) announcement.message = req.body.message;
+        if (req.body.status) announcement.status = req.body.status;
+        if (req.body.priority) announcement.priority = req.body.priority;
         
         const updatedAnnouncement = await announcement.save();
         res.json(updatedAnnouncement);
@@ -42,14 +45,13 @@ router.patch('/:id', isAdmin, async (req, res) => {
     }
 });
 
-router.delete('/:id', isAdmin, async (req, res) => {
+router.delete('/:id', async (req, res) => {
     try {
-        const announcement = await Announcement.findById(req.params.id);
-        if (!announcement) {
+        const result = await Announcement.findByIdAndDelete(req.params.id);
+        if (!result) {
             return res.status(404).json({ message: 'Announcement not found' });
         }
-        await announcement.remove();
-        res.json({ message: 'Announcement deleted' });
+        res.json({ message: 'Announcement deleted successfully' });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

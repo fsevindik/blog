@@ -49,12 +49,12 @@ const WishList: React.FC = () => {
   }, [handleSubmit]);
 
   return (
-    <div className="fixed top-2 left-2 z-50" ref={wishListRef}>
+    <div className="fixed bottom-6 left-2 z-50" ref={wishListRef}>
       <button
         onClick={toggleWishList}
-        className={`bg-yellow-500 p-2 rounded-full hover:bg-yellow-600 transition-colors duration-300 ${
+        className={`bg-green-500 p-2 rounded-full hover:bg-yellow-600 transition-colors duration-300 ${
           !isOpen ? "animate-pulse" : ""
-        } w-12 h-12 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500`}
+        } w-10 h-10 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500`}
         aria-label="Toggle Wish List"
       >
         <ListIcon className="text-gray-900 mt-2 size={4}" size={0} />

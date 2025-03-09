@@ -180,6 +180,9 @@ export interface WishListItemProps {
   onToggleAdded: (id: string) => void;
 }
 
+export interface HeaderProps {
+  user: User | null;
+}
 
 //  not use what follows right now, but it may come in handy in the future and would be  cool Captain oh my captain...:)
 // API Response Types

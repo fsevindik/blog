@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import HeartIcon from "../../icons/HeartIcon";
-import HomeIcon from "../../icons/HomeIcon";
 import { NavbarProps } from "../../types/types";
 import UserIcon from "../../icons/UserIcon";
 import UserDropdown from "../Header/UserDropDown";
@@ -33,17 +32,12 @@ const Navbar: React.FC<NavbarProps> = () => {
   }, []);
 
   return (
-    <nav className="flex items-center space-x-4 ml-5">
-      <NavItem
-        to="/"
-        icon={<HomeIcon className="w-6 h-6" size={2} />}
-        text="Home"
-      />
-
+    <nav className="flex items-center space-x-4 ml-5 ">
+     
       <NavItem
         to="/films/trends"
-        icon={<HeartIcon className="w-6 h-6 " size={2} />}
-        text="Top"
+        icon={<HeartIcon className="md:w-8 md:h-8 w-6 h-6 hover:scale-110" size={4} />}
+        text=""
       />
 
       <div className="relative" ref={dropdownRef}>

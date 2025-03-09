@@ -1,20 +1,22 @@
 import axios from "axios";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import FilmContext from "../../context/FilmDb";
 import useDebounce from "../../hooks/useDebounce";
-import DoctorIcon from "../../icons/DoctorIcon";
 import WishList from "../../pages/components/WishList";
 import Navbar from "../Navbar/Navbar";
+import { Film, User } from "../../types/types";
+import SearchIcon from "../../icons/SearchIcon";
+import HomeIcon from "../../icons/HomeIcon"; // Home ikonunu ekledik
 
 interface HeaderProps {
-  user: any;
+  user: User | null;
 }
 
 const Header: React.FC<HeaderProps> = ({ user }) => {
   const { handleSearch } = useContext(FilmContext);
   const inputRef = useRef<HTMLInputElement>(null);
-  const [, setSearchResults] = useState<any[]>([]);
+  const [, setSearchResults] = useState<Film[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 400);
   const location = useLocation();
@@ -46,49 +48,44 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
     handleSearch(value);
   };
 
-  const handleButtonClick = () => {
+  const handleSearchClick = () => {
     if (inputRef.current) {
       setSearchTerm(inputRef.current.value);
+      handleSearch(inputRef.current.value);
     }
   };
 
   return (
     <header className="bg-gray-900 text-white p-4 shadow-lg border-b-2 border-yellow-500">
       <div className="container mx-auto">
-        <div className="flex flex-col lg:flex-row items-center justify-between">
-          <div className="flex items-center mb-4 lg:mb-0">
-            {!token ? null : <WishList />}
-
-            <DoctorIcon
-              className="w-8 h-8 text-yellow-400 mr-2 ml-12"
-              size={12}
-            />
-            <p className="text-sm lg:text-lg font-semibold text-yellow-400 mr-5">
-              Dr. Filmolog: Your cinematic cure
-            </p>
-          </div>
-
+        <div className="flex items-center justify-between p-2">
+          
+          <Link to="/" className="text-yellow-500 hover:text-white flex items-center">
+            <HomeIcon className="md:w-8 md:h-8 w-6 h-6 hover:scale-110 transition-transform duration-300" size={2} />
+          </Link>
           {location.pathname === "/" && (
-            <div className="flex-grow flex items-center justify-center mb-4 lg:mb-0 lg:mr-4">
+            <div className="relative max-w-xs w-1/2 ">
               <input
                 type="text"
                 placeholder="Search from My List"
-                className="p-2 w-full lg:w-64 bg-gray-800 text-white border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                className="p-2 pr-10 w-full bg-gray-800 text-white border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
                 ref={inputRef}
                 onChange={handleInputChange}
               />
-              <button
-                className="p-2 w-1/4 lg:w-auto bg-yellow-500 text-gray-900 font-semibold rounded-md ml-2 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition duration-300"
-                onClick={handleButtonClick}
+              <button 
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-yellow-500 transition duration-300"
+                onClick={handleSearchClick}
+                aria-label="Search"
               >
-                Search
+                <SearchIcon size={4} />
               </button>
             </div>
           )}
-
-          <div className="flex items-center lg:ml-auto">
+          <div className="flex items-center space-x-4">
+            {token && <WishList />}
             <Navbar user={user} />
           </div>
+
         </div>
       </div>
     </header>

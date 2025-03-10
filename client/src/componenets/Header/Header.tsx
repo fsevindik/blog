@@ -1,13 +1,13 @@
 import axios from "axios";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { useLocation, Link } from "react-router-dom";
+import {  Link } from "react-router-dom";
 import FilmContext from "../../context/FilmDb";
 import useDebounce from "../../hooks/useDebounce";
 import WishList from "../../pages/components/WishList";
 import Navbar from "../Navbar/Navbar";
 import { Film, User } from "../../types/types";
 import SearchIcon from "../../icons/SearchIcon";
-import HomeIcon from "../../icons/HomeIcon"; // Home ikonunu ekledik
+import HomeIcon from "../../icons/HomeIcon";
 
 interface HeaderProps {
   user: User | null;
@@ -19,7 +19,6 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
   const [, setSearchResults] = useState<Film[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 400);
-  const location = useLocation();
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -63,8 +62,8 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
           <Link to="/" className="text-yellow-500 hover:text-white flex items-center">
             <HomeIcon className="md:w-8 md:h-8 w-6 h-6 hover:scale-110 transition-transform duration-300" size={2} />
           </Link>
-          {location.pathname === "/" && (
-            <div className="relative max-w-xs w-1/2 ">
+         
+            <div className="relative max-w-xs w-1/2 h-10">
               <input
                 type="text"
                 placeholder="Search from My List"
@@ -80,7 +79,7 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
                 <SearchIcon size={4} />
               </button>
             </div>
-          )}
+          
           <div className="flex items-center space-x-4">
             {token && <WishList />}
             <Navbar user={user} />

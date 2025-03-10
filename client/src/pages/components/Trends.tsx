@@ -5,6 +5,7 @@ import Spinner from "../../componenets/Spinner";
 import StarIcon from "../../icons/StarIcon";
 import { Film } from "../../types/types";
 import BackButton from "./BackButton";
+
 const API_URL = "https://serverfilmolog.onrender.com";
 
 const Trends = () => {
@@ -30,7 +31,6 @@ const Trends = () => {
         const trendingFilms = filmsWithRatings
           .sort((a, b) => (b.averageRating ?? 0) - (a.averageRating ?? 0))
           .slice(0, 8);
-
         setFilms(trendingFilms);
         setLoading(false);
       })
@@ -52,10 +52,9 @@ const Trends = () => {
   }
 
   return (
-    <div className="bg-[#1c1a1a] flex flex-grow flex-col items-center justify-center">
+    <div className="bg-[#1c1a1a] flex flex-grow flex-col items-center justify-center relative">
       <BackButton />
-      <div className="mx-auto mt-5"></div>
-      <div className="flex-grow w-full my-8 mx-auto max-w-6xl px-4">
+      <div className="flex-grow w-full my-8 mx-auto max-w-6xl px-4 pt-4">
         <h2 className="text-4xl font-bold text-center mb-8 text-white border-b border-white p-1">
           Top Rated
         </h2>
@@ -76,7 +75,7 @@ const Trends = () => {
                       {truncateText(film.title, 30)}
                     </h3>
                     <p className="font-bold text-center md:text-md sm:text-sm p-2 mb-1">
-                      <span className=" font-serif text-gray-900 ">
+                      <span className="font-serif text-gray-900">
                         {truncateText(film.director, 20)}
                       </span>
                     </p>

@@ -128,7 +128,7 @@ const EditFilm: React.FC = () => {
   }
 
   return (
-    <div className="p-4 bg-[#332b12]">
+    <div className="p-4 bg-[#332b12] relative">
       <BackButton />
       <h1 className="text-3xl my-4 text-white text-center">Edit Film</h1>
       <form

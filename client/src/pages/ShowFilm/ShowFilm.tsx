@@ -47,7 +47,7 @@ const ShowFilm: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen p-2 bg-[#1c1a1a] flex flex-col items-center">
+    <div className="min-h-screen p-2 bg-[#1c1a1a] flex flex-col items-center relative">
       <BackButton />
       <h1 className="text-xl my-2 text-white font-mono">Film Info</h1>
       <div className="w-full max-w-3xl">

@@ -52,7 +52,7 @@ const FilmSlider: React.FC<FilmSliderProps> = ({ films }) => {
   };
 
   return (
-    <div className="relative w-full max-w-screen-xl mx-auto px-4 mb-10 bg-gray-900 p-4 rounded-lg border border-gray-700 overflow-hidden">
+    <div className="relative w-full max-w-screen-xl my-4 mx-auto px-4 mb-10 bg-gray-600 p-4 rounded-lg border border-gray-700 overflow-hidden">
       <div
         ref={sliderRef}
         className="flex overflow-x-auto scrollbar-hide"
@@ -73,12 +73,12 @@ const FilmSlider: React.FC<FilmSliderProps> = ({ films }) => {
           >
             <div
               onClick={() => handleFilmClick(film._id)}
-              className="relative w-full h-60 overflow-hidden rounded-lg border-r-2 border-white transition-transform duration-300 hover:scale-105 cursor-pointer"
+              className="relative  w-full h-60 overflow-hidden rounded-lg transition-transform duration-300 hover:scale-105 cursor-pointer"
             >
               <img
                 src={film.posterImageUrlA}
                 alt={film.title}
-                className="w-full h-full object-contain object-center"
+                className="w-full rounded-sm h-full object-contain object-center p-1"
                 draggable="false"
               />
             </div>
@@ -86,7 +86,7 @@ const FilmSlider: React.FC<FilmSliderProps> = ({ films }) => {
         ))}
       </div>
       <button
-        className="absolute top-1/2 left-2 transform -translate-y-1/2 text-yellow-400 hover:text-white hover:scale-110 cursor-pointer z-10 transition-all duration-300 ease-in-out"
+        className="absolute  top-1/2 left-0 transform -translate-y-1/2 text-yellow-400 hover:text-white hover:scale-110 cursor-pointer z-10 transition-all duration-300 ease-in-out"
         onClick={slidePrev}
       >
         <svg
@@ -105,7 +105,7 @@ const FilmSlider: React.FC<FilmSliderProps> = ({ films }) => {
         </svg>
       </button>
       <button
-        className="absolute top-1/2 right-2 transform -translate-y-1/2 text-yellow-400 hover:text-white hover:scale-110 cursor-pointer z-10 transition-all duration-300 ease-in-out"
+        className="absolute top-1/2 right-0 transform -translate-y-1/2 text-yellow-400 hover:text-white hover:scale-110 cursor-pointer z-10 transition-all duration-300 ease-in-out"
         onClick={slideNext}
       >
         <svg

@@ -55,18 +55,24 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
   };
 
   return (
-    <header className="bg-gray-900 text-white p-4 shadow-lg border-b-2 border-yellow-500">
+    <header className="bg-gray-900 text-white p-4 shadow-lg border-b-2 border-yellow-500 ">
       <div className="container mx-auto">
         <div className="hidden md:flex items-center justify-between p-2">
-          <Link to="/" className="text-yellow-500 hover:text-white flex items-center">
-            <HomeIcon className="md:w-8 md:h-8 w-6 h-6 hover:scale-110 transition-transform duration-300" size={2} />
+          <Link
+            to="/"
+            className="text-yellow-500 hover:text-white flex items-center"
+          >
+            <HomeIcon
+              className="md:w-8 md:h-8 w-6 h-6 hover:scale-110 transition-transform duration-300"
+              size={2}
+            />
           </Link>
-          
+
           <div className="relative w-1/4 max-w-xs h-8">
             <input
               type="text"
               placeholder="Search from My List"
-              className="p-1 pr-8 w-full bg-gray-800 text-white text-sm border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              className="p-1 pr-8 w-full bg-gray-700 text-white text-sm border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
               ref={inputRef}
               onChange={handleInputChange}
             />
@@ -78,7 +84,7 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
               <SearchIcon size={3} />
             </button>
           </div>
-          
+
           <div className="flex items-center space-x-4">
             {token && <WishList />}
             <Navbar user={user} />
@@ -87,16 +93,22 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
 
         <div className="md:hidden flex flex-col gap-2">
           <div className="flex items-center justify-between p-1">
-            <Link to="/" className="text-yellow-500 hover:text-white flex items-center">
-              <HomeIcon className="w-6 h-6 hover:scale-110 transition-transform duration-300" size={2} />
+            <Link
+              to="/"
+              className="text-yellow-500 hover:text-white flex items-center"
+            >
+              <HomeIcon
+                className="w-6 h-6 hover:scale-110 transition-transform duration-300"
+                size={2}
+              />
             </Link>
-            
+
             <div className="flex items-center space-x-3">
               {token && <WishList />}
               <Navbar user={user} />
             </div>
           </div>
-          
+
           <div className="relative w-full max-w-xs mx-auto h-8">
             <input
               type="text"

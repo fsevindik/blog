@@ -1,7 +1,8 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import FilmContext from "../context/FilmDb";
 import AddBoxIcon from "../icons/AddBoxIcon";
 import { Film } from "../types/Film";
 import FilmSlider from "./components/FilmSlider";
@@ -12,8 +13,9 @@ const Home: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const API_URL = "https://serverfilmolog.onrender.com";
-
+  
   const { user } = useAuth();
+  const { search } = useContext(FilmContext);
   const userRole = user?.role || "visitor";
 
   useEffect(() => {
@@ -37,6 +39,14 @@ const Home: React.FC = () => {
     fetchFilms();
   }, []);
 
+  const filteredFilms = search
+    ? films.filter((film) => 
+        film.title.toLowerCase().includes(search.toLowerCase())
+      )
+    : films;
+
+  const isSearching = search !== "";
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -51,14 +61,23 @@ const Home: React.FC = () => {
         {userRole === "admin" && (
           <Link
             to="/films/create"
-            className="text-yellow-500 h-8 w-8 ml-auto mr-5 mt-5 border-b-2 border-r-2  border-yellow-500 rounded-md hover:text-white hover:bg-green-400 flex items-center"
+            className="text-yellow-500 h-8 w-8 ml-auto mr-5 mt-5 border-b-2 border-r-2 border-yellow-500 rounded-md hover:text-white hover:bg-green-400 flex items-center"
           >
             <AddBoxIcon />
           </Link>
         )}
       </div>
-      <FilmSlider films={films} />
-      <FilmsTable films={films} setFilms={setFilms} />
+      
+      {isSearching ? (
+        <div className="p-5 bg-gray-800 text-white">
+          <h2 className="text-xl font-bold mb-2 ">Your Search Results</h2>
+          <p>{filteredFilms.length} film(s) found</p>
+        </div>
+      ) : (
+        <FilmSlider films={films} />
+      )}
+      
+      <FilmsTable films={filteredFilms} setFilms={setFilms} />
     </div>
   );
 };

@@ -55,7 +55,7 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
     }
   };
 
-  const isWelcomePage = location.pathname === "/welcome"; 
+  const isWelcomePage = location.pathname === "/welcome" || location.pathname === "/admin"; 
   
   return (
     <header className="bg-gray-900 text-white p-4 shadow-lg border-b-2 border-yellow-500">

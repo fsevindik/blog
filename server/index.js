@@ -11,8 +11,6 @@ import userRoutes from "./routes/userRoutes.js";
 import wishListRoutes from "./routes/wishlistRoutes.js";
 import announcementRoutes from "./routes/announcementRoute.js";
 
-
-
 dotenv.config();
 const PORT = process.env.PORT || 3000;
 
@@ -33,15 +31,13 @@ mongoose
     process.exit(1);
   });
 
-// Routes
 app.use("/films", filmRoutes);
 app.use("/films/:filmId/reactions", reactionRoutes);
 app.use("/users", userRoutes);
 app.use("/messages", messageRoutes);
-app.use("/comments", commentRoutes); // end of project maybe I can make all of them like api/...
+app.use("/comments", commentRoutes);
 app.use("/wishlist", wishListRoutes);
-app.use("/announcements", announcementRoutes);
-
+app.use("/announcements", announcementRoutes); 
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

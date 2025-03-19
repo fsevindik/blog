@@ -10,9 +10,25 @@ const Navbar: React.FC<NavbarProps> = () => {
   const { user } = useAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const closeTimerRef = useRef<number | null>(null);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
+  };
+  const handleMouseEnter = () => {
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current);
+    }
+    closeTimerRef.current = window.setTimeout(() => {
+      setDropdownOpen(false);
+    }, 1000);
   };
 
   useEffect(() => {
@@ -28,12 +44,14 @@ const Navbar: React.FC<NavbarProps> = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      if (closeTimerRef.current) {
+        clearTimeout(closeTimerRef.current);
+      }
     };
   }, []);
 
   return (
     <nav className="flex items-center space-x-4 ml-5 ">
-     
       <NavItem
         to="/films/trends"
         icon={<HeartIcon className="md:w-8 md:h-8 w-6 h-6 hover:scale-110" size={4} />}
@@ -51,7 +69,11 @@ const Navbar: React.FC<NavbarProps> = () => {
           </span>
         </button>
         {dropdownOpen && (
-          <div className="absolute right-0 top-full mt-2 bg-gray-800 text-white rounded-md shadow-lg z-20">
+          <div 
+            className="absolute right-0 top-full mt-2 bg-gray-800 text-white rounded-md shadow-lg z-20"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
             <UserDropdown user={user} />
           </div>
         )}

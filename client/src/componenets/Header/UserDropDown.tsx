@@ -16,7 +16,7 @@ const UserDropdown: React.FC<UserDropdownProps> = () => {
   };
 
   return (
-    <div className="py-2 bg-gray-600 rounded-b-md z-40">
+    <div className="py-2 bg-gray-700 rounded-b-md z-40">
       <div className="p-4 flex items-center text-white">
         {user ? (
           <Link
@@ -44,31 +44,31 @@ const UserDropdown: React.FC<UserDropdownProps> = () => {
         <span className="ml-2">{user ? user.name : "Guest"}</span>
       </div>
       <div className="border-t border-gray-200"></div>
-      <div className="p-2">
-        {user ? (
-          <button
-            onClick={handleLogout}
-            className="block w-full text-yellow-500 text-left px-4 py-2 text-md rounded-md hover:bg-red-500 hover:text-white"
-          >
-            Logout
-          </button>
-        ) : (
-          <>
-            <Link
-              to="/auth?mode=login"
-              className="block rounded-md text-yellow-500 px-4 py-2 text-sm font-bold hover:text-black hover:bg-yellow-500"
-            >
-              Login
-            </Link>
-            <Link
-              to="/auth?mode=register"
-              className="block rounded-md px-4 py-2 text-sm font-bold text-yellow-500 hover:text-black hover:bg-yellow-500"
-            >
-              Register
-            </Link>
-          </>
-        )}
-      </div>
+      <div className="p-2 flex justify-start">
+  {user ? (
+    <button
+      onClick={handleLogout}
+      className="text-yellow-500 text-left px-4 py-2 text-md rounded-md hover:bg-red-500 hover:text-white"
+    >
+      Logout
+    </button>
+  ) : (
+    <div className="flex flex-col items-start">
+      <Link
+        to="/auth?mode=login"
+        className="rounded-md text-yellow-500 px-4 py-2 text-sm font-bold hover:text-black hover:bg-yellow-500"
+      >
+        Login
+      </Link>
+      <Link
+        to="/auth?mode=register"
+        className="rounded-md px-4 py-2 text-sm font-bold text-yellow-500 hover:text-black hover:bg-yellow-500"
+      >
+        Register
+      </Link>
+    </div>
+  )}
+</div>
     </div>
   );
 };

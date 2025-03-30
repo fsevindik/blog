@@ -55,18 +55,20 @@ const FilmsTable: React.FC<FilmsTableProps> = ({ films = [], setFilms }) => {
         </thead>
         <tbody>
           {sortedFilms.map((film) => (
-            <tr key={film._id} className="h-10 bg-gray-700">
+            <tr key={film._id} className="h-10 bg-gray-700 hover:bg-gray-600 transition-colors duration-200">
               <td className="relative pl-5 rounded-md">
                 <Link
                   to={`/Films/details/${film._id}`}
-                  className="flex items-center p-2 hover:rounded-md border-b border-white hover:bg-yellow-500 cursor-pointer font-serif font-semibold flex-col md:flex-row"
+                  className="flex items-center p-2 rounded-md hover:bg-yellow-500 cursor-pointer font-serif font-semibold flex-col md:flex-row transition-all duration-300 shadow-md hover:shadow-lg"
                 >
-                  <img
-                    src={film.posterImageUrlA}
-                    alt={film.title}
-                    className="h-16 w-16 object-cover mb-2 md:mb-0 md:h-16 md:w-16 sm:h-20 sm:w-20"
-                  />
-                  <span className="text-sm md:text-base ml-2">{film.title}</span>
+                  <div className="overflow-hidden rounded-md mb-2 md:mb-0">
+                    <img
+                      src={film.posterImageUrlA}
+                      alt={film.title}
+                      className="object-cover w-32 h-40 md:w-16 md:h-20 lg:w-20 lg:h-24 transition-transform duration-300 hover:scale-105"
+                    />
+                  </div>
+                  <span className="text-sm md:text-base ml-0 md:ml-3 mt-2 md:mt-0 text-center md:text-left">{film.title}</span>
                 </Link>
               </td>
               <td className="rounded-md text-center font-semibold hidden md:table-cell w-1/6">{film.director}</td>

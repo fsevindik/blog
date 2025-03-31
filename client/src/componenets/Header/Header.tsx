@@ -59,7 +59,7 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
 
   return (
     <header className="bg-gray-900 text-white p-4 shadow-lg border-b-2 border-yellow-500">
-      <div className="container mx-auto ">
+      <div className=" mx-auto ">
         <div className="hidden md:flex items-center justify-between p-2 space-x-4 w-full">
           <Link
             to="/"
@@ -72,7 +72,8 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
           </Link>
           
           {isSearchPage && (
-            <div className="relative flex-grow max-w-md mx-auto">
+            <div className="relative flex-grow max-w-xs md:max-w-sm lg:max-w-md mx-auto">
+
               <div className="relative">
                 <input
                   type="text"

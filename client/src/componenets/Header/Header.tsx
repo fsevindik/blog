@@ -55,7 +55,7 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
     }
   };
 
-  const isWelcomePage = location.pathname === "/welcome" || location.pathname === "/admin"; 
+  const isSearchPage = location.pathname === "/" ;
 
   return (
     <header className="bg-gray-900 text-white p-4 shadow-lg border-b-2 border-yellow-500">
@@ -70,29 +70,31 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
               size={2}
             />
           </Link>
-          <div className="relative flex-grow max-w-md mx-auto">
-            {!isWelcomePage && (
-              <input
-                type="text"
-                placeholder="Search from My List"
-                className="p-2 pr-10 w-full bg-gray-800 text-white text-sm border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-300 placeholder-gray-400"
-                ref={inputRef}
-                onChange={handleInputChange}
-              />
-            )}
-            <button
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-yellow-500 transition duration-300"
-              onClick={handleSearchClick}
-              aria-label="Search"
-            >
-              <SearchIcon size={3} />
-            </button>
-          </div>
+          
+          {isSearchPage && (
+            <div className="relative flex-grow max-w-md mx-auto">
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Search from My List"
+                  className="p-2 pr-10 w-full bg-gray-800 text-white text-sm border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-300 placeholder-gray-400"
+                  ref={inputRef}
+                  onChange={handleInputChange}
+                />
+                <SearchIcon
+                  size={3}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                />
+              </div>
+            </div>
+          )}
+
           <div className="flex items-center space-x-6 ml-auto">
             {token && <WishList />}
             <Navbar user={user} />
           </div>
         </div>
+        
         <div className="md:hidden flex items-center justify-between w-full space-x-4">
           <Link
             to="/"
@@ -103,8 +105,9 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
               size={2}
             />
           </Link>
-          <div className="relative flex-grow max-w-md mx-auto">
-            {!isWelcomePage && (
+          
+          {isSearchPage ? (
+            <div className="relative flex-grow max-w-md mx-auto">
               <input
                 type="text"
                 placeholder="Search from My List"
@@ -112,15 +115,18 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
                 ref={inputRef}
                 onChange={handleInputChange}
               />
-            )}
-            <button
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-yellow-500 transition duration-300"
-              onClick={handleSearchClick}
-              aria-label="Search"
-            >
-              <SearchIcon size={3} />
-            </button>
-          </div>
+              <button
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-yellow-500 transition duration-300"
+                onClick={handleSearchClick}
+                aria-label="Search"
+              >
+                <SearchIcon size={3} />
+              </button>
+            </div>
+          ) : (
+            <div className="flex-grow"></div>
+          )}
+          
           <div className="flex items-center space-x-4 ml-auto">
             {token && <WishList />}
             <Navbar user={user} />

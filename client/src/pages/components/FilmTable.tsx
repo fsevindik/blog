@@ -59,13 +59,13 @@ const FilmsTable: React.FC<FilmsTableProps> = ({ films = [], setFilms }) => {
               <td className="relative pl-5 rounded-md">
                 <Link
                   to={`/Films/details/${film._id}`}
-                  className="flex items-center p-2 rounded-md hover:bg-yellow-500 cursor-pointer font-serif font-semibold flex-col md:flex-row transition-all duration-300 shadow-md hover:shadow-lg"
+                  className="flex items-center p-2 rounded-sm hover:bg-yellow-500 cursor-pointer font-serif font-semibold flex-col md:flex-row transition-all duration-300 shadow-md hover:shadow-lg"
                 >
                   <div className="overflow-hidden rounded-md mb-2 md:mb-0">
                     <img
                       src={film.posterImageUrlA}
                       alt={film.title}
-                      className="object-cover w-32 h-40 md:w-16 md:h-20 lg:w-20 lg:h-24 transition-transform duration-300 hover:scale-105"
+                      className="object-cover w-60 h-40 md:w-16 md:h-20 lg:w-20 lg:h-24 transition-transform duration-300 hover:scale-95"
                     />
                   </div>
                   <span className="text-sm md:text-base ml-0 md:ml-3 mt-2 md:mt-0 text-center md:text-left">{film.title}</span>

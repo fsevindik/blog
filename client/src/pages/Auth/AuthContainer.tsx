@@ -17,7 +17,7 @@ const AuthContainer: React.FC<AuthContainerProps> = ({ children }) => {
         <source src={videoSource} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-      <div className="relative z-10 bg-gray-200 bg-opacity-90 p-8 rounded-lg shadow-lg w-full max-w-md text-center">
+      <div className="relative z-10 bg-[#212a50] bg-opacity-90 p-8 rounded-lg shadow-lg w-full max-w-md text-center">
         {children}
       </div>
     </div>

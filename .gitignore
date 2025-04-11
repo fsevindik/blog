@@ -3,3 +3,4 @@
 
 # Frontend environment vars.
 /client/.env
+node_modules

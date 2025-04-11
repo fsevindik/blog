@@ -70,8 +70,8 @@ const AuthForm: React.FC<AuthFormProps> = ({
         disabled={!isFormValid}
         className={`w-full py-3 rounded-md transition duration-300 ease-in-out ${
           isFormValid
-            ? "bg-gray-800 text-white hover:bg-yellow-500 hover:text-black font-semibold"
-            : "bg-gray-500 text-white cursor-not-allowed"
+            ? "bg-[#37646d] text-white hover:bg-[#2768c2] hover:text-black font-semibold"
+            : "bg-[#414852] text-white cursor-not-allowed"
         }`}
       >
         {mode === "register" ? "Register" : "Login"}

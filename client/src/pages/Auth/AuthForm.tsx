@@ -16,7 +16,6 @@ const AuthForm: React.FC<AuthFormProps> = ({
   togglePasswordVisibility,
   handleAuth,
 }) => {
-
   const isPasswordValid =
     password.trim() !== "" &&
     password.length >= 6 &&
